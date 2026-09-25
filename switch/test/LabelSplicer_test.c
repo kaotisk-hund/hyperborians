@@ -14,7 +14,6 @@
  */
 #include "switch/LabelSplicer.h"
 #include "util/Endian.h"
-#include "util/Constant.h"
 
 #include "util/Assert.h"
 #include <stdio.h>
@@ -27,9 +26,9 @@ static void unsplice()
 
 static void splice()
 {
-    uint64_t goHere =   Constant_base2(000000100);
-    uint64_t viaHere =  Constant_base2(000000100);
-    uint64_t expected = Constant_base2(000010000);
+    uint64_t goHere =   4;
+    uint64_t viaHere =  4;
+    uint64_t expected = 16;
 
     uint64_t out = LabelSplicer_splice(goHere, viaHere);
 
@@ -41,8 +40,8 @@ static void splice()
 
 static void routesThrough()
 {
-    uint64_t dst = Constant_base2(0000000000000000100100000000101011101010100101011100101001010101);
-    uint64_t mid = Constant_base2(0000000000000000000000010110010100100110001110011100011001010101);
+    uint64_t dst = 158376559757909;
+    uint64_t mid = 1533944645205;
     Assert_true(!LabelSplicer_routesThrough(dst, mid));
     Assert_true(LabelSplicer_routesThrough(dst, 1));
 }

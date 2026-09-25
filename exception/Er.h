@@ -17,7 +17,6 @@
 
 #include "memory/Allocator.h"
 #include "util/Gcc.h"
-#include "util/Js.h"
 
 #include "util/Linker.h"
 Linker_require("exception/Er.c")
@@ -27,36 +26,49 @@ struct Er_Ret
     const char* message;
 };
 
-Js({ this.Er_JS = require("../exception/Er.js").create(); })
-
-#define Er_DEFUN(...) \
-    Gcc_USE_RET Js_or({ return this.Er_JS.defun(Js_Q __VA_ARGS__ Js_Q) }, __VA_ARGS__)
-
 Gcc_PRINTF(4, 5)
 Gcc_USE_RET
 struct Er_Ret* Er__raise(char* file, int line, struct Allocator* alloc, char* format, ...);
+
+/*
+ * The Er exception system was removed along with the JavaScript preprocessor.
+ * Functions declared with Er_DEFUN are now ordinary C functions. Any error they
+ * encounter is fatal: Er_raise prints the message and aborts the process, and
+ * because a failing callee never returns, the "winding" macros collapse to
+ * plain evaluation of their expression:
+ *
+ *   Er(expr)        -> (expr)         the callee either succeeds or aborts
+ *   Er_assert(expr) -> (void)(expr)   same, but discard any returned value
+ *   Er_check(r,e)   -> (e)            error recovery is no longer available
+ *   Er_raise(...)   -> fail (abort)   no unwinding to a caller
+ *   Er_ret(v)       -> return (v)     normal function return
+ */
+#define Er_DEFUN(...) __VA_ARGS__
+
+Gcc_NORETURN
+void Er__assertFail(struct Er_Ret* er);
 #define Er_raise(...) \
     do { \
-        struct Er_Ret* Er_ret = Er__raise(Gcc_SHORT_FILE, Gcc_LINE, __VA_ARGS__); \
-        Js_or({ return 'return Er_ret;' }, Er__assertFail(Er_ret)); \
+        Er__assertFail(Er__raise(Gcc_SHORT_FILE, Gcc_LINE, __VA_ARGS__)); \
     } while (0)
-    // CHECKFILES_IGNORE missing ;
 
-#define Er(expr) Js_or({ return this.Er_JS.er(Js_Q expr Js_Q, Gcc_SHORT_FILE, Gcc_LINE); }, expr)
+#define Er(expr) (expr)
 
-#define Er_assert(expr) \
-    Js_or({ return this.Er_JS.assert(Js_Q expr Js_Q, Gcc_SHORT_FILE, Gcc_LINE); }, expr)
+#define Er_assert(expr) (expr)
 
-#define Er_check(ret, expr) \
-    Js_or({ return this.Er_JS.check(#ret, Js_Q expr Js_Q, Gcc_SHORT_FILE, Gcc_LINE); }, expr)
+#define Er_check(ret, expr) (expr)
 
-#define Er_ret(val) Js_or({ return this.Er_JS.ret(Js_Q val Js_Q); }, return val)
+#define Er_ret(...) Er_ret_PASTE(Er_ret_apply, Er_ret_NARGS(__VA_ARGS__))(__VA_ARGS__)
+#define Er_ret_PASTE(a, b) Er_ret_PASTE_I(a, b)
+#define Er_ret_PASTE_I(a, b) a##b
+#define Er_ret_NARGS(...) Er_ret_NARGS_SEL(, ## __VA_ARGS__, 1, 0)
+#define Er_ret_NARGS_SEL(_1, _2, N, ...) N
+#define Er_ret_apply0() return ;
+#define Er_ret_apply1(v) return (v);
 
 static inline struct Er_Ret* Er_unwind(const char* file, int line, struct Er_Ret* ret)
 {
     return ret;
 }
-
-void Er__assertFail(struct Er_Ret* er);
 
 #endif

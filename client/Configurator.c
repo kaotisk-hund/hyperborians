@@ -411,23 +411,11 @@ static void ipTunnel(Dict* ifaceConf, struct Allocator* tempAlloc, struct Contex
     }
 }
 
-static void supernodes(List* supernodes, struct Allocator* tempAlloc, struct Context* ctx)
-{
-    if (!supernodes) { return; }
-    String* s;
-    for (int i = 0; (s = List_getString(supernodes, i)) != NULL; i++) {
-        Log_debug(ctx->logger, "Loading supernode connection to [%s]", s->bytes);
-        Dict reqDict = Dict_CONST(String_CONST("key"), String_OBJ(s), NULL);
-        rpcCall0(String_CONST("SupernodeHunter_addSnode"), &reqDict, ctx, tempAlloc, NULL, true);
-    }
-}
-
 static void routerConfig(Dict* routerConf, struct Allocator* tempAlloc, struct Context* ctx)
 {
     tunInterface(Dict_getDictC(routerConf, "interface"), tempAlloc, ctx);
     socketInterface(Dict_getDictC(routerConf, "interface"), tempAlloc, ctx);
     ipTunnel(Dict_getDictC(routerConf, "ipTunnel"), tempAlloc, ctx);
-    supernodes(Dict_getListC(routerConf, "supernodes"), tempAlloc, ctx);
 }
 
 static void ethInterfaceSetBeacon(int ifNum, Dict* eth, struct Context* ctx)

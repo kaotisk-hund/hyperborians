@@ -35,9 +35,8 @@ static struct AddrIface* setupUDP(struct EventBase* base,
     // Mac OSX and BSD do not set up their TUN devices synchronously.
     // We'll just keep on trying until this works.
     struct UDPAddrIface* udp = NULL;
-    struct Er_Ret* er = NULL;
     for (int i = 0; i < 20; i++) {
-        udp = Er_check(&er, UDPAddrIface_new(base, bindAddr, allocator, logger));
+        udp = UDPAddrIface_new(base, bindAddr, allocator, logger);
         if (udp) {
             break;
         }

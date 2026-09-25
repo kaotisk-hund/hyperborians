@@ -30,10 +30,11 @@
 #include <stddef.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include <net/if.h>
+#define _LINUX_IF_H
 #include <linux/if.h>
 #include <linux/if_tun.h>
 #include <linux/if_ether.h>
-#include <net/if.h>
 
 #if defined(android)
   #define DEVICE_PATH "/dev/tun"

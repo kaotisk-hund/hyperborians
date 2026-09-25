@@ -21,7 +21,9 @@
 #include "memory/MallocAllocator.h"
 #include "wire/Message.h"
 #include "test/FuzzTest.h"
-#include "util/Js.h"
+#include "util/Bits.h"
+#include "util/CString.h"
+#include "util/Hex.h"
 
 #include <stdio.h>
 #include <unistd.h>
@@ -33,30 +35,152 @@
     #define testcjdroute_SUBNODE 0
 #endif
 
-Js({ return builder.config.cjdnsTest_prototypes; })
-
 typedef int (* Test)(int argc, char** argv);
 typedef void* (* FuzzTestInit)(struct Allocator* alloc, struct Random* rand);
 typedef void (* FuzzTest)(void* ctx, struct Message* fuzz);
 typedef struct FuzzTest* (* MkFuzz)(struct Allocator* alloc);
 
+int Random_test_main(int argc, char** argv);
+int CryptoAuth_test_main(int argc, char** argv);
+int CryptoAuth_unit_test_main(int argc, char** argv);
+int ReplayProtector_test_main(int argc, char** argv);
+int Sign_test_main(int argc, char** argv);
+int NodeStore_test_main(int argc, char** argv);
+int VersionList_test_main(int argc, char** argv);
+int DHTModules_handleIncoming_test_main(int argc, char** argv);
+int DHTModules_handleOutgoing_test_main(int argc, char** argv);
+int BSDMessageTypeWrapper_test_main(int argc, char** argv);
+int TAPWrapper_root_test_main(int argc, char** argv);
+int TUNInterface_ipv4_root_test_main(int argc, char** argv);
+int TUNInterface_ipv6_root_test_main(int argc, char** argv);
+int TUNInterface_ipv6_withroute_root_test_main(int argc, char** argv);
+int TAPDevice_root_test_main(int argc, char** argv);
+int TAPInterface_root_test_main(int argc, char** argv);
+int FileReader_test_main(int argc, char** argv);
+int Allocator_test_main(int argc, char** argv);
+int EncodingScheme_test_main(int argc, char** argv);
+int LabelSplicer_test_main(int argc, char** argv);
+int NumberCompress_test_main(int argc, char** argv);
+int Beacon_test_main(int argc, char** argv);
+int CryptoAddress_test_main(int argc, char** argv);
+int printIp_test_main(int argc, char** argv);
+int IpTunnel_test_main(int argc, char** argv);
+int RouteGen_test_main(int argc, char** argv);
+int Sockaddr_test_main(int argc, char** argv);
+int AddrTools_test_main(int argc, char** argv);
+int AverageRoller_test_main(int argc, char** argv);
+int Base10_test_main(int argc, char** argv);
+int Base32_test_main(int argc, char** argv);
+int Bits_test_main(int argc, char** argv);
+int Checksum_test_main(int argc, char** argv);
+int Endian_test_main(int argc, char** argv);
+int Hex_test_main(int argc, char** argv);
+int Identity_test_main(int argc, char** argv);
+int Map_test_main(int argc, char** argv);
+int Process_test_main(int argc, char** argv);
+int QSort_test_main(int argc, char** argv);
+int Seccomp_test_main(int argc, char** argv);
+int Set_test_main(int argc, char** argv);
+int VarInt_test_main(int argc, char** argv);
+void* JsonBencMessageReader_init(struct Allocator* alloc, struct Random* rand);
+void JsonBencMessageReader_fuzz(void* vctx, struct Message* fuzz);
+void* CryptoAuth_init(struct Allocator* alloc, struct Random* rand);
+void CryptoAuth_fuzz(void* vctx, struct Message* fuzz);
+void* FramingIface_init(struct Allocator* alloc, struct Random* rand);
+void FramingIface_fuzz(void* vctx, struct Message* fuzz);
+void* Main_init(struct Allocator* alloc, struct Random* rand);
+void Main_fuzz(void* vctx, struct Message* fuzz);
+void* Map_init(struct Allocator* alloc, struct Random* rand);
+void Map_fuzz(void* vctx, struct Message* fuzz);
+
 static const struct {
     Test func;
     char* name;
-} TESTS[] = { Js({ return builder.config.cjdnsTest_tests }) };
+} TESTS[] = {
+    { Random_test_main, "Random_test" },
+    { CryptoAuth_test_main, "CryptoAuth_test" },
+    { CryptoAuth_unit_test_main, "CryptoAuth_unit_test" },
+    { ReplayProtector_test_main, "ReplayProtector_test" },
+    { Sign_test_main, "Sign_test" },
+    { NodeStore_test_main, "NodeStore_test" },
+    { VersionList_test_main, "VersionList_test" },
+    { DHTModules_handleIncoming_test_main, "DHTModules_handleIncoming_test" },
+    { DHTModules_handleOutgoing_test_main, "DHTModules_handleOutgoing_test" },
+    { BSDMessageTypeWrapper_test_main, "BSDMessageTypeWrapper_test" },
+    { TAPWrapper_root_test_main, "TAPWrapper_root_test" },
+    { TUNInterface_ipv4_root_test_main, "TUNInterface_ipv4_root_test" },
+    { TUNInterface_ipv6_root_test_main, "TUNInterface_ipv6_root_test" },
+    { TUNInterface_ipv6_withroute_root_test_main, "TUNInterface_ipv6_withroute_root_test" },
+    { TAPDevice_root_test_main, "TAPDevice_root_test" },
+    { TAPInterface_root_test_main, "TAPInterface_root_test" },
+    { FileReader_test_main, "FileReader_test" },
+    { Allocator_test_main, "Allocator_test" },
+    { EncodingScheme_test_main, "EncodingScheme_test" },
+    { LabelSplicer_test_main, "LabelSplicer_test" },
+    { NumberCompress_test_main, "NumberCompress_test" },
+    { Beacon_test_main, "Beacon_test" },
+    { CryptoAddress_test_main, "CryptoAddress_test" },
+    { printIp_test_main, "printIp_test" },
+    { IpTunnel_test_main, "IpTunnel_test" },
+    { RouteGen_test_main, "RouteGen_test" },
+    { Sockaddr_test_main, "Sockaddr_test" },
+    { AddrTools_test_main, "AddrTools_test" },
+    { AverageRoller_test_main, "AverageRoller_test" },
+    { Base10_test_main, "Base10_test" },
+    { Base32_test_main, "Base32_test" },
+    { Bits_test_main, "Bits_test" },
+    { Checksum_test_main, "Checksum_test" },
+    { Endian_test_main, "Endian_test" },
+    { Hex_test_main, "Hex_test" },
+    { Identity_test_main, "Identity_test" },
+    { Map_test_main, "Map_test" },
+    { Process_test_main, "Process_test" },
+    { QSort_test_main, "QSort_test" },
+    { Seccomp_test_main, "Seccomp_test" },
+    { Set_test_main, "Set_test" },
+    { VarInt_test_main, "VarInt_test" }
+};
 static const int TEST_COUNT = (int) (sizeof(TESTS) / sizeof(*TESTS));
 
 static const struct {
     FuzzTestInit init;
     FuzzTest fuzz;
     char* name;
-} FUZZ_TESTS[] = { Js({ return builder.config.cjdnsTest_fuzzTests }) };
+} FUZZ_TESTS[] = {
+    { JsonBencMessageReader_init, JsonBencMessageReader_fuzz, "JsonBencMessageReader_fuzz_test" },
+    { CryptoAuth_init, CryptoAuth_fuzz, "CryptoAuth_fuzz_test" },
+    { FramingIface_init, FramingIface_fuzz, "FramingIface_fuzz_test" },
+    { Main_init, Main_fuzz, "Main_fuzz_test" },
+    { Map_init, Map_fuzz, "Map_fuzz_test" }
+};
 static const int FUZZ_TEST_COUNT = (int) (sizeof(FUZZ_TESTS) / sizeof(*FUZZ_TESTS));
 
-static const char* FUZZ_CASES[] = { Js({ return builder.config.cjdnsTest_fuzzCases }) };
+static const char* FUZZ_CASES[] = {
+    "benc/serialization/json/test/JsonBencMessageReader_fuzz_test_cases/ConfFile.hex",
+    "crypto/test/CryptoAuth_fuzz_test_cases/Default.hex",
+    "interface/test/FramingIface_fuzz_test_cases/Default.hex",
+    "test/Main_fuzz_test_cases/CtrlAddrErr.hex",
+    "test/Main_fuzz_test_cases/CtrlAuthErr.hex",
+    "test/Main_fuzz_test_cases/CtrlPing.hex",
+    "test/Main_fuzz_test_cases/CtrlPong.hex",
+    "test/Main_fuzz_test_cases/CtrlUndeliverable.hex",
+    "test/Main_fuzz_test_cases/DhtFindNodeQuery.hex",
+    "test/Main_fuzz_test_cases/DhtGetPeersQuery.hex",
+    "test/Main_fuzz_test_cases/DhtPingQuery.hex",
+    "util/test/Map_fuzz_test_cases/Default.hex"
+};
 static const int FUZZ_CASE_COUNT = (int) (sizeof(FUZZ_CASES) / sizeof(*FUZZ_CASES));
 
-Js({ builder.config.cjdnsTest_files.forEach((f) => js.linkerDependency(f)); })
+// Index into FUZZ_TESTS[] for each entry of FUZZ_CASES[].
+// Each recorded fuzz case is the raw input for its own fuzz test, it does not
+// carry a selector in front of the message.
+static const int FUZZ_CASE_TEST[] = {
+    0, // ConfFile.hex   (JsonBencMessageReader)
+    1, // Default.hex    (CryptoAuth)
+    2, // Default.hex    (FramingIface)
+    3, 3, 3, 3, 3, 3, 3, 3, 3, // (Main)
+    4  // Default.hex    (Map)
+};
 
 static uint64_t runTest(Test test,
                         char* name,
@@ -101,14 +225,58 @@ static void usage(char* appName)
     }
 }
 
+// The saved fuzz cases are text files full of hex with '#' comment lines.
+// Lines starting with '#' are skipped and the remaining hex is decoded.
 static void readFile(int fileNo, struct Allocator* alloc, struct Message* fuzz)
 {
-    ssize_t length = read(fileNo, fuzz->bytes, fuzz->length);
-    if (length >= fuzz->length) {
-        printf("No test files over [%d] bytes\n", fuzz->length);
-        length = 0;
+    char* hex = Allocator_malloc(alloc, 1<<16);
+    ssize_t length = read(fileNo, hex, (1<<16) - 1);
+    if (length <= 0) { fuzz->length = 0; return; }
+    hex[length] = '\0';
+    char* out = Allocator_malloc(alloc, 1<<15);
+    int o = 0;
+    for (int i = 0; i < length; i++) {
+        if (i == 0 || hex[i-1] == '\n') {
+            while (hex[i] == ' ' || hex[i] == '\t') { i++; }
+            if (hex[i] == '#') { while (hex[i] != '\n' && i < length) { i++; } continue; }
+        }
+        if (hex[i] != '\n' && hex[i] != '\r' && hex[i] != ' ' && hex[i] != '\t') {
+            out[o++] = hex[i];
+        }
     }
-    fuzz->length = length;
+    out[o] = '\0';
+    uint8_t* bin = Allocator_malloc(alloc, 1<<15);
+    int binLen = Hex_decode(bin, 1<<15, (uint8_t*)out, o);
+    Assert_true(binLen >= 0);
+    if (binLen > (int)fuzz->capacity - (int)fuzz->padding) {
+        printf("No test files over [%d] bytes\n", fuzz->capacity - fuzz->padding);
+        binLen = 0;
+    }
+    Bits_memcpy(fuzz->bytes, bin, binLen);
+    fuzz->length = binLen;
+}
+
+// Run the recorded fuzz input against its own fuzz test. The input does not
+// carry a selector prefix, the mapping is fixed by FUZZ_CASE_TEST[].
+static void runFuzzCase(const char* testCase,
+                        struct Allocator* alloc,
+                        struct Random* rand,
+                        int quiet)
+{
+    for (int i = 0; i < FUZZ_CASE_COUNT; i++) {
+        if (!CString_strcmp(FUZZ_CASES[i], testCase)) {
+            if (!quiet) { fprintf(stderr, "Running fuzz %s", testCase); }
+            void* ctx = FUZZ_TESTS[FUZZ_CASE_TEST[i]].init(alloc, rand);
+            struct Message* fuzz = Message_new(4096, 128, alloc);
+            int f = open(testCase, O_RDONLY);
+            Assert_true(f > -1);
+            readFile(f, alloc, fuzz);
+            close(f);
+            FUZZ_TESTS[FUZZ_CASE_TEST[i]].fuzz(ctx, fuzz);
+            return;
+        }
+    }
+    Assert_failure("unknown fuzz case");
 }
 
 static void** initFuzzTests(struct Allocator* alloc, struct Random* rand)
@@ -148,13 +316,7 @@ static uint64_t runFuzzTestManual(
     uint64_t startTime,
     int quiet)
 {
-    int f = open(testCase, O_RDONLY);
-    Assert_true(f > -1);
-    struct Message* fuzz = Message_new(4096, 128, alloc);
-    readFile(f, alloc, fuzz);
-    close(f);
-
-    runFuzzTest(NULL, alloc, detRand, fuzz, testCase, quiet);
+    runFuzzCase(testCase, alloc, detRand, quiet);
 
     if (!quiet) {
         uint64_t now = Time_hrtime();

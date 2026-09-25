@@ -15,8 +15,6 @@
 #ifndef Kbps_H
 #define Kbps_H
 
-#include "util/Constant.h"
-#include "util/Js.h"
 
 // Must be multiples of 2
 #define Kbps_WINDOW_SIZE 8
@@ -24,8 +22,8 @@
 // Must be a multiple of 1024 (1 second)
 #define Kbps_TIMESPAN    1024
 
-#define Kbps_WINDOW_SH Constant_log2(Kbps_WINDOW_SIZE)
-#define Kbps_TIMESPAN_SH Constant_log2(Kbps_TIMESPAN)
+#define Kbps_WINDOW_SH 3
+#define Kbps_TIMESPAN_SH 10
 
 struct Kbps
 {
@@ -75,10 +73,11 @@ static inline uint32_t Kbps_accumulate(struct Kbps* ctx, uint32_t now, uint32_t 
     // *= 2 ** 10               --> bytes per millisecond to bytes per second
     // *= 2 ** 3                --> bytes per second to bits per second
     // /= 2 ** 10               --> bits per second to kbits per second
-    return Js_or({
-        var x = (Number(Kbps_TIMESPAN_SH) - 10 - 3 + 10);
-        return "ctx->currentBpt" + ( ((x) < 0) ? "<<" : ">>" ) + " " + Math.abs(x);
-    }, ctx->currentBpt);
+#if Kbps_TIMESPAN_SH >= 3
+    return ctx->currentBpt >> (Kbps_TIMESPAN_SH - 3);
+#else
+    return ctx->currentBpt << (3 - Kbps_TIMESPAN_SH);
+#endif
 }
 
 #endif

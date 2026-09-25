@@ -15,8 +15,7 @@
 #ifndef Linker_H
 #define Linker_H
 
-#include "util/Js.h"
 
-#define Linker_require(req) Js({ js.linkerDependency(req); })
+#define Linker_require(req) extern void Linker_require_dummy(void);
 
 #endif

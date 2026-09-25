@@ -16,7 +16,9 @@
 #define Seccomp_H
 
 #include "util/Seccomp_impl.h"
-#include "util/Linker.h"
-Linker_require("util/Seccomp.c")
 
+/*
+ * The seccomp implementation (util/Seccomp_linux.c or util/Seccomp_dummy.c)
+ * is selected per-platform by the build system.
+ */
 #endif

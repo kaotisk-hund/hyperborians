@@ -16,19 +16,23 @@
 #define RootTest_H
 
 #include "util/CString.h"
-#include "util/Js.h"
 
 #include <stdio.h>
 
 #define RootTest_toStr(x) RootTest_toStr2(x)
 #define RootTest_toStr2(x) #x
-Js({
-    this.RootTest_mainFunc = RootTest_toStr(main);
-    this.RootTest_mainName = this.RootTest_mainFunc.replace(/_main$/, '');
-})
-#define RootTest_mainName Js_or({ return '"' + this.RootTest_mainName + '"' }, "main")
 
-#define RootTest_main Js_or({ return 'RootTest_' + this.RootTest_mainFunc; }, RootTest_main)
+// The name of the test, derived from the main() which was renamed by
+// the -Dmain=<test>_main flag when this header is -included into a test.
+#define RootTest_mainName RootTest_toStr(main)
+
+// When built standalone (with -include test/RootTest.h) the test's own
+// main() is renamed to RootTest_main below, so the dispatcher can call it.
+// A test wrapper may pre-define RootTest_main to give this test a unique
+// public symbol when several root tests are linked together.
+#ifndef RootTest_main
+    #define RootTest_main RootTest_main
+#endif
 
 int RootTest_main(int argc, char** argv);
 int main(int argc, char** argv)

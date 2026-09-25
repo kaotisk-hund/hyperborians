@@ -39,6 +39,10 @@ struct Ping
     String* path;
 };
 
+static String* ERR_PATH_NOT_PARSABLE = String_CONST_SO("path was not parsable.");
+static String* ERR_NO_OPEN_SLOTS =
+    String_CONST_SO("no open slots to store ping, try later.");
+
 static void adminPingOnResponse(struct SwitchPinger_Response* resp, void* vping)
 {
     struct Allocator* pingAlloc = resp->ping->pingAlloc;
@@ -79,7 +83,7 @@ static void adminPing(Dict* args, void* vcontext, String* txid, struct Allocator
     uint64_t path;
     String* err = NULL;
     if (pathStr->len != 19 || AddrTools_parsePath(&path, (uint8_t*) pathStr->bytes)) {
-        err = String_CONST("path was not parsable.");
+        err = ERR_PATH_NOT_PARSABLE;
     } else {
         struct SwitchPinger_Ping* ping = SwitchPinger_newPing(path,
                                                               data,
@@ -89,7 +93,7 @@ static void adminPing(Dict* args, void* vcontext, String* txid, struct Allocator
                                                               context->switchPinger);
         if (keyPing && *keyPing) { ping->type = SwitchPinger_Type_KEYPING; }
         if (!ping) {
-            err = String_CONST("no open slots to store ping, try later.");
+            err = ERR_NO_OPEN_SLOTS;
         } else {
             ping->onResponseContext = Allocator_clone(ping->pingAlloc, (&(struct Ping) {
                 .context = context,

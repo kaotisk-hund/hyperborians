@@ -822,8 +822,8 @@ struct Allocator* Allocator_new(unsigned long sizeLimit,
                 .lineNum = lineNum,
             },
             #ifdef Allocator_USE_CANARIES
-            .canary = (uintptr_t) Constant_rand64(),
-            .nextCanary = (uintptr_t) Constant_rand64(),
+            .canary = (uintptr_t) 0x6d3f8a91b2c4d5e6ULL,
+            .nextCanary = (uintptr_t) 0x1e2f3a4b5c6d7e8fULL,
             #endif
         }
     };

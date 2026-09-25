@@ -26,6 +26,83 @@
 
 #include <stdbool.h>
 
+#include <setjmp.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+/*
+ * The Er system in this tree is fatal by design: Er_raise prints the message
+ * and aborts the process. That is fine for the daemon, but the JSON reader is
+ * required to tolerate malformed input and report a pleasant error instead
+ * (JsonBencMessageReader_readNoExcept, cjdroute2 config loading and the fuzz
+ * harness all rely on errors being recoverable). Re-establish the original
+ * unwinding behavior for this translation unit only: Er_raise unwinds to the
+ * nearest Er_check boundary via a longjmp.
+ */
+struct Er_Bjb_ {
+    jmp_buf jb;
+    struct Er_Ret* err;
+};
+static __thread struct Er_Bjb_* Er__activeBjb_ = NULL;
+
+static struct Er_Ret* Er__raiseLocal(
+    char* file, int line, struct Allocator* alloc, char* format, ...)
+{
+    va_list args;
+    va_start(args, format);
+    if (!alloc) {
+        fprintf(stderr, "%s:%d ", file, line);
+        vfprintf(stderr, format, args);
+        fprintf(stderr, "\n");
+        abort();
+    }
+    int written = snprintf(NULL, 0, "%s:%d ", file, line);
+    Assert_true(written >= 0);
+    va_list argsCopy;
+    va_copy(argsCopy, args);
+    int written2 = vsnprintf(NULL, 0, format, argsCopy);
+    Assert_true(written2 >= 0);
+    va_end(argsCopy);
+    int len = written + written2 + 1;
+    char* buf = Allocator_calloc(alloc, len, 1);
+    snprintf(buf, len, "%s:%d ", file, line);
+    vsnprintf(&buf[written], len - written, format, args);
+    struct Er_Ret* res = Allocator_calloc(alloc, sizeof(struct Er_Ret), 1);
+    res->message = buf;
+    va_end(args);
+    return res;
+}
+
+#undef Er_raise
+#define Er_raise(alloc, ...) \
+    do { \
+        struct Er_Ret* Er_ret = Er__raiseLocal(Gcc_SHORT_FILE, Gcc_LINE, (alloc), __VA_ARGS__); \
+        if (Er_ret && Er__activeBjb_) { \
+            Er__activeBjb_->err = Er_ret; \
+            longjmp(Er__activeBjb_->jb, 1); \
+        } \
+        Er__assertFail(Er_ret); \
+    } while (0)
+
+#undef Er_check
+#define Er_check(ret, expr) \
+    __extension__ ({ \
+        struct Er_Bjb_ Er_bj_ = { .err = NULL }; \
+        struct Er_Bjb_* Er_prevBjb_ = Er__activeBjb_; \
+        volatile typeof(expr) Er_res_ = (typeof(expr))0; \
+        volatile bool Er_jumped_ = false; \
+        Er__activeBjb_ = &Er_bj_; \
+        if (setjmp(Er_bj_.jb) == 0) { \
+            Er_res_ = (expr); \
+        } else { \
+            Er_jumped_ = true; \
+        } \
+        Er__activeBjb_ = Er_prevBjb_; \
+        *(ret) = Er_jumped_ ? Er_bj_.err : NULL; \
+        Er_res_; \
+    })
+
 struct Context {
     struct Message* const msg;
     struct Allocator* const alloc;
@@ -40,11 +117,11 @@ static int getColumn(struct Context* ctx)
 }
 
 #define ERROR0(ctx, message) \
-    return Er__raise(Gcc_SHORT_FILE, Gcc_LINE, ctx->alloc,    \
+    Er_raise(ctx->alloc,    \
         "Error parsing config (line %d column %d): " message, \
         ctx->line, getColumn(ctx))
 #define ERROR(ctx, message, ...) \
-    return Er__raise(Gcc_SHORT_FILE, Gcc_LINE, ctx->alloc,    \
+    Er_raise(ctx->alloc,    \
         "Error parsing config (line %d column %d): " message, \
         ctx->line, getColumn(ctx), __VA_ARGS__)
 

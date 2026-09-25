@@ -38,9 +38,11 @@ struct Allocator* BufferAllocator__new(void* buffer,
 
 #define BufferAllocator_new(a,b) BufferAllocator__new((a),(b),Gcc_SHORT_FILE,Gcc_LINE)
 
-// This relies on the fact that UniqueName is only unique on a per-line basis.
+// UniqueName_MK has (via __COUNTER__) a single name per macro expansion.
 #define BufferAllocator_STACK(name, length) \
-    uint8_t UniqueName_get()[length]; \
-    name = BufferAllocator_new(UniqueName_last(), length);
+    BufferAllocator_STACK_impl(name, length, UniqueName_MK(BufferAllocator_STACK_tmp_))
+#define BufferAllocator_STACK_impl(name, length, tmp) \
+    uint8_t tmp[length]; \
+    name = BufferAllocator_new(tmp, length);
 
 #endif

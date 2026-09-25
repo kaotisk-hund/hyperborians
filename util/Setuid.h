@@ -16,7 +16,9 @@
 #define Setuid_H
 
 #include "util/Setuid_impl.h"
-#include "util/Linker.h"
-Linker_require("util/Setuid.c")
 
+/*
+ * The setuid implementation (util/Setuid_linux.c or util/Setuid_dummy.c)
+ * is selected per-platform by the build system.
+ */
 #endif

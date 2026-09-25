@@ -41,10 +41,12 @@ void Set_iterNext(struct Set_Iter* iter);
 int Set_addCopy(struct Set* _set, void* val, uint32_t size);
 
 #define Set_FOREACH(name, set, out) \
-    struct Set_ ## name ## _Iter UniqueName_get();             \
-    for (Set_ ## name ## _iter(set, &UniqueName_last());       \
-        ((out) = UniqueName_last().val);                       \
-        Set_ ## name ## _iterNext(&UniqueName_last()))
+    Set_FOREACH_impl(name, set, out, UniqueName_MK(Set_foreach_ ## name ## _))
+#define Set_FOREACH_impl(name, set, out, it) \
+    struct Set_ ## name ## _Iter it;                           \
+    for (Set_ ## name ## _iter(set, &it);                      \
+        ((out) = it.val);                                      \
+        Set_ ## name ## _iterNext(&it))
 // CHECKFILES_IGNORE expecting a {
 
 #endif // Used multiple times...

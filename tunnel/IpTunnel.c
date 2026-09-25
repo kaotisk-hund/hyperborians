@@ -651,7 +651,7 @@ static bool prefixMatches4(uint8_t* addressA, uint8_t* refAddr, uint32_t prefixL
     return !((a ^ b) >> (32 - prefixLen));
 }
 
-static bool isValidAddress4(uint8_t sourceAndDestIp4[8],
+static bool isValidAddress4(uint8_t* sourceAndDestIp4,
                             bool isFromTun,
                             struct IpTunnel_Connection* conn)
 {
@@ -661,7 +661,7 @@ static bool isValidAddress4(uint8_t sourceAndDestIp4[8],
     return prefixMatches4(compareAddr, conn->connectionIp4, conn->connectionIp4Alloc);
 }
 
-static bool isValidAddress6(uint8_t sourceAndDestIp6[32],
+static bool isValidAddress6(uint8_t* sourceAndDestIp6,
                             bool isFromTun,
                             struct IpTunnel_Connection* conn)
 {
@@ -675,8 +675,8 @@ static bool isValidAddress6(uint8_t sourceAndDestIp6[32],
     return prefixMatches6(compareAddr, conn->connectionIp6, conn->connectionIp6Alloc);
 }
 
-static struct IpTunnel_Connection* findConnection(uint8_t sourceAndDestIp6[32],
-                                                  uint8_t sourceAndDestIp4[8],
+static struct IpTunnel_Connection* findConnection(uint8_t* sourceAndDestIp6,
+                                                  uint8_t* sourceAndDestIp4,
                                                   bool isFromTun,
                                                   struct IpTunnel_pvt* context)
 {

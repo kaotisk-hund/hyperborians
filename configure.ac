@@ -109,6 +109,24 @@ esac
 # cjdns lets the compiler know its own version
 CJDNS_CPPFLAGS="$CJDNS_CPPFLAGS -DCJD_PACKAGE_VERSION=\\\"$PACKAGE_VERSION\\\""
 
+# Some compilers (gcc 16+) warn that Allocator_calloc(alloc, sizeof(x), 1)
+# looks like calloc(nmemb, size) with the arguments transposed.  The order is
+# deliberate and matches every call site in the tree, so silence the warning
+# on compilers that understand it (others must not be told about it).
+AC_CACHE_CHECK([for -Wno-calloc-transposed-args], [cjdns_cv_wcalloc_transposed], [
+    AC_LANG_PUSH([C])
+    CJDNS_SAVE_CFLAGS=$CFLAGS
+    CFLAGS="$CFLAGS -Werror -Wno-calloc-transposed-args"
+    AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[ ]], [[return 0;]])],
+        [cjdns_cv_wcalloc_transposed=yes],
+        [cjdns_cv_wcalloc_transposed=no])
+    CFLAGS=$CJDNS_SAVE_CFLAGS
+    AC_LANG_POP([C])
+])
+if test "x$cjdns_cv_wcalloc_transposed" = "xyes"; then
+    CJDNS_WARN_FLAGS="$CJDNS_WARN_FLAGS -Wno-calloc-transposed-args"
+fi
+
 # Libraries historically needed for libuv on linux
 AC_SEARCH_LIBS([clock_gettime], [rt])
 AC_SEARCH_LIBS([dlopen], [dl])
@@ -118,7 +136,10 @@ AC_SUBST([CJDNS_SYSTEM])
 AC_SUBST([CJDNS_SYSDEF])
 AC_SUBST([CJDNS_CPPFLAGS])
 AC_SUBST([CJDNS_OPTFLAGS])
+AC_SUBST([CJDNS_CFLAGS_SPLIT])
 AC_SUBST([CJDNS_PIE_LDFLAGS])
+
+AC_SUBST([CJDNS_WARN_FLAGS])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

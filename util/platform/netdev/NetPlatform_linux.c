@@ -33,6 +33,8 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <arpa/inet.h>
+#include <net/if.h>
+#define _LINUX_IF_H
 #include <linux/if.h>
 #include <linux/route.h>
 #if ! defined(android)
@@ -40,7 +42,6 @@
 #endif
 #include <linux/netlink.h>
 #include <linux/rtnetlink.h>
-#include <net/if.h>
 
 // Way to identify our routes as opposed to statically created or otherwise...
 #define RTPROT_CJDNS 52

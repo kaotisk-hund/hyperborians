@@ -15,17 +15,44 @@
 #ifndef Defined_H
 #define Defined_H
 
-#include "util/Js.h"
-
 /**
- * Preprocesses to a 1 if the macro is defined, a 0 if it is not.
- * Example:
+ * Defined(macro) is replaced at build time by 1 if the macro given is defined,
+ * and 0 if it is not.
  *
- * if (Defined(linux)) {
- *     doLinuxSpecificStuff();
- * }
+ * This is a substitute for the historical JavaScript-based preprocessor that
+ * performed the same job.  The macro must be one of the names mirrored below,
+ * each of which is kept in sync with the corresponding -D flag emitted by
+ * configure.ac.  If a new condition is needed, add a Defined_<name> entry here
+ * and the corresponding definition in configure.ac.
  */
-#define Defined(macro) \
-    Js_or({ return ( Js_Q macro Js_Q === ' ' + #macro + ' ' ) ? '0' : '1'; }, 1)
+#define Defined(macro) (Defined_##macro)
+
+#define Defined_Log_DEBUG 1
+#define Defined_Log_KEYS 0
+#define Defined_Log_INFO 1
+
+#define Defined_win32 0
+#define Defined_linux 1
+#define Defined_darwin 0
+#define Defined_sunos 0
+#define Defined_freebsd 0
+#define Defined_android 0
+
+#define Defined_PARANOIA 1
+#define Defined_Allocator_PARANOIA 0
+
+#define Defined_SUBNODE 0
+
+#define Defined_NSA_APPROVED 0
+
+#define Defined_Iface_OPTIMIZE 0
+
+#define Defined_si_syscall 0
+
+#define Defined_HAS_ETH_INTERFACE 1
+
+#define Defined_Address_ROT64 1
+
+#define Defined_NodeStore_whichIsWorse_PATHCOUNTS 0
 
 #endif

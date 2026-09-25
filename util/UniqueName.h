@@ -15,13 +15,17 @@
 #ifndef UniqueName_H
 #define UniqueName_H
 
-#include "util/Constant.h"
-#include "util/Js.h"
-
-#define UniqueName_get() Js_or({ \
-    return this.UniqueName_last = 'UniqueName_' + Constant_randHexString(20); \
-}, UniqueName)
-
-#define UniqueName_last() Js_or({ return this.UniqueName_last; }, UniqueName)
+/**
+ * Helpers for building identifiers that are unique per macro expansion.
+ * UniqueName_MK(x) expands to x##__COUNTER__, so a macro that needs a
+ * private declaration (and references to it) builds the name once:
+ *
+ *     #define FOO(...) FOO_impl(__VA_ARGS__, UniqueName_MK(foo_tmp))
+ *
+ * This replaces the historical JavaScript preprocessor which substituted
+ * random hex strings.
+ */
+#define UniqueName_CAT(a,b) a##b
+#define UniqueName_MK(name) UniqueName_CAT(name, __COUNTER__)
 
 #endif

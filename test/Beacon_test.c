@@ -189,10 +189,12 @@ static void start(struct Allocator* alloc,
 
 
 #define STACKMSG(name, messageLength, amountOfPadding) \
-    uint8_t UniqueName_get()[messageLength + amountOfPadding]; \
+    STACKMSG_impl(name, messageLength, amountOfPadding, UniqueName_MK(STACKMSG_msg_))
+#define STACKMSG_impl(name, messageLength, amountOfPadding, msg) \
+    uint8_t msg[messageLength + amountOfPadding];              \
     name = &(struct Message){                                  \
         .length = messageLength,                               \
-        .bytes = UniqueName_last() + amountOfPadding,          \
+        .bytes = msg + amountOfPadding,                        \
         .padding = amountOfPadding,                            \
         .capacity = messageLength                              \
     }

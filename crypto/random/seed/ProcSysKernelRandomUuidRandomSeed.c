@@ -28,7 +28,7 @@
 
 static int getUUID(uint64_t output[2])
 {
-    uint8_t buffer[40] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    uint8_t buffer[41] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
     {
         int fd = -1;
         int tries = 0;

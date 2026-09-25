@@ -247,7 +247,7 @@ static inline Gcc_USE_RET int decrypt(uint32_t nonce,
     union {
         uint32_t ints[2];
         uint8_t bytes[24];
-    } nonceAs = { .ints = {0, 0} };
+    } nonceAs = { .bytes = {0} };
     nonceAs.ints[!isInitiator] = Endian_hostToLittleEndian32(nonce);
 
     return decryptRndNonce(nonceAs.bytes, msg, secret);
@@ -269,7 +269,7 @@ static inline void encrypt(uint32_t nonce,
     union {
         uint32_t ints[2];
         uint8_t bytes[24];
-    } nonceAs = { .ints = {0, 0} };
+    } nonceAs = { .bytes = {0} };
     nonceAs.ints[isInitiator] = Endian_hostToLittleEndian32(nonce);
 
     encryptRndNonce(nonceAs.bytes, msg, secret);
@@ -511,6 +511,7 @@ int CryptoAuth_encrypt(struct CryptoAuth_Session* sessionPub, struct Message* ms
                             session->herTempPubKey,
                             NULL,
                             session->context->logger);
+
         }
     }
 
@@ -865,6 +866,7 @@ enum CryptoAuth_DecryptErr CryptoAuth_decrypt(struct CryptoAuth_Session* session
                             session->herTempPubKey,
                             NULL,
                             session->context->logger);
+
 
             enum CryptoAuth_DecryptErr ret = decryptMessage(session, nonce, msg, secret);
 

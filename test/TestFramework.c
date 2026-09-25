@@ -24,7 +24,7 @@
 #include "memory/MallocAllocator.h"
 #include "memory/Allocator.h"
 #include "switch/SwitchCore.h"
-#include "subnode/SubnodePathfinder.h"
+
 #include "test/TestFramework.h"
 #include "util/log/WriterLog.h"
 #include "util/events/EventBase.h"
@@ -136,12 +136,6 @@ struct TestFramework* TestFramework_setUp(char* privateKey,
     Iface_plumb(&nc->tunAdapt->ipTunnelIf, &ipTunnel->tunInterface);
     Iface_plumb(&nc->upper->ipTunnelIf, &ipTunnel->nodeInterface);
 
-    struct SubnodePathfinder* spf = SubnodePathfinder_new(
-        allocator, logger, base, rand, nc->myAddress, privateKey, scheme);
-    struct ASynchronizer* spfAsync = ASynchronizer_new(allocator, base, logger);
-    Iface_plumb(&spfAsync->ifA, &spf->eventIf);
-    EventEmitter_regPathfinderIface(nc->ee, &spfAsync->ifB);
-
     #ifndef SUBNODE
         struct Pathfinder* pf = Pathfinder_register(allocator, logger, base, rand, NULL);
         pf->fullVerify = true;
@@ -149,8 +143,6 @@ struct TestFramework* TestFramework_setUp(char* privateKey,
         Iface_plumb(&pfAsync->ifA, &pf->eventIf);
         EventEmitter_regPathfinderIface(nc->ee, &pfAsync->ifB);
     #endif
-
-    SubnodePathfinder_start(spf);
 
     struct TestFramework* tf = Allocator_calloc(allocator, sizeof(struct TestFramework), 1);
     Identity_set(tf);
@@ -165,7 +157,6 @@ struct TestFramework* TestFramework_setUp(char* privateKey,
     #ifndef SUBNODE
         tf->pathfinder = pf;
     #endif
-    tf->subnodePathfinder = spf;
     tf->scheme = scheme;
 
     return tf;

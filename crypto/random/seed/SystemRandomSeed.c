@@ -16,38 +16,48 @@
 #include "crypto/random/seed/SystemRandomSeed.h"
 #include "util/log/Log.h"
 
-Js({ this.RandomSeedProvider_providers = []; })
-#define RandomSeedProvider_register(name) Js({ this.RandomSeedProvider_providers.push(#name) })
-#define RandomSeedProvider_list() Js({ return this.RandomSeedProvider_providers.join(','); })
-
 #ifdef win32
     #include "crypto/random/seed/RtlGenRandomSeed.h"
-    RandomSeedProvider_register(RtlGenRandomSeed_new)
 #else
     #include "crypto/random/seed/DevUrandomRandomSeed.h"
-    RandomSeedProvider_register(DevUrandomRandomSeed_new)
     #ifdef linux
         #include "crypto/random/seed/ProcSysKernelRandomUuidRandomSeed.h"
-        RandomSeedProvider_register(ProcSysKernelRandomUuidRandomSeed_new)
         #if !defined(__ILP32__) && !defined(__aarch64__) && defined(__GLIBC__)
             #include "crypto/random/seed/LinuxRandomUuidSysctlRandomSeed.h"
-            RandomSeedProvider_register(LinuxRandomUuidSysctlRandomSeed_new)
         #endif
     #else
         #ifdef freebsd
             #include "crypto/random/seed/BsdKernArndSysctlRandomSeed.h"
-            RandomSeedProvider_register(BsdKernArndSysctlRandomSeed_new)
         #endif
     #endif
     #include <sys/syscall.h>
     #if defined(__OPENBSD__) || (defined(SYS_getrandom) && \
         (SYS_getrandom != __NR_getrandom || defined(__NR_getrandom)))
         #include "crypto/random/seed/GetEntropyRandomSeed.h"
-        RandomSeedProvider_register(GetEntropyRandomSeed_new)
     #endif
 #endif
 
-static RandomSeed_Provider PROVIDERS[] = { RandomSeedProvider_list() };
+#ifdef win32
+static RandomSeed_Provider PROVIDERS[] = { RtlGenRandomSeed_new };
+#else
+static RandomSeed_Provider PROVIDERS[] = {
+    DevUrandomRandomSeed_new,
+    #ifdef linux
+        ProcSysKernelRandomUuidRandomSeed_new,
+        #if !defined(__ILP32__) && !defined(__aarch64__) && defined(__GLIBC__)
+            LinuxRandomUuidSysctlRandomSeed_new,
+        #endif
+    #else
+        #ifdef freebsd
+            BsdKernArndSysctlRandomSeed_new,
+        #endif
+    #endif
+    #if defined(__OPENBSD__) || (defined(SYS_getrandom) && \
+        (SYS_getrandom != __NR_getrandom || defined(__NR_getrandom)))
+        GetEntropyRandomSeed_new,
+    #endif
+};
+#endif
 #define PROVIDERS_COUNT ((int)(sizeof(PROVIDERS) / sizeof(RandomSeed_Provider)))
 
 struct RandomSeed* SystemRandomSeed_new(RandomSeed_Provider* additionalProviders,

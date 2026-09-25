@@ -15,7 +15,6 @@
 #ifndef Gcc_H
 #define Gcc_H
 
-#include "util/Js.h"
 
 // GCC > 6
 #if defined(__GNUC__) && (__GNUC__ > 6)
@@ -94,10 +93,7 @@
     #define Gcc_USE_RET
 #endif
 
-Js({ this.Gcc_shortFile = (x) => '"' + x.substring(x.lastIndexOf('/')+1) + '"'; })
-
-#define Gcc_SHORT_FILE \
-    Js_or({ return this.Gcc_shortFile(__FILE__); }, __FILE__)
+#define Gcc_SHORT_FILE __FILE__
 
 #define Gcc_FILE Gcc_SHORT_FILE
 #define Gcc_LINE __LINE__

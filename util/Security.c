@@ -12,7 +12,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
+#ifndef _GNU_SOURCE
 #define _GNU_SOURCE // chroot(), MAP_ANONYMOUS
+#endif
 #include "benc/Dict.h"
 #include "benc/String.h"
 #include "exception/Except.h"

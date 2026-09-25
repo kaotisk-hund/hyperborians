@@ -300,7 +300,6 @@ static void linkNodes(struct Context* ctx, struct NodeContext* client, struct No
 
 static void linkAllNodes(struct Context* ctx)
 {
-    int i = 0;
     String* key = NULL;
     Dict_forEach(ctx->confNodes, key) {
         int nodeIdx = Map_OfNodes_indexForKey(&key, &ctx->nodeMap);
@@ -315,7 +314,6 @@ static void linkAllNodes(struct Context* ctx)
             struct NodeContext* ncB = ctx->nodeMap.values[nodeIdxB];
             linkNodes(ctx, nc, ncB);
         }
-        i++;
     }
     ctx->confNodes = NULL;
 }

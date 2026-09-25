@@ -2032,7 +2032,6 @@ static void updatePathCost(struct NodeStore_pvt* store, const uint64_t path, uin
 
         pathFrag = nextPath;
         link = nextLink;
-        newCost++;
     }
 
     link->child->timeLastPinged = now;

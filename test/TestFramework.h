@@ -30,7 +30,6 @@ struct TestFramework
     #ifndef SUBNODE
     struct Pathfinder* pathfinder;
     #endif
-    struct SubnodePathfinder* subnodePathfinder;
 
     struct Iface* tunIf;
     struct NetCore* nc;

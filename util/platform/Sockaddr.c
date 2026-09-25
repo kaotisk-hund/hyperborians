@@ -71,7 +71,7 @@ const struct Sockaddr* const Sockaddr_LOOPBACK6 =
 
 struct Sockaddr* Sockaddr_fromNative(const void* ss, int addrLen, struct Allocator* alloc)
 {
-    struct Sockaddr_pvt* out = Allocator_calloc(alloc, addrLen + Sockaddr_OVERHEAD, 1);
+    struct Sockaddr_pvt* out = Allocator_calloc(alloc, sizeof(struct Sockaddr_pvt), 1);
     Bits_memcpy(&out->ss, ss, addrLen);
     out->pub.addrLen = addrLen + Sockaddr_OVERHEAD;
     Sockaddr_normalizeNative(&out->ss);
@@ -304,7 +304,7 @@ struct Sockaddr* Sockaddr_fromBytes(const uint8_t* bytes, int addrFamily, struct
         default: Assert_failure("unrecognized address type [%d]", addrFamily);
     }
 
-    struct Sockaddr_pvt* out = Allocator_calloc(alloc, addrLen + Sockaddr_OVERHEAD, 1);
+    struct Sockaddr_pvt* out = Allocator_calloc(alloc, sizeof(struct Sockaddr_pvt), 1);
     Bits_memcpy(&out->ss, &ss, addrLen);
     out->pub.addrLen = addrLen + Sockaddr_OVERHEAD;
     return &out->pub;

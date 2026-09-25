@@ -19,7 +19,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-#include <node_build/dependencies/tree.h>
+#include "util/tree.h"
 
 struct Entry {
     void* data;

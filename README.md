@@ -8,7 +8,7 @@
     mv m4 m4_old
     mkdir m4
     rm aclocal.m4
-    ./condigure
+    ./configure
     ./do
     
 You should get then the hyperboria-route executable available in the current directory. 

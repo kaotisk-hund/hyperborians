@@ -17,7 +17,7 @@
 
 #include <stdint.h>
 
-// This is INTERNAL to cjdns, it does not get used in the protocol at all,
+// This is INTERNAL to hyperboria, it does not get used in the protocol at all,
 // but it is an internal protocol which is used to coordinate the different
 // modules.
 //

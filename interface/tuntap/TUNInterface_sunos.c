@@ -147,7 +147,7 @@ Er_DEFUN(struct Iface* TUNInterface_new(const char* interfaceName,
         .lifr_flags = IFF_IPV6
     };
 
-    // Since devices are numbered rather than named, it's not possible to have tun0 and cjdns0
+    // Since devices are numbered rather than named, it's not possible to have tun0 and hyperboria0
     // so we'll skip the pretty names and call everything tunX
     int maxNameSize = (LIFNAMSIZ < TUNInterface_IFNAMSIZ) ? LIFNAMSIZ : TUNInterface_IFNAMSIZ;
     if (assignedInterfaceName) {

@@ -13,7 +13,7 @@
 /node_darwin
 /node_sunos
 /benc2json*
-/cjdroute*
+/hyperboria-route*
 /cleanconfig*
 /privatetopublic*
 /publictoip6*
@@ -21,14 +21,14 @@
 /makekeys*
 /mkpasswd*
 /randombytes*
-/testcjdroute*
+/testhyperboria-route*
 *.pyc
 .clang_complete
 *~
 .DS_Store
 /node_modules/jshint
 /node_modules/.bin
-/contrib/docker/cjdns*/
+/contrib/docker/hyperboria*/
 .vscode
 
 # autotools products

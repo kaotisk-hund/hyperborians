@@ -15,7 +15,7 @@
 #include "benc/Dict.h"
 #include "benc/String.h"
 #include "crypto/AddressCalc.h"
-#include "dht/CJDHTConstants.h"
+#include "dht/HyperboriaDHTConstants.h"
 #include "dht/dhtcore/ReplySerializer.h"
 #include "dht/dhtcore/VersionList.h"
 #include "dht/Address.h"
@@ -38,7 +38,7 @@ struct Address_List* ReplySerializer_parse(struct Address* fromNode,
                                            bool splicePath,
                                            struct Allocator* alloc)
 {
-    String* nodes = Dict_getString(result, CJDHTConstants_NODES);
+    String* nodes = Dict_getString(result, HyperboriaDHTConstants_NODES);
 
     if (!nodes) {
         Log_debug(log, "Missing 'n' field in reply");
@@ -51,7 +51,7 @@ struct Address_List* ReplySerializer_parse(struct Address* fromNode,
     }
 
     struct VersionList* versions = NULL;
-    String* versionsStr = Dict_getString(result, CJDHTConstants_NODE_PROTOCOLS);
+    String* versionsStr = Dict_getString(result, HyperboriaDHTConstants_NODE_PROTOCOLS);
     if (versionsStr) {
         versions = VersionList_parse(versionsStr, alloc);
     }

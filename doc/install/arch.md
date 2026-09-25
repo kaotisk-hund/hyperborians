@@ -1,6 +1,6 @@
-# Installing cjdns on arch
+# Installing hyperboria on arch
 
-	pacman -S cjdns
-	systemctl enable cjdns
-	systemctl start cjdns
+	pacman -S hyperboria
+	systemctl enable hyperboria
+	systemctl start hyperboria
 

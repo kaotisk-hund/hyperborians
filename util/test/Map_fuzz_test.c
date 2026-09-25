@@ -24,12 +24,12 @@
 #define Map_ENABLE_HANDLES
 #include "util/Map.h"
 
-void* CJDNS_FUZZ_INIT(struct Allocator* alloc, struct Random* rand)
+void* HYPERBORIA_FUZZ_INIT(struct Allocator* alloc, struct Random* rand)
 {
     return alloc;
 }
 
-void CJDNS_FUZZ_MAIN(void* vctx, struct Message* fuzz)
+void HYPERBORIA_FUZZ_MAIN(void* vctx, struct Message* fuzz)
 {
     struct Allocator* alloc = (struct Allocator*) vctx;
     if (fuzz->length < 4) { return; }

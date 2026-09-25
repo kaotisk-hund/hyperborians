@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-var Cjdns = require('./lib/cjdnsadmin/cjdnsadmin');
+var Hyperboria = require('./lib/hyperboriaadmin/hyperboriaadmin');
 var nThen = require('nthen');
 var PubToIp6 = require('./lib/publicToIp6');
 var Dns = require('dns');
@@ -39,10 +39,10 @@ var highBits = function (nodeDesc) {
     return ip6.substring(20,29);
 }
 
-var tracePath = function (target, queryNode, cjdns, cb, doneCb) {
+var tracePath = function (target, queryNode, hyperboria, cb, doneCb) {
     var lastNode = queryNode;
     var again = function () {
-        cjdns.RouterModule_nextHop(target, lastNode, function (err, ret) {
+        hyperboria.RouterModule_nextHop(target, lastNode, function (err, ret) {
             if (err) { throw err; }
             ret.from = lastNode;
             ret.fromIP6 = nodeToIP6(lastNode);
@@ -64,12 +64,12 @@ var tracePath = function (target, queryNode, cjdns, cb, doneCb) {
 
 var main = function (target) {
 
-    var cjdns;
+    var hyperboria;
     var self;
     var lastRet;
     nThen(function (waitFor) {
 
-        Cjdns.connectWithAdminInfo(waitFor(function (c) { cjdns = c; }));
+        Hyperboria.connectWithAdminInfo(waitFor(function (c) { hyperboria = c; }));
 
         if (!validTarget(target)) {
             Dns.lookup(target, 6, waitFor(function (err, res) {
@@ -81,7 +81,7 @@ var main = function (target) {
 
     }).nThen(function (waitFor) {
 
-        cjdns.RouterModule_getPeers("0000.0000.0000.0001", waitFor(function (err, ret) {
+        hyperboria.RouterModule_getPeers("0000.0000.0000.0001", waitFor(function (err, ret) {
             if (err) { throw err; }
             self = ret.peers[0];
         }));
@@ -89,7 +89,7 @@ var main = function (target) {
     }).nThen(function (waitFor) {
 
         process.stdout.write(self + ' ' + highBits(self));
-        tracePath(target, self, cjdns, function (ret) {
+        tracePath(target, self, hyperboria, function (ret) {
             lastRet = ret;
             process.stdout.write('  ' + ret.ms + 'ms\n');
             if (!ret.nodes || !ret.nodes.length) {
@@ -104,7 +104,7 @@ var main = function (target) {
         if (!lastRet || lastRet.nodes[0] !== lastRet.from) { return; }
         console.log('success, trying reverse trace');
         process.stdout.write(lastRet.from);
-        tracePath(nodeToIP6(self), lastRet.from, cjdns, function (ret) {
+        tracePath(nodeToIP6(self), lastRet.from, hyperboria, function (ret) {
             lastRet = ret;
             process.stdout.write('  ' + ret.ms + 'ms\n');
             if (ret.result === 'timeout') {
@@ -118,7 +118,7 @@ var main = function (target) {
 
     }).nThen(function (waitFor) {
         console.log();
-        cjdns.disconnect();
+        hyperboria.disconnect();
     });
 };
 

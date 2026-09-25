@@ -12,16 +12,16 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import sys;
-from cjdnsadmin.cjdnsadmin import connectWithAdminInfo;
+from cjdnsadmin.hyperboriaadmin import connectWithAdminInfo;
 
-cjdns = connectWithAdminInfo();
+hyperboria = connectWithAdminInfo();
 allRoutes = [];
 
 magicalLinkConstant = 5366870.0;
 
 def pingNode(addr, path, link):
     addrAtPath = addr + '@' + path;
-    result = cjdns.RouterModule_pingNode(path, 2000);
+    result = hyperboria.RouterModule_pingNode(path, 2000);
     res = '';
     if ('result' in result): res = result['result'];
 
@@ -41,7 +41,7 @@ def pingNode(addr, path, link):
 
 i = 0;
 while True:
-    table = cjdns.NodeStore_dumpTable(i);
+    table = hyperboria.NodeStore_dumpTable(i);
     routes = table['routingTable'];
     allRoutes += routes;
     if (not 'more' in table):
@@ -52,7 +52,7 @@ if (len(sys.argv) > 4 and '-s' == sys.argv[4]):
     for route in allRoutes:
         i = 0;
         while i < 3:
-            result = cjdns.SwitchPinger_ping(route['path'], route['path'], 10000);
+            result = hyperboria.SwitchPinger_ping(route['path'], route['path'], 10000);
             if (i > 0): print 'attempt ' + str(i) + ' ';
             print result;
             if (result['result'] != 'timeout'): break;

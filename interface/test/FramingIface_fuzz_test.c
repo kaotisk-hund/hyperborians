@@ -43,7 +43,7 @@ static Iface_DEFUN ifaceRecvMsg(struct Message* message, struct Iface* thisInter
     return NULL;
 }
 
-void CJDNS_FUZZ_MAIN(void* vctx, struct Message* fuzz)
+void HYPERBORIA_FUZZ_MAIN(void* vctx, struct Message* fuzz)
 {
     struct Context* ctx = Identity_check((struct Context*) vctx);
     if (fuzz->length <= 2) { return; }
@@ -66,7 +66,7 @@ void CJDNS_FUZZ_MAIN(void* vctx, struct Message* fuzz)
     }
 }
 
-void* CJDNS_FUZZ_INIT(struct Allocator* alloc, struct Random* rand)
+void* HYPERBORIA_FUZZ_INIT(struct Allocator* alloc, struct Random* rand)
 {
     struct Context* ctx = Allocator_calloc(alloc, sizeof(struct Context), 1);
     ctx->iface.send = ifaceRecvMsg;

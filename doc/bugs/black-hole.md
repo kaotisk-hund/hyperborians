@@ -1,4 +1,4 @@
-Those familiar with **cjdns** have likely heard others refer to a **black hole routing bug**. This is one of the central problems we have to solve. Thus far, we have had a hard time fixing this issue because we don't fully understand what is causing it.
+Those familiar with **hyperboria** have likely heard others refer to a **black hole routing bug**. This is one of the central problems we have to solve. Thus far, we have had a hard time fixing this issue because we don't fully understand what is causing it.
 
 Firstly, it's quite possible that we are referring to an apparent behaviour which is actually caused by a number of different bugs. For that reason, it may be helpful to use the term to refer to the behaviour, and find other terms to refer to the actual causes, once we understand them.
 
@@ -12,29 +12,29 @@ Create a bug report:
 
 ```bash
 # what version are you using?
-cd cjdns;
-./cjdroute -v > ~/cjdns-bug-report.txt
+cd hyperboria;
+./hyperboria-route -v > ~/hyperboria-bug-report.txt
 
 # more specifically, which git commit?
-git rev-parse HEAD >> ~/cjdns-bug-report.txt
+git rev-parse HEAD >> ~/hyperboria-bug-report.txt
 
-# let us know your cjdns ipv6 address
-ip a | grep " fc" >> ~/cjdns-bug-report.txt
+# let us know your hyperboria ipv6 address
+ip a | grep " fc" >> ~/hyperboria-bug-report.txt
 ```
 
 ```bash
 # Dump your routing table to a text file:
 cd contrib/nodejs/tools;
-./dumptable.js >> ~/cjdns-bug-report.txt
+./dumptable.js >> ~/hyperboria-bug-report.txt
 
 # peerStats might be helpful too
-./peerStats.js >> ~/cjdns-bug-report.txt
+./peerStats.js >> ~/hyperboria-bug-report.txt
 ```
 
 Add some comments to your bug report telling us about the problem in as much detail as you can think of.
 
 ```Bash
-$EDITOR ~/cjdns-bug-report.txt
+$EDITOR ~/hyperboria-bug-report.txt
 ```
 
 Post it, or host it, and get on IRC!

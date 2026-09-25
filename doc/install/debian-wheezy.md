@@ -1,6 +1,6 @@
-# Installing cjdns on debian wheezy
+# Installing hyperboria on debian wheezy
 
-This is a short guide how to setup a debian wheezy cjdns box.
+This is a short guide how to setup a debian wheezy hyperboria box.
 
 ## Enable backports
 
@@ -17,11 +17,11 @@ This is a short guide how to setup a debian wheezy cjdns box.
 ## Clone, compile, install
 
 	cd /opt
-	git clone https://github.com/cjdelisle/cjdns.git
-	cd cjdns
+	git clone https://github.com/cjdelisle/hyperboria.git
+	cd hyperboria
 	./do
-	ln -s /opt/cjdns/cjdroute /usr/bin
-	(umask 077 && ./cjdroute --genconf > /etc/cjdroute.conf)
-	cp contrib/systemd/cjdns.service /etc/systemd/system/
-	systemctl enable cjdns
+	ln -s /opt/hyperboria/hyperboria-route /usr/bin
+	(umask 077 && ./hyperboria-route --genconf > /etc/hyperboria-route.conf)
+	cp contrib/systemd/hyperboria.service /etc/systemd/system/
+	systemctl enable hyperboria
 

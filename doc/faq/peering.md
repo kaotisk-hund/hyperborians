@@ -2,7 +2,7 @@
 
 [Hyperboria](https://hyperboria.net) is an encrypted [Mesh Network](https://en.wikipedia.org/wiki/Mesh_networking) designed for privacy and resiliency to censorship.
 
-It currently exists as an [Overlay](https://en.wikipedia.org/wiki/Overlay_network) test network for [Project Meshnet](https://projectmeshnet.org/), and is only accessible to those who install [cjdns](https://en.wikipedia.org/wiki/Cjdns).
+It currently exists as an [Overlay](https://en.wikipedia.org/wiki/Overlay_network) test network for [Project Meshnet](https://projectmeshnet.org/), and is only accessible to those who install [hyperboria](https://en.wikipedia.org/wiki/Hyperboria).
 
 Ultimately, we hope to build a viable alternative to the regular internet, which we call [clearnet](http://www.urbandictionary.com/define.php?term=clearnet). Our ultimate goal is to replace the existing hierarchical internet with a non-hierarchical model.
 
@@ -16,7 +16,7 @@ This is called a [Meshlocal](/locals). I am trying to start a [Toronto-based Mes
 
 To join the network, you need a password and a public key from someone who is already on the network. If you're in Toronto or the surrounding area, and are interested, <a href="/contact">contact</a> me.
 
-## Can I run Cjdns in a virtual machine?
+## Can I run Hyperboria in a virtual machine?
 
 You can, but you might have trouble finding willing peers, since you're not really contributing much to the network by having a 'sometimes-on' node.
 
@@ -28,7 +28,7 @@ That means you should be patient, since you're relying on other people's good wi
 
 With that in mind, say hi, tell us what you're doing. We're pretty enthusiastic about sharing our interests if it's unlikely that you're a <a class="clearnet" href="http://www.urbandictionary.com/define.php?term=feds">FED</a>.
 
-Read [this document](/cjdns/peers) on peering for more info.
+Read [this document](/hyperboria/peers) on peering for more info.
 
 ## Why should I prefer the friend of a friend model?
 
@@ -40,13 +40,13 @@ Other networks which do more to guarantee absolute anonymity tend to attract beh
 
 The premise is simple: you get to decide who you connect to, provided they consent. It is not some centralized body which will decide to disconnect you if you use our bandwidth for malicious purposes. You are only accountable to your peers. The rest tends to sort itself out.
 
-## Can I run cjdns from home (dynamic IP/NAT'ed connection)?
+## Can I run hyperboria from home (dynamic IP/NAT'ed connection)?
 
 We describe it in terms of 'inbound' and 'outbound' peers
 
 Inbound means people can connect to you, which requires either not being behind a router, or being able to forward ports
 
-Anyone who can install and run cjdns can be an outbound peer
+Anyone who can install and run hyperboria can be an outbound peer
 
 ## Do I need to exchange credentials with all my peers?
 
@@ -104,11 +104,11 @@ Easy, just run the following command:
 
 ## Can I use UPNP to bypass NAT?
 
-cjdns does not interact at all with your NAT setup. Use some other upnp client to control your router.
+hyperboria does not interact at all with your NAT setup. Use some other upnp client to control your router.
 
 ## Can I substitute a domain for an IP in my connectTo?
 
-cjd originally had no intention of implementing this, but someone<a href="/contrib">(?)</a> implemented it and submitted a pull request. Now you can.
+hyperboria originally had no intention of implementing this, but someone<a href="/contrib">(?)</a> implemented it and submitted a pull request. Now you can.
 
 ## Is there a meshlocal in my vicinity?
 
@@ -117,12 +117,12 @@ Check <a href="/locals">this page</a> for a basic list of some general areas. It
 ## Can someone give me peering info?
 
 ```text
-01:53 -!- newguy [webchat@198.20.69.234] has joined #cjdns
+01:53 -!- newguy [webchat@198.20.69.234] has joined #hyperboria
 01:54 < newguy> can someone point me toward a public peer?
 01:55 -!- newguy [webchat@198.20.69.234] has quit [Client Quit]
 ```
 
-We see this **a lot**. You should read [ircerr's peers.txt](http://web.archive.org/web/20140119050902/http://ircerr.ca/cjdns/peers.txt), [the peering section of my old faq](/faq#peering), and [my page about meshlocals](../meshlocals).
+We see this **a lot**. You should read [ircerr's peers.txt](http://web.archive.org/web/20140119050902/http://ircerr.ca/hyperboria/peers.txt), [the peering section of my old faq](/faq#peering), and [my page about meshlocals](../meshlocals).
 
 TL;DR :: this isn't a public network, and we're under no obligation to give credentials to everyone who asks. We aren't a non-profit, or a corporation, or even a cohesive group. Everyone here has their own motivations and ideas of what the network should be, and you need to find someone who wants to connect to you. Don't be shy, introduce yourself.
 
@@ -140,13 +140,13 @@ I don't know, maybe start by asking your peer? If you don't know how to contact 
 }
 ```
 
-Make a file called `~/.cjdnsadmin`, containing valid JSON with the properties above. These credentials will be used by any scripts which need to connect to the admin interface to gather data.
+Make a file called `~/.hyperboriaadmin`, containing valid JSON with the properties above. These credentials will be used by any scripts which need to connect to the admin interface to gather data.
 
-To find your peers, run `cjdns/contrib/nodejs/tools/peerStats.js`
+To find your peers, run `hyperboria/contrib/nodejs/tools/peerStats.js`
 
 Alternatively, you can use [this tool which does a few other things as well](https://github.com/ehmry/cjdcmd-ng).
 
-## How to sniff for Ethernet cjdns traffic?
+## How to sniff for Ethernet hyperboria traffic?
 
 ```
 tcpdump -nn -s0 -t -vv -e -i mon0 ether proto 0xfc00

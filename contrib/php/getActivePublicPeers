@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 /**
- * Create list of active peers for cjdroute.conf file
+ * Create list of active peers for hyperboria-route.conf file
  */
 
 define('FNAME',          'publicPeers.json');

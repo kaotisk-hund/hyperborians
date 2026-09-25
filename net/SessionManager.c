@@ -628,9 +628,9 @@ static void bufferPacket(struct SessionManager_pvt* sm, struct Message* msg)
     Assert_true(msg->length >= (RouteHeader_SIZE + DataHeader_SIZE));
     struct RouteHeader* header = (struct RouteHeader*) msg->bytes;
 
-    // We should never be sending CJDHT messages without full version, key, path known.
+    // We should never be sending HyperboriaDHT messages without full version, key, path known.
     struct DataHeader* dataHeader = (struct DataHeader*) &header[1];
-    Assert_true(DataHeader_getContentType(dataHeader) != ContentType_CJDHT);
+    Assert_true(DataHeader_getContentType(dataHeader) != ContentType_HYPERBORIADHT);
 
     uint8_t ipStr[40];
     AddrTools_printIp(ipStr, header->ip6);
@@ -798,7 +798,7 @@ static Iface_DEFUN incomingFromInsideIf(struct Message* msg, struct Iface* iface
     // Forward secrecy, only send dht messages until the session is setup.
     CryptoAuth_resetIfTimeout(sess->pub.caSession);
     if (CryptoAuth_getState(sess->pub.caSession) < CryptoAuth_State_RECEIVED_KEY) {
-        if (DataHeader_getContentType(dataHeader) == ContentType_CJDHT) {
+        if (DataHeader_getContentType(dataHeader) == ContentType_HYPERBORIADHT) {
             if (sess->pub.timeOfLastUsage) {
                 // Any time any message of any kind is sent down a link that is
                 // currently in use, keep firing off unsetupSession

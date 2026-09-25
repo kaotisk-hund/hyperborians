@@ -45,23 +45,23 @@ Linker_require("crypto/AddressCalc.c")
 /**
  * Check if an address is valid given the IPv6
  *
- * @return true if the IPv6 is a valid cjdns address.
+ * @return true if the IPv6 is a valid hyperboria address.
  */
 
 bool AddressCalc_validAddress(const uint8_t address[16]);
 
 /**
- * Edits the prefix of the given address to make it a valid cjdns address.
+ * Edits the prefix of the given address to make it a valid hyperboria address.
  */
 
 void AddressCalc_makeValidAddress(uint8_t address[16]);
 
 /**
- * Calculate a cjdns IPv6 address for a public key.
+ * Calculate a hyperboria IPv6 address for a public key.
  *
  * @param addressOut put the address here.
  * @param key the 256 bit curve25519 public key.
- * @return true if the IPv6 is a valid cjdns address.
+ * @return true if the IPv6 is a valid hyperboria address.
  */
 bool AddressCalc_addressForPublicKey(uint8_t addressOut[16], const uint8_t key[32]);
 

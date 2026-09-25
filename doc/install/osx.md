@@ -1,24 +1,24 @@
 # Installing on Mac OS X
 
-The easiest way to get cjdns is to use [brew](http://brew.sh/). To get the latest brew formulae run this command from your terminal:
+The easiest way to get hyperboria is to use [brew](http://brew.sh/). To get the latest brew formulae run this command from your terminal:
 
 `brew update`
 
-Then you should be able to install cjdns with by running:
+Then you should be able to install hyperboria with by running:
 
-`brew install cjdns`
+`brew install hyperboria`
 
-After which you should have a cjdroute binary available at `/usr/local/Cellar/cjdns/<version>/bin/cjdroute`. Usually brew will link the binary to your `/usr/local/bin directory`, to make it available in your `$PATH`.
+After which you should have a hyperboria-route binary available at `/usr/local/Cellar/hyperboria/<version>/bin/hyperboria-route`. Usually brew will link the binary to your `/usr/local/bin directory`, to make it available in your `$PATH`.
 
-# Running CJDNS as launchd daemon  
-To keep cjdns running in background and to start it automatically when your Mac turns on, it is possible to create a launchd daemon.
+# Running HYPERBORIA as launchd daemon  
+To keep hyperboria running in background and to start it automatically when your Mac turns on, it is possible to create a launchd daemon.
 
-First of all we need to create a script that will be called by launchd and run cjdroute with the specific configuration. This file will contain the path of your configuration, for this example I will assume that your settings are stored in `/etc/cjdroute.conf`. It is vital that the service will NOT run in background, so remember to edit the end of the configuration to have something similar to this:
+First of all we need to create a script that will be called by launchd and run hyperboria-route with the specific configuration. This file will contain the path of your configuration, for this example I will assume that your settings are stored in `/etc/hyperboria-route.conf`. It is vital that the service will NOT run in background, so remember to edit the end of the configuration to have something similar to this:
 
 ```json
 ...
 
-    // If set to non-zero, cjdns will not fork to the background.
+    // If set to non-zero, hyperboria will not fork to the background.
     // Recommended for use in conjunction with "logTo":"stdout".
     "noBackground": 1
 }
@@ -29,10 +29,10 @@ Create or/and edit the file `/usr/local/bin/cjdroute_start` with the following c
 ```bash
 #!/bin/bash
 # You can use custom path or enable sleeping time to delay the process
-/usr/local/bin/cjdroute < /etc/cjdroute.conf
+/usr/local/bin/hyperboria-route < /etc/hyperboria-route.conf
 ```
 
-Now that the script is created, we need to write the instructions for launchd. Create the file `/Library/LaunchDaemons/com.cjdns.cjdroute.plist` using administrator permissions (`sudo nano ...`) and insert the following content in it:
+Now that the script is created, we need to write the instructions for launchd. Create the file `/Library/LaunchDaemons/com.hyperboria.hyperboria-route.plist` using administrator permissions (`sudo nano ...`) and insert the following content in it:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -41,7 +41,7 @@ Now that the script is created, we need to write the instructions for launchd. C
 <plist version="1.0">
 <dict>
     <key>Label</key>
-        <string>com.cjdns.cjdroute</string>
+        <string>com.hyperboria.hyperboria-route</string>
     <key>Program</key>
         <string>/usr/local/bin/cjdroute_start</string>
     <key>RunAtLoad</key>
@@ -49,9 +49,9 @@ Now that the script is created, we need to write the instructions for launchd. C
     <key>KeepAlive</key>
         <true/>
     <key>StandardOutPath</key>
-        <string>/Library/Logs/CJDNS.log</string>
+        <string>/Library/Logs/HYPERBORIA.log</string>
     <key>StandardErrorPath</key>
-        <string>/Library/Logs/CJDNS-Errors.log</string>
+        <string>/Library/Logs/HYPERBORIA-Errors.log</string>
 </dict>
 </plist>
 ```
@@ -60,13 +60,13 @@ This will keep our process alive and run it at the startup. At this point we jus
 
 ```bash
 sudo chmod +x /usr/local/bin/cjdroute_start # Execution
-sudo launchctl load /Library/LaunchDaemons/com.cjdns.cjdroute.plist 
+sudo launchctl load /Library/LaunchDaemons/com.hyperboria.hyperboria-route.plist 
 ```
 
-If everything is correct, you can now restart your Mac and it will automatically run cjdns. If you want to avoid the reboot, you can start the daemon using the following command:
+If everything is correct, you can now restart your Mac and it will automatically run hyperboria. If you want to avoid the reboot, you can start the daemon using the following command:
 
 ```bash
-sudo launchctl start com.cjdns.cjdroute # To start without rebooting
+sudo launchctl start com.hyperboria.hyperboria-route # To start without rebooting
 ```
 
 Enjoy!
@@ -75,14 +75,14 @@ Enjoy!
 # What if I get the error message Failed to make function call ?
 
 ```
-<vik> on macos sierra I am not able to start cjdroute
+<vik> on macos sierra I am not able to start hyperboria-route
 <vik> 1488788811 INFO Configurator.c:427 Creating new ETHInterface [en0]
 <vik> 1488788816 CRITICAL Configurator.c:97 Failed to make function call [Timed out waiting for a response], error: [ETHInterface_new]
 <vik> How do I debug this problem ?
-<cjd> are you starting it as root ?
+<hyperboria> are you starting it as root ?
 <vik> No
-<cjd> that would be the cause
+<hyperboria> that would be the cause
 <vik> Tx .. starting with sudo fixed it ..
 ```
 
-You will probably also need to change `"bind": "all"` to `"bind": "en0"` in your `cjdroute.conf`. See [this](https://github.com/hyperboria/bugs/issues/160#issuecomment-320576127) issue.
+You will probably also need to change `"bind": "all"` to `"bind": "en0"` in your `hyperboria-route.conf`. See [this](https://github.com/hyperboria/bugs/issues/160#issuecomment-320576127) issue.

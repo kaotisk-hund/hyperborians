@@ -1,4 +1,4 @@
-# cjdns
+# hyperboria
 
 [Русская версия](README_RU.md)
 [Hrvatski](README_HR.md)
@@ -12,20 +12,20 @@
 
 #### *Rede Reinventada*
 
-O Cjdns implementa uma rede IPv6 criptografada usando criptografia de chave pública para
+O Hyperboria implementa uma rede IPv6 criptografada usando criptografia de chave pública para
 alocação de endereços e uma tabela de hash distribuída para roteamento. Isso fornece
 rede de configuração quase zero e evita muitos dos aspectos de segurança e
 problemas de escalabilidade que afetam as redes existentes.
 
-[![Build Status](https://api.travis-ci.org/cjdelisle/cjdns.svg?branch=master)](https://travis-ci.org/cjdelisle/cjdns)
+[![Build Status](https://api.travis-ci.org/cjdelisle/hyperboria.svg?branch=master)](https://travis-ci.org/cjdelisle/hyperboria)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/387/badge)](https://bestpractices.coreinfrastructure.org/projects/387)
-[![tip for next commit](https://tip4commit.com/projects/941.svg)](https://tip4commit.com/github/cjdelisle/cjdns)
-[![irc](https://img.shields.io/badge/irc%20chat-%23cjdns-blue.svg)](https://kiwiirc.com/client/irc.efnet.org/?nick=visitor|?#cjdns)
-![License](https://img.shields.io/github/license/cjdelisle/cjdns.svg)
+[![tip for next commit](https://tip4commit.com/projects/941.svg)](https://tip4commit.com/github/cjdelisle/hyperboria)
+[![irc](https://img.shields.io/badge/irc%20chat-%23hyperboria-blue.svg)](https://kiwiirc.com/client/irc.efnet.org/?nick=visitor|?#hyperboria)
+![License](https://img.shields.io/github/license/cjdelisle/hyperboria.svg)
 
 ## Depoimentos
 
-    23:26 <@jercos> well, cjdns is now officially more reliable than the open
+    23:26 <@jercos> well, hyperboria is now officially more reliable than the open
                     internet for getting to my cheaper VPSes :|
 
     12:52 < mariner> so i don't know if it's been done before, and i assume it's
@@ -37,14 +37,14 @@ problemas de escalabilidade que afetam as redes existentes.
 
     <DuoNoxSol> it's notably more reliable than the normal internet
 
-    09:46 < Kubuxu> I so love cjdns code base
+    09:46 < Kubuxu> I so love hyperboria code base
 
     <whyrusleeping> my internet is way better now.
     <whyrusleeping> thanks
     <whyrusleeping> i'm really upset and sad that its better
     <whyrusleeping> but also quite happy
 
-    21:01 <@grewalsat> this is amazing. with my workpalce speedtest.net results I get around 6+mb speed, and with my cjdns-gate as vpn network I'm getting like 11-15mb download speed in speedtest.net
+    21:01 <@grewalsat> this is amazing. with my workpalce speedtest.net results I get around 6+mb speed, and with my hyperboria-gate as vpn network I'm getting like 11-15mb download speed in speedtest.net
     21:01 <@grewalsat> :P
     21:01 <@grewalsat> plus, access anything! :D
 
@@ -52,31 +52,31 @@ problemas de escalabilidade que afetam as redes existentes.
 
 ## Comunidade
 
-* [irc://irc.efnet.org/#cjdns][IRC Web]
-* [Hyperboria][] a maior rede de cjdns, em outubro de 2015, havia 2100 nós.
+* [irc://irc.efnet.org/#hyperboria][IRC Web]
+* [Hyperboria][] a maior rede de hyperboria, em outubro de 2015, havia 2100 nós.
 * [/r/darknetplan][]
-* [#cjdns no Twitter][]
-* [/r/CJDNS](https://www.reddit.com/r/cjdns/)
+* [#hyperboria no Twitter][]
+* [/r/HYPERBORIA](https://www.reddit.com/r/hyperboria/)
 
 
 ## Documentação
 
 * [Objetivos do projeto](doc/projectGoals.md)
-* [Cjdns Whitepaper](doc/Whitepaper.md)
-* [Cjdns na Wikipedia][]
+* [Hyperboria Whitepaper](doc/Whitepaper.md)
+* [Hyperboria na Wikipedia][]
 
 Configuração avançada:
 
-* [Configure um gateway NAT cjdns para sua LAN](doc/nat-gateway.md)
-* [Instale cjdns no OpenIndiana](doc/open-indiana.md)
+* [Configure um gateway NAT hyperboria para sua LAN](doc/nat-gateway.md)
+* [Instale hyperboria no OpenIndiana](doc/open-indiana.md)
 
 Obrigado por seu tempo e interesse,
 
-Os desenvolvedores do cjdns.
+Os desenvolvedores do hyperboria.
 
 --------------------------------------------------------------------------------
 
-## Como instalar o cjdns
+## Como instalar o hyperboria
 
 Estas instruções são para distribuições Linux baseadas no Debian e macOS. Eles deveriam ser
 informativo o suficiente para uso em outras distribuições - apenas não espere que
@@ -105,15 +105,15 @@ ele será baixado e instalado na árvore de origem.
 
 #### Construção a partir do pacote:
 
-    sudo yum localinstall https://kojipkgs.fedoraproject.org//packages/cjdns/17.4/4.el6/src/cjdns-17.4-4.el6.src.rpm
+    sudo yum localinstall https://kojipkgs.fedoraproject.org//packages/hyperboria/17.4/4.el6/src/hyperboria-17.4-4.el6.src.rpm
 
-Se você estiver em um laptop e o suspender ou hibernar, o cjdroute levará alguns
+Se você estiver em um laptop e o suspender ou hibernar, o hyperboria-route levará alguns
 minutos para fazer café e descobrir o que aconteceu quando acorda. Vocês
 pode acelerar drasticamente isso com:
 
-    systemctl enable cjdns-resume
+    systemctl enable hyperboria-resume
 
-O serviço de reinicialização reinicia o cjdns quando o sistema acorda do modo de suspensão.
+O serviço de reinicialização reinicia o hyperboria quando o sistema acorda do modo de suspensão.
 
 #### Gentoo
 
@@ -123,11 +123,11 @@ O serviço de reinicialização reinicia o cjdns quando o sistema acorda do modo
 
 Instale com [Homebrew](https://brew.sh/):
 
-    brew install cjdns
+    brew install hyperboria
 
 Instale com [MacPorts](https://www.macports.org/):
 
-    sudo port install cjdns
+    sudo port install hyperboria
 
 #### OpenBSD:
 
@@ -143,27 +143,27 @@ Tudo o que você precisa está disponível pré-compilado nas portas do FreeBSD.
 
 #### Arch:
 
-Você pode instalar cjdns executando:
+Você pode instalar hyperboria executando:
 
-    pacman -S cjdns
+    pacman -S hyperboria
 
 Se você precisa construir a partir do código-fonte, tudo o que você precisa pode ser instalado assim:
 
     pacman -S nodejs git base-devel
 
-Como alternativa, você pode instalar via AUR a partir do pacote, `cjdns-git`.
-Após a instalação, o arquivo de configuração está localizado em `/etc/cjdroute.conf`.
-Para iniciar o serviço `cjdns.service`, faça:
+Como alternativa, você pode instalar via AUR a partir do pacote, `hyperboria-git`.
+Após a instalação, o arquivo de configuração está localizado em `/etc/hyperboria-route.conf`.
+Para iniciar o serviço `hyperboria.service`, faça:
 
-    systemctl start cjdns
+    systemctl start hyperboria
 
 Para parar:
 
-    systemctl stop cjdns
+    systemctl stop hyperboria
 
 #### Gentoo:
 
-O cjdns ainda não está no repositório principal do Gentoo, então você terá que usar uma sobreposição.
+O hyperboria ainda não está no repositório principal do Gentoo, então você terá que usar uma sobreposição.
 A maneira mais fácil é usar o Layman, mas você também pode fazê-lo manualmente.
 
 ##### Layman:
@@ -181,9 +181,9 @@ Para atualização futura da sobreposição, use
 
     layman -S
 
-Agora você pode instalar o cjdns
+Agora você pode instalar o hyperboria
 
-    emerge cjdns
+    emerge hyperboria
 
 ##### À mão:
 
@@ -207,20 +207,20 @@ Agora sincronize
 
     emerge --sync
 
-E instale cjdns
+E instale hyperboria
 
-    emerge cjdns
+    emerge hyperboria
 
 #### Detecção e reinício automáticos de falhas
 
 Copie o script init openrc de `contrib/openrc` para `/etc/init.d/` e modifique o `CONFFILE` e `command` parâmetro para suas necessidades.
-Em seguida, inicie o cjdns emitindo
+Em seguida, inicie o hyperboria emitindo
 
-    /etc/init.d/cjdns start
+    /etc/init.d/hyperboria start
 
-Configure o sistema init para iniciar automaticamente cjdns
+Configure o sistema init para iniciar automaticamente hyperboria
 
-    rc-update add cjdns default
+    rc-update add hyperboria default
 
 Copie o script service_restart `contrib/gentoo/service_restart.sh` para qualquer diretório conveniente em
 seu sistema e modifique o endereço de e-mail. Se você não deseja ser notificado, comente toda a linha.
@@ -239,27 +239,27 @@ Siga as etapas abaixo:
 
 * Desculpe por tantas etapas. Um pacote está sendo trabalhado atualmente *
 
-##### 1. Recuperar cjdns do GitHub
+##### 1. Recuperar hyperboria do GitHub
 
 Clone o repositório do GitHub e mude para o diretório de origem:
 
-    git clone https://github.com/cjdelisle/cjdns.git cjdns
-    cd cjdns
+    git clone https://github.com/cjdelisle/hyperboria.git hyperboria
+    cd hyperboria
 
 ##### 2. Construir
 
     ./do
 
-Procure por `Build completed successfully, type ./cjdroute to begin setup.`e, em seguida,
+Procure por `Build completed successfully, type ./hyperboria-route to begin setup.`e, em seguida,
 prossiga abaixo:
 
 --------------------------------------------------------------------------------
 
 ## Configuração
 
-Execute cjdroute sem opções para HELP:
+Execute hyperboria-route sem opções para HELP:
 
-    ./cjdroute
+    ./hyperboria-route
 
 ### 0. Verifique se você tem as coisas.
 
@@ -285,7 +285,7 @@ necessita.
 
 ### 1. Gere um novo arquivo de configuração
 
-    ./cjdroute --genconf >> cjdroute.conf
+    ./hyperboria-route --genconf >> hyperboria-route.conf
 
 **Proteja seu arquivo conf!**
 
@@ -295,7 +295,7 @@ Um arquivo conf comprometido significa que outras pessoas podem se passar por vo
 
 Para gerar um arquivo conf com permissões definidas, para que somente seu usuário possa lê-lo e gravá-lo:
 
-    (umask 077 && ./cjdroute --genconf > cjdroute.conf)
+    (umask 077 && ./hyperboria-route --genconf > hyperboria-route.conf)
 
 
 ### 2. Encontre um amigo
@@ -419,7 +419,7 @@ Suas credenciais de login terão a seguinte aparência (com seu IPv4 e porta):
 Observe que você e seu amigo podem * iniciar * uma conexão de saída (de VOCÊ -> AMIGO) ou de entrada (de AMIGO -> VOCÊ), mas o tráfego flui para os dois lados quando a conexão é estabelecida.
 
 Consulte [doc/configure.md](doc/configure.md) para obter mais detalhes sobre configuração,
-incluindo como fazer pares com outros nós cjdns por Ethernet e Wi-Fi.
+incluindo como fazer pares com outros nós hyperboria por Ethernet e Wi-Fi.
 
 
 ### 4. Proteja seu sistema - verifique se há serviços de escuta
@@ -433,22 +433,22 @@ Consulte [doc/network-services.md](doc/network-services.md) para obter instruç�
 
 ### 5. Iniciar!
 
-    sudo ./cjdroute < cjdroute.conf
+    sudo ./hyperboria-route < hyperboria-route.conf
 
 Se você deseja que seus logs sejam gravados em um arquivo:
 
-    sudo ./cjdroute < cjdroute.conf > cjdroute.log
+    sudo ./hyperboria-route < hyperboria-route.conf > hyperboria-route.log
 
-Para parar cjdns:
+Para parar hyperboria:
 
-    sudo killall cjdroute
+    sudo killall hyperboria-route
 
-Se você estiver tendo problemas, use `killall cjdroute` para retornar à sanidade. Use
-`pgrep cjdroute` ou `top` para ver se está rodando.
+Se você estiver tendo problemas, use `killall hyperboria-route` para retornar à sanidade. Use
+`pgrep hyperboria-route` ou `top` para ver se está rodando.
 
 **NOTA!**
 
-Isso inicia o cjdns como usuário root, para que ele possa configurar seu sistema sem se preocupar com permissões. Para iniciar o cjdns como um usuário não root, consulte
+Isso inicia o hyperboria como usuário root, para que ele possa configurar seu sistema sem se preocupar com permissões. Para iniciar o hyperboria como um usuário não root, consulte
 [doc/non-root-user.md](doc/non-root-user.md).
 
 
@@ -458,15 +458,15 @@ Bem-vindo à rede! Agora você é um administrador de rede. Existem responsabili
 
 ## Interface de administração
 
-Quando o cjdroute estiver em funcionamento, a interface administrativa estará disponível em
-`udp://localhost:11234` (isso pode ser alterado no arquivo de configuração `cjdroute.conf`). Consulte [doc/admin-api.md](doc/admin-api.md) para mais
+Quando o hyperboria-route estiver em funcionamento, a interface administrativa estará disponível em
+`udp://localhost:11234` (isso pode ser alterado no arquivo de configuração `hyperboria-route.conf`). Consulte [doc/admin-api.md](doc/admin-api.md) para mais
 informações sobre a interface de administração. Existem várias ferramentas no `contrib/`
 que pode interagir com ele.
 
 Você pode acessar a API do administrador com:
 
 * o **Python library**; consulte [aqui](contrib/python/README.md).
-* o **Perl library**, mantido por Mikey; consulte [aqui](contrib/perl/CJDNS/README).
+* o **Perl library**, mantido por Mikey; consulte [aqui](contrib/perl/HYPERBORIA/README).
 
 
 ## Relatar problemas
@@ -487,19 +487,19 @@ Os problemas de segurança devem ser relatados no IRC da mesma forma que outros 
 grupo de pessoas com conhecimentos especiais, o que significa que o método padrão de relatório de segurança é
 transparência completa.
 
-Consulte: [security_specification.md](https://github.com/cjdelisle/cjdns/blob/master/doc/security_specification.md) para ver se um possível problema de segurança é realmente um problema de segurança.
+Consulte: [security_specification.md](https://github.com/cjdelisle/hyperboria/blob/master/doc/security_specification.md) para ver se um possível problema de segurança é realmente um problema de segurança.
 
 Naquela época do ano novamente ... Hora de alguns projetos de código aberto!
 [![Hacktoberfest](https://img.shields.io/badge/Open%20Source-Hacktoberfest-orange.svg)](https://hacktoberfest.digitalocean.com/)
 
-[IRC Web]: http://chat.efnet.org/irc.cgi?chan=%23cjdns
+[IRC Web]: http://chat.efnet.org/irc.cgi?chan=%23hyperboria
 [Hyperboria]: https://hyperboria.net
 [/r/darknetplan]: https://www.reddit.com/r/darknetplan
-[#cjdns no Twitter]: https://twitter.com/hashtag/cjdns
+[#hyperboria no Twitter]: https://twitter.com/hashtag/hyperboria
 [Hyperboria Map]: https://www.fc00.org/
-[Buildbots]: https://buildbot.meshwith.me/cjdns/waterfall
+[Buildbots]: https://buildbot.meshwith.me/hyperboria/waterfall
 
-[Cjdns na Wikipedia]: https://en.wikipedia.org/wiki/Cjdns
+[Hyperboria na Wikipedia]: https://en.wikipedia.org/wiki/Hyperboria
 [Distributed Hash Table]: https://en.wikipedia.org/wiki/Distributed_hash_table
 [Beyond Pain]: https://lists.torproject.org/pipermail/tor-dev/2012-October/004063.html
 [Kademlia]: https://en.wikipedia.org/wiki/Kademlia

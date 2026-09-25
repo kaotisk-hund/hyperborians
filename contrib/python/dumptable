@@ -13,8 +13,8 @@
 
 import cjdnsadmin.adminTools as at
 
-cjdns=at.connect()
+hyperboria=at.connect()
 
-at.dumpTable(cjdns,verbose=True);
+at.dumpTable(hyperboria,verbose=True);
 
-cjdns.disconnect()
+hyperboria.disconnect()

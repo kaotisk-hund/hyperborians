@@ -13,7 +13,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "dht/CJDHTConstants.h"
+#include "dht/HyperboriaDHTConstants.h"
 #include "dht/DHTMessage.h"
 #include "dht/DHTModule.h"
 #include "dht/DHTModuleRegistry.h"
@@ -28,7 +28,7 @@
  * It also modifies outgoing replies to make sure that a reply packet has the
  * correct transaction id and is labeled as a reply. It adds the "y":"r" and
  * the "t":"aa" to the packet.
- * It is the core of the cjdns dht engine.
+ * It is the core of the hyperboria dht engine.
  */
 
 /*--------------------Prototypes--------------------*/
@@ -57,8 +57,8 @@ void ReplyModule_register(struct DHTModuleRegistry* registry, struct Allocator* 
 
 static int handleIncoming(struct DHTMessage* message, void* vcontext)
 {
-    String* q = Dict_getString(message->asDict, CJDHTConstants_QUERY);
-    if (Dict_getString(message->asDict, CJDHTConstants_QUERY) == NULL) {
+    String* q = Dict_getString(message->asDict, HyperboriaDHTConstants_QUERY);
+    if (Dict_getString(message->asDict, HyperboriaDHTConstants_QUERY) == NULL) {
         return 0;
     }
 
@@ -90,9 +90,9 @@ static int handleOutgoing(struct DHTMessage* message, void* vcontext)
         }
 
         // Put the transaction ID
-        String* tid = Dict_getString(message->replyTo->asDict, CJDHTConstants_TXID);
+        String* tid = Dict_getString(message->replyTo->asDict, HyperboriaDHTConstants_TXID);
         if (tid != NULL) {
-            Dict_putString(message->asDict, CJDHTConstants_TXID, tid, message->allocator);
+            Dict_putString(message->asDict, HyperboriaDHTConstants_TXID, tid, message->allocator);
         }
     }
     return 0;

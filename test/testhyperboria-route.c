@@ -30,9 +30,9 @@
 #include <fcntl.h>
 
 #ifdef SUBNODE
-    #define testcjdroute_SUBNODE 1
+    #define testhyperboriaRoute_SUBNODE 1
 #else
-    #define testcjdroute_SUBNODE 0
+    #define testhyperboriaRoute_SUBNODE 0
 #endif
 
 typedef int (* Test)(int argc, char** argv);
@@ -411,7 +411,7 @@ static int main2(int argc, char** argv, struct Allocator* alloc, struct Random* 
         now = runTest(TESTS[i].func, TESTS[i].name, now, argc, argv, quiet);
     }
     for (int i = 0; i < FUZZ_CASE_COUNT; i++) {
-        // TODO(cjd): Apparently a race condition in the allocator
+        // TODO(hyperboria): Apparently a race condition in the allocator
         // if you have async freeing in progress and then you come in and
         // free the root allocator, you get an assertion.
         //

@@ -20,7 +20,7 @@
 #include "dht/dhtcore/ReplySerializer.h"
 #include "dht/dhtcore/NodeStore.h"
 #include "dht/dhtcore/NodeList.h"
-#include "dht/CJDHTConstants.h"
+#include "dht/HyperboriaDHTConstants.h"
 #include "util/Identity.h"
 #include "util/Bits.h"
 #include "util/log/Log.h"
@@ -245,11 +245,11 @@ static void searchStep(struct SearchRunner_Search* search)
     Dict* message = Dict_new(rp->alloc);
 
     if (!Bits_memcmp(nextSearchNode->address.ip6.bytes, search->target.ip6.bytes, 16)) {
-        Dict_putString(message, CJDHTConstants_QUERY, CJDHTConstants_QUERY_GP, rp->alloc);
+        Dict_putString(message, HyperboriaDHTConstants_QUERY, HyperboriaDHTConstants_QUERY_GP, rp->alloc);
     } else {
-        Dict_putString(message, CJDHTConstants_QUERY, CJDHTConstants_QUERY_FN, rp->alloc);
+        Dict_putString(message, HyperboriaDHTConstants_QUERY, HyperboriaDHTConstants_QUERY_FN, rp->alloc);
     }
-    Dict_putString(message, CJDHTConstants_TARGET, search->targetStr, rp->alloc);
+    Dict_putString(message, HyperboriaDHTConstants_TARGET, search->targetStr, rp->alloc);
 
     rp->userData = search;
     rp->callback = searchCallback;

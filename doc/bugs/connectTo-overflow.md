@@ -1,13 +1,13 @@
-## cjdns connectTo buffer overflow bug
+## hyperboria connectTo buffer overflow bug
 
-I (and [several others](https://github.com/cjdelisle/cjdns/issues/701)) experienced an issue where cjdroute would fail to launch, with the following error:
+I (and [several others](https://github.com/cjdelisle/hyperboria/issues/701)) experienced an issue where hyperboria-route would fail to launch, with the following error:
 
 ```
 ...
 1423794312 INFO cjdroute2.c:560 Forking angel to background.
 1423794312 DEBUG Pipe.c:135 Buffering a message
 1423794312 DEBUG cjdroute2.c:597 Sent [204] bytes to angel process
-1423794312 DEBUG Pipe.c:232 Pipe [/tmp/cjdns_pipe_client-angel-yubd7j5m8vvjn3fju1nvw47v316g05] established connection
+1423794312 DEBUG Pipe.c:232 Pipe [/tmp/hyperboria_pipe_client-angel-yubd7j5m8vvjn3fju1nvw47v316g05] established connection
 1423794312 DEBUG Pipe.c:254 Sending buffered message
 1423794312 DEBUG AdminClient.c:333 Connecting to [127.0.0.1:11234]
 1423794312 DEBUG UDPAddrInterface.c:293 Bound to address [0.0.0.0:36018]
@@ -36,9 +36,9 @@ At first I commented out the `"ipv6"` line, and suddenly my node was able to lau
 
 At this point, I just commented out the ipv6 field, and relaunched the node. It worked, and for a while I was happy enough with that solution, but I wanted to understand what was happening.
 
-I asked [cjd](http://github.com/cjdelisle/) and he suggested commenting out a different field instead. Surely enough, commenting out any member of the data structure (other than those that are required by the cjdns angel) was enough to make the configuration file valid.
+I asked [hyperboria](http://github.com/cjdelisle/) and he suggested commenting out a different field instead. Surely enough, commenting out any member of the data structure (other than those that are required by the hyperboria angel) was enough to make the configuration file valid.
 
-So as it turns out, the error occurred as a result of the length of the bencoded packet being sent to the angel exceeding the hard limit of the length of a UDP packet. Again, at **cjd**'s suggestion, I used a commonly available tool to diagnose the issue:
+So as it turns out, the error occurred as a result of the length of the bencoded packet being sent to the angel exceeding the hard limit of the length of a UDP packet. Again, at **hyperboria**'s suggestion, I used a commonly available tool to diagnose the issue:
 
 
 ## How to do it yourself
@@ -50,7 +50,7 @@ So as it turns out, the error occurred as a result of the length of the bencoded
 10:49 <@__cjd__> tcpdump -A -s0 -i lo
 ```
 
-I personally ran `sudo tcpdump -A -s0 -i lo > connectTo.overflow.log`, then attempted to launch cjdns using my `buggy.conf`.
+I personally ran `sudo tcpdump -A -s0 -i lo > connectTo.overflow.log`, then attempted to launch hyperboria using my `buggy.conf`.
 
 ## What the traffic looks like
 
@@ -62,7 +62,7 @@ E..8..@.@...........+....$.7d5:error16:Request too big.e
 
 ## A successful conf
 
-I shortened this `connectTo` block one character at a time until `cjdroute` launched successfully. This block is the maximum length that passes. 
+I shortened this `connectTo` block one character at a time until `hyperboria-route` launched successfully. This block is the maximum length that passes. 
 
 ```javascript
 "192.168.10.102:6447":

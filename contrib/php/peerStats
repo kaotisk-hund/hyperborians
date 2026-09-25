@@ -2,17 +2,17 @@
 <?php
 
 require 'Bencode.php';
-require 'Cjdns.php';
+require 'Hyperboria.php';
 require 'publicKey2ipv6.php';
 
 define('PASSWORD', 'NONE');
 
-$cjdns = new Cjdns(PASSWORD, "127.0.0.1", 11234);
+$hyperboria = new Hyperboria(PASSWORD, "127.0.0.1", 11234);
 
 $peers = []; $page = 0;
 do
 {
-        $res = $cjdns->call("InterfaceController_peerStats", ['page' => $page++]);
+        $res = $hyperboria->call("InterfaceController_peerStats", ['page' => $page++]);
         $peers = array_merge($peers, $res['peers']);
 } while(!empty($res['more']));
 

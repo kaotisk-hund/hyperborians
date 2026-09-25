@@ -13,24 +13,24 @@ t[0]+2^26 t[1]+2^51 t[2]+2^77 t[3]+2^102 t[4]+...+2^230 t[9].
 Bounds on each t[i] vary depending on context.
 */
 
-#define fe_frombytes cjdns_fe_frombytes
-#define fe_tobytes cjdns_fe_tobytes
-#define fe_copy cjdns_fe_copy
-#define fe_isnonzero cjdns_fe_isnonzero
-#define fe_isnegative cjdns_fe_isnegative
-#define fe_0 cjdns_fe_0
-#define fe_1 cjdns_fe_1
-#define fe_cswap cjdns_fe_cswap
-#define fe_cmov cjdns_fe_cmov
-#define fe_add cjdns_fe_add
-#define fe_sub cjdns_fe_sub
-#define fe_neg cjdns_fe_neg
-#define fe_mul cjdns_fe_mul
-#define fe_sq cjdns_fe_sq
-#define fe_sq2 cjdns_fe_sq2
-#define fe_mul121666 cjdns_fe_mul121666
-#define fe_invert cjdns_fe_invert
-#define fe_pow22523 cjdns_fe_pow22523
+#define fe_frombytes hyperboria_fe_frombytes
+#define fe_tobytes hyperboria_fe_tobytes
+#define fe_copy hyperboria_fe_copy
+#define fe_isnonzero hyperboria_fe_isnonzero
+#define fe_isnegative hyperboria_fe_isnegative
+#define fe_0 hyperboria_fe_0
+#define fe_1 hyperboria_fe_1
+#define fe_cswap hyperboria_fe_cswap
+#define fe_cmov hyperboria_fe_cmov
+#define fe_add hyperboria_fe_add
+#define fe_sub hyperboria_fe_sub
+#define fe_neg hyperboria_fe_neg
+#define fe_mul hyperboria_fe_mul
+#define fe_sq hyperboria_fe_sq
+#define fe_sq2 hyperboria_fe_sq2
+#define fe_mul121666 hyperboria_fe_mul121666
+#define fe_invert hyperboria_fe_invert
+#define fe_pow22523 hyperboria_fe_pow22523
 
 extern void fe_frombytes(fe,const unsigned char *);
 extern void fe_tobytes(unsigned char *,const fe);

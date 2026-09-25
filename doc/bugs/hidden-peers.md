@@ -42,7 +42,7 @@ On both ends, e.g. my laptop and the VPS it's peered with, I collect logs
 related to the respective other node.
 
 ```
-$ sudo gdb ./cjdroute -ex 'set follow-fork-mode child' -ex 'run < /etc/cjdroute.conf' -ex 'thread apply all bt' -ex 'quit' &> gdb.log
+$ sudo gdb ./hyperboria-route -ex 'set follow-fork-mode child' -ex 'run < /etc/hyperboria-route.conf' -ex 'thread apply all bt' -ex 'quit' &> gdb.log
 # In another shell
 $ tail -f gdb.log | grep -P '044e|vsbxsthgml9l7wxyqn1b9nc2c9cucbmdps0fh3gd2jn9ys017590'
 ```

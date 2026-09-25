@@ -730,7 +730,7 @@ void Configurator_config(Dict* config,
     List* secList = Dict_getListC(config, "security");
     security(tempAlloc, secList, logger, &ctx);
 
-    Log_debug(logger, "Cjdns started in the background");
+    Log_debug(logger, "Hyperboria started in the background");
 
     Allocator_free(tempAlloc);
 }

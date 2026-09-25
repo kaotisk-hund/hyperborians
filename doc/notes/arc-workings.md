@@ -1,10 +1,10 @@
-# Random details of cjdns' inner workings
+# Random details of hyperboria' inner workings
 
 ansuz' notes of a Q&A with Arceliar
 
 ## Probability of IPv6 address collisions
 
-Or the math behind the birthday problem RE: cjdns
+Or the math behind the birthday problem RE: hyperboria
 
 *Ansuz:* I remember that it was something like 1/10^18, and I remember the basic expression to derive that, but you had some fancy trick that got around the combinatorial explosion
 
@@ -20,7 +20,7 @@ Or the math behind the birthday problem RE: cjdns
 - ~= = approximately equal to (for sufficiently large values of d, which is definitely not a - problem)
 - n ~= sqrt(2d * ln(1/(1-p)))
 
-And some specific numbers for cjdns: (d = 2^120, because 8 bits are taken up by the leading fc. Note that the range of a sha512sum might not cover the full keyspace for all we know, though I would be very surprised if that were the case... but it's technically an open problem AFAIK)
+And some specific numbers for hyperboria: (d = 2^120, because 8 bits are taken up by the leading fc. Note that the range of a sha512sum might not cover the full keyspace for all we know, though I would be very surprised if that were the case... but it's technically an open problem AFAIK)
 
 - n(0.1%) = 5.15731 * 10^16
 - n(1%)   = 1.63458 * 10^17
@@ -43,7 +43,7 @@ I'm trying to gather up all this info and put it in a better format, and mirror 
 
 ## About XOR distance and finding nodes
 
-Ansuz: I've heard that cjdroute remembers nodes with similar xor values. randati is using this for fc00.org - generating new nodes to help expand his routing table.
+Ansuz: I've heard that hyperboria-route remembers nodes with similar xor values. randati is using this for fc00.org - generating new nodes to help expand his routing table.
 
 Arc: At least on crashey, it's probably easier to make the size of the node store larger in dht/dhtcore/NodeStore.h -- just add a 0 to the nodestore and linkstore sizes at the top. I have done both to find as many nodes as possible
 
@@ -60,11 +60,11 @@ Nodes make it into our routing table one of two ways. Both are steered from dht/
 
 Finally, about the nodestore in the crashey branch. It now has a size that's small enough that we don't just keep the entire network in memory (it's 128 nodes by default now, and we have ~500-ish on hype last time I heard). So if the nodestore is full and we discover someone new, we evict the worst node. The details of how "worst" is defined are kind of complicated. It first looks at the set of nodes that are unreachable, and selects the one furthest from us in keyspace (by the xor metric). If no nodes are unreachable, it looks at the nodes that have no children (that's a nodestore thing, basically... nodes that aren't an intermediate hop on the best path to any other known nodes) and it evicts whichever one is furthest in keyspace.
 
-Somewhat related... in theory, people in the same meshlocal could deliberately brute force addresses where the most significant bits in keyspace are a match (that is, that are close together). If somene outside the meshlocal doesn't know a route their destination inside it, but does happen to know of another node somewhere in the meshlocal, then they'd generally forward it to the right meshlocal at least. But I wouldn't advise actually doing this--it *shouldn't* be needed, so doing it now could actually hide any bugs in the current DHT logic and make things worse in the long run. (Also, for reference, addresses are rotated 64 bits before being xored. I have no idea why cjd decided to do this, as it makes distance calculations kind of annoying, but there you go. If ever we make a backwards incompatible change, I'm going to lobby that we take the opportunity to drop the 64 bit rotation. If the problem is the leading fc, then we should just do a bitwise reversal of the whole thing, to put the fc at the last position where it will never show up in a... ~thousand years of use)
+Somewhat related... in theory, people in the same meshlocal could deliberately brute force addresses where the most significant bits in keyspace are a match (that is, that are close together). If somene outside the meshlocal doesn't know a route their destination inside it, but does happen to know of another node somewhere in the meshlocal, then they'd generally forward it to the right meshlocal at least. But I wouldn't advise actually doing this--it *shouldn't* be needed, so doing it now could actually hide any bugs in the current DHT logic and make things worse in the long run. (Also, for reference, addresses are rotated 64 bits before being xored. I have no idea why hyperboria decided to do this, as it makes distance calculations kind of annoying, but there you go. If ever we make a backwards incompatible change, I'm going to lobby that we take the opportunity to drop the 64 bit rotation. If the problem is the leading fc, then we should just do a bitwise reversal of the whole thing, to put the fc at the last position where it will never show up in a... ~thousand years of use)
 
 Ansuz: lol, oh so every address would end in cf? or that's a hash.. so maybe not?
 
-Arceliar: Addresses would still start with fc. right now, before we xor, we basically swap positions of the first and second half of the address, to keep the fc away from the first few bits because the DHT would hate that. My point is, if that's what we're worried about, we could keep the same addresses but flip them (so it would look like it ends in... not cf but whatever the bitwise reverse of fc is) (its.. 03) right before we xor. Nobody outside the cjdns code base would have any idea that this happens. It would just be slightly less confusing to work around than a 64 bit rotation... that or we chop the leading fc off of things before calculating anything. Implementation details, don't worry about it.
+Arceliar: Addresses would still start with fc. right now, before we xor, we basically swap positions of the first and second half of the address, to keep the fc away from the first few bits because the DHT would hate that. My point is, if that's what we're worried about, we could keep the same addresses but flip them (so it would look like it ends in... not cf but whatever the bitwise reverse of fc is) (its.. 03) right before we xor. Nobody outside the hyperboria code base would have any idea that this happens. It would just be slightly less confusing to work around than a 64 bit rotation... that or we chop the leading fc off of things before calculating anything. Implementation details, don't worry about it.
 
 Ansuz: I was going to say we could make a script based off of:
 

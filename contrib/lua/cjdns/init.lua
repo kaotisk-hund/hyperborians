@@ -1,4 +1,4 @@
--- Cjdns admin module for Lua
+-- Hyperboria admin module for Lua
 -- Written by Philip Horger
 
 bencode = require "bencode" -- https://bitbucket.org/wilhelmy/lua-bencode/
@@ -16,6 +16,6 @@ submodules = {
     'admin'
 }
 for i=1,#submodules do
-    require('cjdns/' .. submodules[i])
+    require('hyperboria/' .. submodules[i])
 end
-return require "cjdns/common"
+return require "hyperboria/common"

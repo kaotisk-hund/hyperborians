@@ -1,14 +1,14 @@
-# Cjdns Core Notes
+# Hyperboria Core Notes
 
 ## Introduction
 
-A number of us have begun the task of documenting and reverse engineering the cjdns core. The "core" refers to the core functionality required to implement a cjdns-compatible router.
+A number of us have begun the task of documenting and reverse engineering the hyperboria core. The "core" refers to the core functionality required to implement a hyperboria-compatible router.
 
 To speak with those involved, join **HypeIRC/#documentation**
 
 ## Status
 
-ansuz has re-implemented the [xor metric](https://github.com/ansuz/cjdnsjs/tree/master/scripts/xor) and [key generation process](https://github.com/ansuz/cjdnsjs/tree/master/scripts/keys), along with the support functions involved, notably the implementation of Base32 used by cjdns.
+ansuz has re-implemented the [xor metric](https://github.com/ansuz/cjdnsjs/tree/master/scripts/xor) and [key generation process](https://github.com/ansuz/cjdnsjs/tree/master/scripts/keys), along with the support functions involved, notably the implementation of Base32 used by hyperboria.
 
 [jph](https://hackworth.be/) is experimenting with writing a minimal, Linux first implementation in golang, along with deconstructing everything involved in making that happen. He is also investigating TUN support in other languages (notably Python and ocaml).
 
@@ -21,7 +21,7 @@ ansuz has re-implemented the [xor metric](https://github.com/ansuz/cjdnsjs/tree/
 
 ## Overview
 
-Cjdns uses [TUN devices](https://www.kernel.org/doc/Documentation/networking/tuntap.txt) to create a virtual network interface and enable routable peer to peer connections. Therefore, TUN support is a critical requirement for implement a cjdns router. 
+Hyperboria uses [TUN devices](https://www.kernel.org/doc/Documentation/networking/tuntap.txt) to create a virtual network interface and enable routable peer to peer connections. Therefore, TUN support is a critical requirement for implement a hyperboria router. 
 
 At this time, the following languages have built-in or third-party TUN support:
 
@@ -31,7 +31,7 @@ At this time, the following languages have built-in or third-party TUN support:
 * Ruby
 * Ocaml
 
-Please note that "TUN support" may not have the full functionality required by a cjdns router. As this section is expanded, we will describe what that functionality is.
+Please note that "TUN support" may not have the full functionality required by a hyperboria router. As this section is expanded, we will describe what that functionality is.
 
 In addition, be aware that TUN implementation varies across operating system implementations. Multiplatform router implementations need to keep this in mind.
 
@@ -45,7 +45,7 @@ TBC
 
 # Cryptography
 
-Cryptography provides core functionality within cjdns. [Here](cryptography.md) we will describe some of the cryptographic functions performed within cjdns and implementation details.
+Cryptography provides core functionality within hyperboria. [Here](cryptography.md) we will describe some of the cryptographic functions performed within hyperboria and implementation details.
 
 ## Public Keys
 
@@ -57,14 +57,14 @@ Cryptography provides core functionality within cjdns. [Here](cryptography.md) w
 
 # Utility Functions
 
-Instead of relying on external libraries, some utility functions have been re-implemented within cjdns. We will describe those functions that differ from standard implementations to ensure compatibility with existing cjdns routers.
+Instead of relying on external libraries, some utility functions have been re-implemented within hyperboria. We will describe those functions that differ from standard implementations to ensure compatibility with existing hyperboria routers.
 
 ## JSON
 
-cjdns config files are typically stored as what the community often refers to as [cjdson](https://github.com/cjdson). As [finn](https://github.com/thefinn93) has pointed out, [comments](https://commentjson.readthedocs.org/en/latest/) [in json](https://www.npmjs.com/package/strip-json-comments) are [not unheard of](https://www.npmjs.com/package/json-comments).
+hyperboria config files are typically stored as what the community often refers to as [cjdson](https://github.com/cjdson). As [finn](https://github.com/thefinn93) has pointed out, [comments](https://commentjson.readthedocs.org/en/latest/) [in json](https://www.npmjs.com/package/strip-json-comments) are [not unheard of](https://www.npmjs.com/package/json-comments).
 
 In any case, we're going to try to add some functionality to that repo that the others lack, such as _inserting fields without deleting comments_.
 
 ## Base32
 
-[This Javascript library](https://github.com/ansuz/cjdnsjs/blob/master/scripts/keys/cjdb32.js) is a direct translation of [the cjdns base32 encoder written in C](https://github.com/cjdelisle/cjdns/blob/master/util/Base32.h#L109)
+[This Javascript library](https://github.com/ansuz/cjdnsjs/blob/master/scripts/keys/cjdb32.js) is a direct translation of [the hyperboria base32 encoder written in C](https://github.com/cjdelisle/hyperboria/blob/master/util/Base32.h#L109)

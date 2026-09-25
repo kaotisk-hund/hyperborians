@@ -2,7 +2,7 @@
 <?php
 
 require 'Bencode.php';
-require 'Cjdns.php';
+require 'Hyperboria.php';
 require 'publicKey2ipv6.php';
 
 define('PASSWORD', 'NONE');
@@ -10,9 +10,9 @@ define('URL',      'http://www.fc00.org/sendGraph');
 define('EMAIL',    'your@email.here'); // update your email address, so I can contact you in case something goes wrong
 //define('DEBUG', 1);
 
-$cjdns = new Cjdns(PASSWORD, "127.0.0.1", 11234);
-//$_nds = dump_node_store($cjdns);
-$_nds = dump_near_nodes($cjdns);
+$hyperboria = new Hyperboria(PASSWORD, "127.0.0.1", 11234);
+//$_nds = dump_node_store($hyperboria);
+$_nds = dump_near_nodes($hyperboria);
 if (defined('DEBUG'))
 	echo "Nodes: ".count($_nds)."\n";
 
@@ -20,7 +20,7 @@ $nodes = []; $links = []; $edges = [];
 foreach ($_nds as $node)
 {
 	if (defined('DEBUG')) echo 'Node '.(@++$i).' / '.count($_nds)."\n";
-	$peers = get_peers($cjdns, $node['path']);
+	$peers = get_peers($hyperboria, $node['path']);
 
 	foreach ($peers as $peer)
 	if ($peer['ip'] != $node['ip'])
@@ -55,12 +55,12 @@ if (defined('DEBUG'))
 	echo "Result: $st\n";
 
 
-function get_peers($cjdns, $path, $nearbyPath='')
+function get_peers($hyperboria, $path, $nearbyPath='')
 {
 	if (!cache_get($path, $res))
 	{
 		if (defined('DEBUG')) echo "Call $path\n";
-		$res = $cjdns->call('RouterModule_getPeers', ['path'=>$path] + ($nearbyPath?['nearbyPath'=>$nearbyPath]:[]));
+		$res = $hyperboria->call('RouterModule_getPeers', ['path'=>$path] + ($nearbyPath?['nearbyPath'=>$nearbyPath]:[]));
 		cache_set($path, $res);
 	}
 
@@ -71,13 +71,13 @@ function get_peers($cjdns, $path, $nearbyPath='')
 	return $res;
 }
 
-function dump_near_nodes($cjdns)
+function dump_near_nodes($hyperboria)
 {
 	$nodes = []; $page = 0;
 	if (cache_get('near_nodes', $nodes)) return $nodes;
 	while (1)
 	{
-		$res = $cjdns->call('InterfaceController_peerStats', ['page'=>$page]);
+		$res = $hyperboria->call('InterfaceController_peerStats', ['page'=>$page]);
 		if (!empty($res['peers']))
 		foreach ($res['peers'] as $a)
 		{
@@ -90,13 +90,13 @@ function dump_near_nodes($cjdns)
 	return cache_set('near_nodes', $nodes);
 }
 
-function dump_node_store($cjdns)
+function dump_node_store($hyperboria)
 {
 	$nodes = []; $page = 0;
 	if (cache_get('nodes', $nodes)) return $nodes;
 	while (1)
 	{
-		$res = $cjdns->call('NodeStore_dumpTable', ['page'=>$page]);
+		$res = $hyperboria->call('NodeStore_dumpTable', ['page'=>$page]);
 		if (!empty($res['routingTable']))
 		foreach ($res['routingTable'] as $a)
 		{

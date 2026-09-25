@@ -28,7 +28,7 @@ KEEPALIVE_INTERVAL_SECONDS = 2
 
 
 class Session():
-    """Current cjdns admin session"""
+    """Current hyperboria admin session"""
 
     def __init__(self, socket):
         self.socket = socket
@@ -55,7 +55,7 @@ def _randomString():
 
 
 def _callFunc(session, funcName, password, args):
-    """Call custom cjdns admin function"""
+    """Call custom hyperboria admin function"""
 
     txid = _randomString()
     sock = session.socket
@@ -83,7 +83,7 @@ def _callFunc(session, funcName, password, args):
 
 
 def _receiverThread(session):
-    """Receiving messages from cjdns admin server"""
+    """Receiving messages from hyperboria admin server"""
 
     timeOfLastSend = time.time()
     timeOfLastRecv = time.time()
@@ -213,7 +213,7 @@ def _functionFabric(func_name, argList, oargs, oargNames, password):
 
 
 def connect(ipAddr, port, password):
-    """Connect to cjdns admin with this attributes"""
+    """Connect to hyperboria admin with this attributes"""
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.connect((ipAddr, port))
@@ -225,7 +225,7 @@ def connect(ipAddr, port, password):
     if (not data.endswith('1:q4:ponge')):
         raise Exception(
             "Looks like " + ipAddr + ":" + str(port) +
-            " is to a non-cjdns socket.")
+            " is to a non-hyperboria socket.")
 
     # Get the functions and make the object
     page = 0
@@ -297,22 +297,22 @@ def connect(ipAddr, port, password):
 
 
 def connectWithAdminInfo(path = None):
-    """Connect to cjdns admin with data from user file"""
+    """Connect to hyperboria admin with data from user file"""
 
     if path is None:
-        path = os.path.expanduser('~/.cjdnsadmin')
+        path = os.path.expanduser('~/.hyperboriaadmin')
     try:
         with open(path, 'r') as adminInfo:
             data = json.load(adminInfo)
     except IOError:
-        sys.stderr.write("""Please create a file named .cjdnsadmin in your
+        sys.stderr.write("""Please create a file named .hyperboriaadmin in your
 home directory with
-ip, port, and password of your cjdns engine in json.
+ip, port, and password of your hyperboria engine in json.
 for example:
 {
     "addr": "127.0.0.1",
     "port": 11234,
-    "password": "You tell me! (Search in ~/cjdroute.conf)"
+    "password": "You tell me! (Search in ~/hyperboria-route.conf)"
 }
 """)
         raise

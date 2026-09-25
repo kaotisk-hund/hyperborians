@@ -94,9 +94,9 @@ void Sign_publicKeyFromKeyPair(uint8_t publicSigningKey[32], uint8_t keyPair[64]
     Bits_memcpy(publicSigningKey, &keyPair[32], 32);
 }
 
-// This function is here because cjdns traditionally did not include signing, it only
+// This function is here because hyperboria traditionally did not include signing, it only
 // has a key for encryption so when signing was implemented, in order not to break
-// everyone who has a cjdroute.conf file already, we needed to be able to convert
+// everyone who has a hyperboria-route.conf file already, we needed to be able to convert
 // the encryption key to a signing key.
 // That in itself is fairly easy, and considered to be safe, but unfortunately nacl
 // and libsodium ed25519 implementations hash the private key before each use, making

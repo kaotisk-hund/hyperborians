@@ -13,14 +13,14 @@
 
 safeclean()
 {
-    echo "Oh look, a file called cjdroute.conf! I'll try not to touch it."
-    git clean -dxf -e cjdroute.conf ||
+    echo "Oh look, a file called hyperboria-route.conf! I'll try not to touch it."
+    git clean -dxf -e hyperboria-route.conf ||
         echo "Damn, your version of git won't let me do that,
- please move cjdroute.conf to a safe place and try again"
+ please move hyperboria-route.conf to a safe place and try again"
 }
 
 git reset --hard
 
-( ls && ls ./build ) 2>/dev/null | grep 'cjdroute.conf' >/dev/null && safeclean && exit 0
+( ls && ls ./build ) 2>/dev/null | grep 'hyperboria-route.conf' >/dev/null && safeclean && exit 0
 
 git clean -dxf

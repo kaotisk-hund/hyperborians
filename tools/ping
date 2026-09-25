@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-var Cjdns = require('./lib/cjdnsadmin/cjdnsadmin');
+var Hyperboria = require('./lib/hyperboriaadmin/hyperboriaadmin');
 var nThen = require('nthen');
 var Dns =  require('dns');
 
@@ -52,10 +52,10 @@ var main = function (argv) {
     }
     var target = argv[argv.length-1];
 
-    var cjdns;
+    var hyperboria;
     nThen(function (waitFor) {
 
-        Cjdns.connectWithAdminInfo(waitFor(function (c) { cjdns = c; }));
+        Hyperboria.connectWithAdminInfo(waitFor(function (c) { hyperboria = c; }));
 
         if (!validTarget(target)) {
             Dns.lookup(target, 6, waitFor(function (err, res) {
@@ -71,7 +71,7 @@ var main = function (argv) {
         var routerPing = function () {
             if (count++ >= maxCount) { return; }
             var startTime = now();
-            cjdns.RouterModule_pingNode(target, WAIT_TIME, waitFor(function (err, ret) {
+            hyperboria.RouterModule_pingNode(target, WAIT_TIME, waitFor(function (err, ret) {
                 if (err) { throw err; }
                 if (ret.result === 'timeout') {
                     console.log(
@@ -92,7 +92,7 @@ var main = function (argv) {
         var switchPing = function (keyPing) {
             if (count++ >= maxCount) { return; }
             var startTime = now();
-            cjdns.SwitchPinger_ping(target, WAIT_TIME, keyPing^0, data, waitFor(function (err, ret) {
+            hyperboria.SwitchPinger_ping(target, WAIT_TIME, keyPing^0, data, waitFor(function (err, ret) {
                 if (err) { throw err; }
 
                 var out = nowSeconds() + ' switchPing ';
@@ -120,7 +120,7 @@ var main = function (argv) {
             routerPing();
         }
     }).nThen(function (waitFor) {
-        cjdns.disconnect();
+        hyperboria.disconnect();
     });
 };
 

@@ -124,7 +124,7 @@ int main(int argc, char** argv)
     struct Random* rand = Random_new(alloc, logger, NULL);
     char randName[32] = {0};
     Random_base32(rand, (uint8_t*)randName, 31);
-    String* name = String_printf(alloc, "%s%scjdns-test-%s", Pipe_PATH, Pipe_PATH_SEP, randName);
+    String* name = String_printf(alloc, "%s%shyperboria-test-%s", Pipe_PATH, Pipe_PATH_SEP, randName);
 
     struct Context* ctx = Allocator_calloc(alloc, sizeof(struct Context), 1);
     Identity_set(ctx);

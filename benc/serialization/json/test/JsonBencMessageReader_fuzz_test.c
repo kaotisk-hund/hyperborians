@@ -17,7 +17,7 @@
 #include "memory/Allocator.h"
 #include "test/FuzzTest.h"
 
-void CJDNS_FUZZ_MAIN(void* vctx, struct Message* fuzz)
+void HYPERBORIA_FUZZ_MAIN(void* vctx, struct Message* fuzz)
 {
     struct Allocator* alloc = (struct Allocator*) vctx;
     Dict* out = NULL;
@@ -26,7 +26,7 @@ void CJDNS_FUZZ_MAIN(void* vctx, struct Message* fuzz)
     res = JsonBencMessageReader_readNoExcept(fuzz, alloc, &out, false);
 }
 
-void* CJDNS_FUZZ_INIT(struct Allocator* alloc, struct Random* rand)
+void* HYPERBORIA_FUZZ_INIT(struct Allocator* alloc, struct Random* rand)
 {
     return alloc;
 }

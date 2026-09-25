@@ -1,5 +1,5 @@
 # Before `make install' is performed this script should be runnable with
-# `make test'. After `make install' it should work as `perl CJDNS.t'
+# `make test'. After `make install' it should work as `perl HYPERBORIA.t'
 
 #########################
 
@@ -9,7 +9,7 @@ use strict;
 use warnings;
 
 use Test::More tests => 1;
-BEGIN { use_ok('CJDNS') };
+BEGIN { use_ok('HYPERBORIA') };
 
 #########################
 

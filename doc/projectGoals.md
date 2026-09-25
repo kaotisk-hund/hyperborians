@@ -28,7 +28,7 @@ increasing risk of back-and-forth retaliatory filtration eventually leaving
 entire nations isolated and breeding the hate and intolerance which the Internet
 promised to end.
 
-Cjdns was designed with the understanding that for the Internet to continue
+Hyperboria was designed with the understanding that for the Internet to continue
 existing without borders, authority over its processes must be decentralized.
 This isn't, and can't be, just a dream - the future of the open Internet is at
 stake.
@@ -43,8 +43,8 @@ popular software applications are designed around these assumptions, the
 existing Internet does not guarantee any of them and a number of network
 security exploits come from the cases where these assumptions break down.
 
-Cjdns guarantees confidentiality, authenticity and integrity of data by using
-modern cryptography in a non-intrusive way. Information transmitted over a cjdns
+Hyperboria guarantees confidentiality, authenticity and integrity of data by using
+modern cryptography in a non-intrusive way. Information transmitted over a hyperboria
 network can't be altered or read en-route. While you can create multiple
 identities, it's practically impossible to impersonate other nodes on the
 network and since a node's IPv6 address is the fingerprint of its key,
@@ -55,7 +55,7 @@ man-in-the-middle attacks are not possible.
 
 Traditional networks require manual configuration of IP addresses. For one to
 get these addresses one must join an Internet Registry and file a lengthy
-application. Cjdns nodes generate their own addresses along with their keys.
+application. Hyperboria nodes generate their own addresses along with their keys.
 When two nodes find each other, they connect. When many nodes find one another,
 they form a network. General network architecture is of course needed to avoid
 bottlenecks but once the nodes are put in the right places, they will discover
@@ -64,8 +64,8 @@ their roles in the network.
 
 ## Scalability
 
-Cjdns is built around the bold and unproven assumption that a non-hierarchical
-network can scale. Cjdns uses a
+Hyperboria is built around the bold and unproven assumption that a non-hierarchical
+network can scale. Hyperboria uses a
 [distributed hash table](https://en.wikipedia.org/wiki/Distributed_hash_table)
 to spread the load of routing among a number of nodes, rather than requiring
 every node know the exact location of every other node. At the bottom layer,

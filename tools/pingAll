@@ -14,17 +14,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-var Cjdns = require('./lib/cjdnsadmin/cjdnsadmin');
+var Hyperboria = require('./lib/hyperboriaadmin/hyperboriaadmin');
 var nThen = require('nthen');
 
-Cjdns.connectWithAdminInfo(function (cjdns) {
+Hyperboria.connectWithAdminInfo(function (hyperboria) {
 
     var nodes = [];
     var lags = [];
     nThen(function (waitFor) {
 
         var again = function (i) {
-            cjdns.NodeStore_dumpTable(i, waitFor(function (err, table) {
+            hyperboria.NodeStore_dumpTable(i, waitFor(function (err, table) {
                 if (err) { throw err; }
                 var j;
                 for (j = 0; j < table.routingTable.length; j++) {
@@ -55,13 +55,13 @@ Cjdns.connectWithAdminInfo(function (cjdns) {
         var nt = nThen;
         uniques.forEach(function (node) {
             nt = nt(function (waitFor) {
-                cjdns.NodeStore_nodeForAddr(node.ip, waitFor(function (err, ret) {
+                hyperboria.NodeStore_nodeForAddr(node.ip, waitFor(function (err, ret) {
                     if (err) { throw err; }
                     process.stdout.write(node.ip + '@' + ret.result.routeLabel);
                 }));
             }).nThen(function (waitFor) {
                 switchLabel = null;
-                cjdns.RouterModule_pingNode(node.ip, 3000, waitFor(function (err, ret) {
+                hyperboria.RouterModule_pingNode(node.ip, 3000, waitFor(function (err, ret) {
                     if (err) { throw err; }
                     if (ret.result === 'pong') {
                         process.stdout.write('  ' + ret.ms + 'ms v'+ret.protocol+' linkq:' + node.link);
@@ -79,7 +79,7 @@ Cjdns.connectWithAdminInfo(function (cjdns) {
                     process.stdout.write('\n');
                     return
                 }
-                cjdns.SwitchPinger_ping(switchLabel, 3000, 0, '', waitFor(function (err, ret) {
+                hyperboria.SwitchPinger_ping(switchLabel, 3000, 0, '', waitFor(function (err, ret) {
                     if (err) { throw err; }
 
                     var out = ' switchPing ';
@@ -104,7 +104,7 @@ Cjdns.connectWithAdminInfo(function (cjdns) {
         var totalLag = 0;
         for (var i = 0; i < lags.length; i++) { totalLag += lags[i]; }
         console.log("Average lag: " + (totalLag / lags.length));
-        cjdns.disconnect();
+        hyperboria.disconnect();
     });
 
 });

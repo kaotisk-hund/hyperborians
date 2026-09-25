@@ -11,7 +11,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from cjdnsadmin.cjdnsadmin import connectWithAdminInfo;
+from cjdnsadmin.hyperboriaadmin import connectWithAdminInfo;
 from cjdnsadmin.bencode import *;
 import sys;
 
@@ -29,13 +29,13 @@ def usage():
 def doLog(data):
     print str(data['time']) + ' ' + data['level'] + ' ' + data['file'] + ':' + str(data['line']) + ' ' + data['message'];
 
-def recieve(cjdns, txid):
+def recieve(hyperboria, txid):
     while True:
-        doLog(cjdns.getMessage(txid));
+        doLog(hyperboria.getMessage(txid));
 
 
 def main():
-    cjdns = connectWithAdminInfo();
+    hyperboria = connectWithAdminInfo();
 
     level = '';
     fileName = '';
@@ -49,10 +49,10 @@ def main():
     if (args > 1): fileName = sys.argv[2];
     if (args > 2): line = int(sys.argv[3]);
 
-    sub = cjdns.AdminLog_subscribe(line, fileName, level);
+    sub = hyperboria.AdminLog_subscribe(line, fileName, level);
 
     if (sub['error'] == 'none'):
-        recieve(cjdns, sub['txid']);
+        recieve(hyperboria, sub['txid']);
     else:
         print(sub);
 

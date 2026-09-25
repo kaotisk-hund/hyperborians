@@ -1,7 +1,7 @@
--- Cjdns admin module for Lua
+-- Hyperboria admin module for Lua
 -- Written by Philip Horger
 
-common = require 'cjdns/common'
+common = require 'hyperboria/common'
 
 Permanence = {}
 Permanence.__index = Permanence

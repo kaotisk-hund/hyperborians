@@ -7,7 +7,7 @@ VirginiaMesh
 
 * Connect Virginians up to Hyperboria
 
-* Increase public awareness about CJDNS, Hyperboria, and Project Meshnet
+* Increase public awareness about HYPERBORIA, Hyperboria, and Project Meshnet
 
 * Foster a community of knowing and helping others, in whatever way possible
 

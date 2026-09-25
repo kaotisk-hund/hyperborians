@@ -1,4 +1,4 @@
-makekeys(1) -- write cjdns keys generated via libnacl to stdout
+makekeys(1) -- write hyperboria keys generated via libnacl to stdout
 =============================================
 
 ## SYNOPSIS
@@ -7,7 +7,7 @@ makekeys(1) -- write cjdns keys generated via libnacl to stdout
 
 ## DESCRIPTION
 
-Generates cjdns private keys and writes them to stdout forever with
+Generates hyperboria private keys and writes them to stdout forever with
 corresponding IP6 address and public key.  Sample:
 
     9b5520e11b4e1aac4e54cf8382ca219b6942f75519dbe7cc71fc6c4bb636a2db fca1:43dc:9e20:68dc:df3f:6bf1:fbf9:37ab x70u0x6sfh0yuushlq7wvcdxj8rgb8lvss9t6f42zp60ftq71cm0.k

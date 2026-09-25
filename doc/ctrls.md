@@ -1,6 +1,6 @@
-# 3rd Party Tools for managing/working with cjdns
+# 3rd Party Tools for managing/working with hyperboria
 
-To automate some simple tasks with cjdns, there are a lot of scripts that people use. Here's just a few:
+To automate some simple tasks with hyperboria, there are a lot of scripts that people use. Here's just a few:
 
 + https://github.com/kpcyrd/yrd
   + Displays nodeinfo

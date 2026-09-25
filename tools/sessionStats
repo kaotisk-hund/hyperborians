@@ -16,7 +16,7 @@
  */
 
 var PublicToIp6 = require('./lib/publicToIp6');
-var Cjdns = require('./lib/cjdnsadmin/cjdnsadmin');
+var Hyperboria = require('./lib/hyperboriaadmin/hyperboriaadmin');
 var nThen = require('nthen');
 
 var printSession = function (session) {
@@ -34,18 +34,18 @@ var printSession = function (session) {
     console.log(out.join(' '));
 };
 
-var cjdns;
+var hyperboria;
 var handles = [];
 var sessions = [];
 
 nThen(function (waitFor) {
 
-    Cjdns.connectWithAdminInfo(waitFor(function (c) { cjdns = c; }));
+    Hyperboria.connectWithAdminInfo(waitFor(function (c) { hyperboria = c; }));
 
 }).nThen(function (waitFor) {
 
     var more = function (i) {
-        cjdns.SessionManager_getHandles(i, waitFor(function (err, ret) {
+        hyperboria.SessionManager_getHandles(i, waitFor(function (err, ret) {
             if (err) { throw err; }
             handles.push.apply(handles, ret.handles);
             if (ret.more) { more(i+1); }
@@ -56,7 +56,7 @@ nThen(function (waitFor) {
 }).nThen(function (waitFor) {
 
     var next = function (i) {
-        cjdns.SessionManager_sessionStats(Number(handles[i]), waitFor(function (err, ret) {
+        hyperboria.SessionManager_sessionStats(Number(handles[i]), waitFor(function (err, ret) {
             if (err) { throw err; }
             sessions.push(ret);
             i++
@@ -70,7 +70,7 @@ nThen(function (waitFor) {
     }
 
 }).nThen(function (waitFor) {
-    cjdns.disconnect();
+    hyperboria.disconnect();
 
     sessions.sort(function (a, b) {
         return (a.addr.substring(a.addr.indexOf('.')) < b.addr.substring(b.addr.indexOf('.')))

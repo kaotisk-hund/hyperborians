@@ -89,7 +89,7 @@ static Iface_DEFUN sendMessage(struct Message* msg, struct Iface* iface)
     Er_assert(Message_epush(msg, &hdr, ETHInterface_Header_SIZE));
 
     struct ethernet_frame ethFr = {
-        .type = Ethernet_TYPE_CJDNS
+        .type = Ethernet_TYPE_HYPERBORIA
     };
     if (sockaddr.generic.flags & Sockaddr_flags_BCAST) {
         Bits_memset(ethFr.dest, 0xff, 6);
@@ -190,7 +190,7 @@ static void handleEvent(void* vcontext)
         int contentLength = frameLength - ethernet_frame_SIZE;
 
         Assert_true(offset + bpfPkt->bh_hdrlen + frameLength <= bytes);
-        Assert_true(Ethernet_TYPE_CJDNS == ethFr->type);
+        Assert_true(Ethernet_TYPE_HYPERBORIA == ethFr->type);
 
         struct Allocator* messageAlloc = Allocator_child(context->pub.generic.alloc);
         handleEvent2(context, ethFr->src, ethFr->dest, contentLength, frameContent, messageAlloc);
@@ -296,20 +296,20 @@ Er_DEFUN(struct ETHInterface* ETHInterface_new(struct EventBase* eventBase,
     ctx->buffer = Allocator_malloc(alloc, bufLen);
     ctx->bufLen = bufLen;
 
-    // filter for cjdns ethertype (0xfc00)
-    static struct bpf_insn cjdnsFilter[] = {
+    // filter for hyperboria ethertype (0xfc00)
+    static struct bpf_insn hyperboriaFilter[] = {
         BPF_STMT(BPF_LD+BPF_H+BPF_ABS, 12),
-        BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, /* Ethernet_TYPE_CJDNS */ 0xfc00, 1, 0),
+        BPF_JUMP(BPF_JMP+BPF_JEQ+BPF_K, /* Ethernet_TYPE_HYPERBORIA */ 0xfc00, 1, 0),
         // drop
         BPF_STMT(BPF_RET+BPF_K, 0),
         // How much of the packet to ask for...
         BPF_STMT(BPF_RET+BPF_K, ~0u)
     };
-    struct bpf_program cjdnsFilterProgram = {
-        .bf_len = (sizeof(cjdnsFilter) / sizeof(struct bpf_insn)),
-        .bf_insns = cjdnsFilter,
+    struct bpf_program hyperboriaFilterProgram = {
+        .bf_len = (sizeof(hyperboriaFilter) / sizeof(struct bpf_insn)),
+        .bf_insns = hyperboriaFilter,
     };
-    if (ioctl(ctx->socket, BIOCSETF, &cjdnsFilterProgram) == -1) {
+    if (ioctl(ctx->socket, BIOCSETF, &hyperboriaFilterProgram) == -1) {
         Er_raise(alloc, "ioctl(BIOCSETF) [%s]", strerror(errno));
     }
 

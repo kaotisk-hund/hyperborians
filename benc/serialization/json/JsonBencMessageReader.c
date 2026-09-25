@@ -35,7 +35,7 @@
  * The Er system in this tree is fatal by design: Er_raise prints the message
  * and aborts the process. That is fine for the daemon, but the JSON reader is
  * required to tolerate malformed input and report a pleasant error instead
- * (JsonBencMessageReader_readNoExcept, cjdroute2 config loading and the fuzz
+ * (JsonBencMessageReader_readNoExcept, hyperboria-route2 config loading and the fuzz
  * harness all rely on errors being recoverable). Re-establish the original
  * unwinding behavior for this translation unit only: Er_raise unwinds to the
  * nearest Er_check boundary via a longjmp.

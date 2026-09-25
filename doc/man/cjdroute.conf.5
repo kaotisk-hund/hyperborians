@@ -1,24 +1,24 @@
-.\" Manpage for cjdroute.conf
+.\" Manpage for hyperboria-route.conf
 .\"
 
-.TH cjdroute.conf 5 "2014-03-16" "" "Cjdns Reference"
+.TH hyperboria-route.conf 5 "2014-03-16" "" "Hyperboria Reference"
 
 .SH "NAME"
-cjdroute.conf \- Cjdns configuration file
+hyperboria-route.conf \- Hyperboria configuration file
 
 .SH "DESCRIPTION"
 The
-.I cjdroute\&.conf
-file configures the cjdns routing engine,
-.BR cjdns (8),
+.I hyperboria-route\&.conf
+file configures the hyperboria routing engine,
+.BR hyperboria (8),
 generally through
-.BR cjdroute (1)\&.
+.BR hyperboria-route (1)\&.
 .PP
 The configuration is written in a variation of the JSON format that also
 accepts traditional C-like comments such as single line comments (//) and
 multiline comments (/* and */)\&. Additionally, unused JSON values found in
-.I cjdroute\&.conf
-are ignored by cjdns and can be used as a form of JSON-compliant comments.
+.I hyperboria-route\&.conf
+are ignored by hyperboria and can be used as a form of JSON-compliant comments.
 
 .SH "CONFIGURATION"
 \fB"privateKey":\fR "\&.\&.\&."
@@ -39,7 +39,7 @@ to know this\&.
 .RS 4
 Your node's IPv6 address when it is on the network\&. It is generated
 by using the first 16 bytes of a double SHA-512 of your public key\&. All
-cjdns IPv6 addresses must begin with "fc" or else they are invalid\&.
+hyperboria IPv6 addresses must begin with "fc" or else they are invalid\&.
 .RE
 .PP
 
@@ -83,7 +83,7 @@ long random string of characters.
 
 \fB"interfaces":\fR {\&.\&.\&.}
 .RS 4
-An object that defines which interfaces cjdns will bind to and what peers to
+An object that defines which interfaces hyperboria will bind to and what peers to
 connect to\&. There are two different interfaces, UDPInterface and
 ETHInterface, both of which are arrays\&. Within each array there are a variety
 of different options
@@ -112,10 +112,10 @@ network\&.
 .PP
 \fI"connectTo":\fR {\&.\&.\&.}
 .RS 4
-Defines which nodes cjdns should connect to with the specified interface\&.
+Defines which nodes hyperboria should connect to with the specified interface\&.
 Multiple nodes may be placed in a single "connectTo" as long as each are
 seperated by commas\&. If a node happens to be offline or become offline during
-runtime, cjdns will attempt to reconnect at regular intervals\&. The one
+runtime, hyperboria will attempt to reconnect at regular intervals\&. The one
 difference in this option between UDPInterface and ETHInterface is that
 UDPInterface connects to an "IP:PORT" while ETHInterface connects to a MAC
 address\&.
@@ -155,22 +155,22 @@ An object that holds configuration information on the router
 .PP
 \fI"interface":\fR {\&.\&.\&.}
 .RS 4
-Defines the type of interface used for connecting to the cjdns network\&.
+Defines the type of interface used for connecting to the hyperboria network\&.
 It requires a "type" string, and optionally a "tunDevice" string\&. The "type"
 string defines the type of interface used, however only "TUNInterface" is
 supported at the moment\&. The "tunDevice" string defines the name of a
-persistent TUN device to use, which is helpful for starting cjdroute as its own
+persistent TUN device to use, which is helpful for starting hyperboria-route as its own
 user instead of root\&.
 .RE
 .PP
 \fI"ipTunnel":\fR {\&.\&.\&.}
 .RS 4
-A system for tunneling ICANN IPv4 and ICANN IPv6 through cjdns\&. This is using
-the cjdns switch layer as a VPN carrier\&.
+A system for tunneling ICANN IPv4 and ICANN IPv6 through hyperboria\&. This is using
+the hyperboria switch layer as a VPN carrier\&.
 .PP
 \fBNOTE:\fR Simply editing your configuration file is not sufficient to
 setting up an ipTunnel gateway\&. Please read through tunnel/README.md in the
-cjdns git tree for more information
+hyperboria git tree for more information
 .PP
 \fI"allowedConnections":\fR [\&.\&.\&.]
 .RS 4
@@ -249,20 +249,20 @@ ipTunnel to automatically set IP addresses for the TUN device\&.
 
 \fB"logging":\fR {\&.\&.\&.}
 .RS 4
-Add or uncomment "logTo":"stdout" to have cjdns log to stdout rather than
+Add or uncomment "logTo":"stdout" to have hyperboria log to stdout rather than
 making logs available via the admin socket
 .RE
 .PP
 
 \fB"noBackground":\fR Integer
 .RS 4
-If set to a non-zero value, cjdns will not fork to the background\&.
+If set to a non-zero value, hyperboria will not fork to the background\&.
 Recommended for use in conjunction with "logTo":"stdout"\&.
 .RE
 .PP
 \fB"dns":\fR {\&.\&.\&.}
 .RS 4
-This section is used to configure the dns capabilities being added to cjdns\&.
+This section is used to configure the dns capabilities being added to hyperboria\&.
 Unfortunetly, there is no documentation for this DNS section at this time\&.
 .PP
 \fI"keys":\fR [\&.\&.\&.]
@@ -280,11 +280,11 @@ Unfortunetly, there is no documentation for this DNS section at this time\&.
 
 
 .SH "FILES"
-.BI /etc/cjdroute.conf
+.BI /etc/hyperboria-route.conf
 .RS 4
 A common location for the configuration file\&.
 .RE
 
 .SH "SEE ALSO"
-.BR cjdroute (1),
-.BR cjdns (8)
+.BR hyperboria-route (1),
+.BR hyperboria (8)

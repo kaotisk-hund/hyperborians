@@ -2,9 +2,9 @@
 
 ## Proposed rules
 
-This is an incomplete list of terms used in direct context of cjdns.
+This is an incomplete list of terms used in direct context of hyperboria.
 
-- Please add terms used in direct context of cjdns itself, tools and best practices, peering,
+- Please add terms used in direct context of hyperboria itself, tools and best practices, peering,
   community, Hyperboria, similar routing protocols --
   e.g. NodeStore, peer stats, WTFM, buildbot, 802.11s
 - Please don't add terms which are out of scope --
@@ -19,14 +19,14 @@ The [correct pronunciation](http://xkcd.com/148/) of 'blog'.
 
 ### Hidden Peers
 
-This was a peering bug which was fixed in cjdns v14. Please make sure none of
+This was a peering bug which was fixed in hyperboria v14. Please make sure none of
 your peers is affected, and if there is one, tell them to update.
 
     tools/peerStats | sort
 
 ### NodeStore
 
-The internal name of cjdns' routing table.
+The internal name of hyperboria' routing table.
 
 ### P2P
 

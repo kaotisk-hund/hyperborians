@@ -16,7 +16,7 @@
 #include "util/log/Log.h"
 #include "switch/SwitchCore.h"
 
-// TODO(cjd): Get rid of NumberCompress so we can set encodingScheme at runtime.
+// TODO(hyperboria): Get rid of NumberCompress so we can set encodingScheme at runtime.
 #define NumberCompress_OLD_CODE
 #include "switch/NumberCompress.h"
 
@@ -153,7 +153,7 @@ static Iface_DEFUN receiveMessage(struct Message* message, struct Iface* iface)
             //   reverse return path and forward path (see below)
             if (0 != ((label ^ 1) & (UINT64_MAX >> (64 - sourceBits - 4)))) {
                 // This is a bug.
-                // https://github.com/cjdelisle/cjdns/issues/93
+                // https://github.com/cjdelisle/hyperboria/issues/93
                 // The problem is that there is no way to splice a route and know for certain
                 // that you've not spliced one which will end up in this if statement.
                 // Unfortunately there seems no clean way around this issue at the moment.
@@ -220,7 +220,7 @@ static Iface_DEFUN receiveMessage(struct Message* message, struct Iface* iface)
     header->label_be = Endian_hostToBigEndian64(targetLabel);
     uint32_t labelShift = SwitchHeader_getLabelShift(header) + bits;
     if (labelShift > 63) {
-        // TODO(cjd): hmm should we return an error packet?
+        // TODO(hyperboria): hmm should we return an error packet?
         Log_debug(core->logger, "Label rolled over");
         return NULL;
     }

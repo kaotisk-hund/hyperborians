@@ -25,7 +25,7 @@
 
 /**
  * Android VpnService is expect you to read/write packet from the tun device
- * file description opened by system process rather than in the cjd process,
+ * file description opened by system process rather than in the hyperboria process,
  * this InterfaceWrapper handle this case.
  */
 

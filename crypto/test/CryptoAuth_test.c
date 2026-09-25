@@ -134,7 +134,7 @@ static void normal()
 {
     struct Context* ctx = simpleInit();
     sendToIf2(ctx, "hello world");
-    sendToIf1(ctx, "hello cjdns");
+    sendToIf1(ctx, "hello hyperboria");
     sendToIf2(ctx, "hai");
     sendToIf1(ctx, "goodbye");
     Allocator_free(ctx->alloc);
@@ -145,7 +145,7 @@ static void repeatKey()
     struct Context* ctx = simpleInit();
     sendToIf2(ctx, "hello world");
     sendToIf2(ctx, "r u thar?");
-    sendToIf1(ctx, "hello cjdns");
+    sendToIf1(ctx, "hello hyperboria");
     sendToIf2(ctx, "hai");
     sendToIf1(ctx, "goodbye");
     Allocator_free(ctx->alloc);
@@ -156,7 +156,7 @@ static void repeatHello()
     struct Context* ctx = simpleInit();
     sendToIf2(ctx, "hello world");
     sendToIf2(ctx, "r u thar?");
-    sendToIf1(ctx, "hello cjdns");
+    sendToIf1(ctx, "hello hyperboria");
     sendToIf2(ctx, "hai");
     sendToIf1(ctx, "goodbye");
     Allocator_free(ctx->alloc);
@@ -166,16 +166,16 @@ static void chatter()
 {
     struct Context* ctx = simpleInit();
     sendToIf2(ctx, "hello world");
-    sendToIf1(ctx, "hello cjdns");
+    sendToIf1(ctx, "hello hyperboria");
     sendToIf2(ctx, "hai");
     sendToIf1(ctx, "goodbye");
-    sendToIf1(ctx, "hello cjdns");
+    sendToIf1(ctx, "hello hyperboria");
     sendToIf2(ctx, "hai");
     sendToIf1(ctx, "goodbye");
-    sendToIf1(ctx, "hello cjdns");
+    sendToIf1(ctx, "hello hyperboria");
     sendToIf2(ctx, "hai");
     sendToIf1(ctx, "goodbye");
-    sendToIf1(ctx, "hello cjdns");
+    sendToIf1(ctx, "hello hyperboria");
     sendToIf2(ctx, "hai");
     sendToIf1(ctx, "goodbye");
     Allocator_free(ctx->alloc);
@@ -185,7 +185,7 @@ static void auth()
 {
     struct Context* ctx = init(PRIVATEKEY_A, PUBLICKEY_A, "password", PRIVATEKEY_B, PUBLICKEY_B);
     sendToIf2(ctx, "hello world");
-    sendToIf1(ctx, "hello cjdns");
+    sendToIf1(ctx, "hello hyperboria");
     sendToIf2(ctx, "hai");
     sendToIf1(ctx, "goodbye");
     Allocator_free(ctx->alloc);
@@ -239,7 +239,7 @@ static void hellosCrossedOnTheWire()
     decryptMsg(ctx, hello1, ctx->sess2, "hello1");
 
     sendToIf2(ctx, "hello world");
-    sendToIf1(ctx, "hello cjdns");
+    sendToIf1(ctx, "hello hyperboria");
     sendToIf2(ctx, "hai");
     sendToIf1(ctx, "goodbye");
 
@@ -250,7 +250,7 @@ static void reset()
 {
     struct Context* ctx = simpleInit();
     sendToIf2(ctx, "hello world");
-    sendToIf1(ctx, "hello cjdns");
+    sendToIf1(ctx, "hello hyperboria");
     sendToIf2(ctx, "hai");
     sendToIf1(ctx, "brb");
 

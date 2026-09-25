@@ -1,7 +1,7 @@
 # Contrib
 
-This is a place for code which is not officially part of cjdns but is useful as
-a complement. cjdns is 100% C99 licensed under the GPLv3 and has only 2
+This is a place for code which is not officially part of hyperboria but is useful as
+a complement. hyperboria is 100% C99 licensed under the GPLv3 and has only 2
 dependencies, for front-end code, this is too restrictive so there exists
 contrib where code can be added without concern about using other dependencies,
 licenses and languages.

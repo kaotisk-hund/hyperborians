@@ -16,7 +16,7 @@ what needs docs?
 especially useful stuff
 
 - contrib/python/peerStats - shows a list of your peers and their connection status as well as byte counts
-- contrib/python/cjdnsadminmaker.py - generates .cjdnsadmin for use with other scripts
+- contrib/python/cjdnsadminmaker.py - generates .hyperboriaadmin for use with other scripts
 
 
 Tutorials specifically for newbs
@@ -30,7 +30,7 @@ stuff on macOS
 - http://couch.syrinxist.org:9001/p/osx
 
 
-General Math and stuff behind cjdns security and network architecture
+General Math and stuff behind hyperboria security and network architecture
 
 - http://couch.syrinxist.org:9001/p/howCjdnsWorks
 
@@ -47,7 +47,7 @@ Good Ideas(tm)
 
 - Turn off password auth if you are running sshd on hype. Especially if you have crap passwords. http://couch.syrinxist.org/security ah
 
-CJDNS related resources:  http://couch.syrinxist.org/links
+HYPERBORIA related resources:  http://couch.syrinxist.org/links
 
 links to....
 - buildbots?

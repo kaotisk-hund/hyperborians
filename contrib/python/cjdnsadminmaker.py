@@ -1,11 +1,11 @@
 #!/usr/bin/env python2
 
 """
-Automagically generate a .cjdnsadmin file.
+Automagically generate a .hyperboriaadmin file.
 
-Searches around for cjdroute.conf and the cjdns executable, cleans the config
+Searches around for hyperboria-route.conf and the hyperboria executable, cleans the config
 into proper JSON, and saves just the RPC admin info to a file. By default this
-is ~/.cjdnsadmin, but you can specify any file you want.
+is ~/.hyperboriaadmin, but you can specify any file you want.
 """
 
 import json
@@ -14,25 +14,25 @@ import sys
 import subprocess
 
 
-# possibly search for running cjdroute processes and check the same folder as they're in
+# possibly search for running hyperboria-route processes and check the same folder as they're in
 # and/or running find on the home folder
 
 ## Wanted: Everyone's favorite place to store their shit.
-conflocations = ["/etc/cjdroute.conf",
-    "~/cjdroute.conf",
-    "~/cjdns/cjdroute.conf",
-    "/usr/local/opt/cjdns/cjdroute.conf"]
+conflocations = ["/etc/hyperboria-route.conf",
+    "~/hyperboria-route.conf",
+    "~/hyperboria/hyperboria-route.conf",
+    "/usr/local/opt/hyperboria/hyperboria-route.conf"]
 
-cjdroutelocations = ["/opt/cjdns",
-    "~/cjdns",
-    "~/cjdns-git",
-    "/usr/local/opt/cjdns"]
+cjdroutelocations = ["/opt/hyperboria",
+    "~/hyperboria",
+    "~/hyperboria-git",
+    "/usr/local/opt/hyperboria"]
 
 cjdroutelocations += os.getenv("PATH").split(":")
 
 if len(sys.argv) == 0:
     # Write the file in the default location
-    cjdnsadmin_path = os.path.expanduser("~/.cjdnsadmin") 
+    cjdnsadmin_path = os.path.expanduser("~/.hyperboriaadmin") 
 else:
     # Write the file in some other location
     cjdnsadmin_path = sys.argv[1]
@@ -48,27 +48,27 @@ def ask(question, default):
             print "Invalid response, please enter either y or n"
 
 
-def find_cjdroute_bin():
+def find_hyperboria-route_bin():
     for path in cjdroutelocations:
-        path = os.path.expanduser(path) + "/cjdroute"
+        path = os.path.expanduser(path) + "/hyperboria-route"
         if os.path.isfile(path):
             return path
 
-    print "Failed to find cjdroute"
+    print "Failed to find hyperboria-route"
     print "Please tell me where it is"
-    return raw_input("ie. <cjdns git>/cjdroute: ")
+    return raw_input("ie. <hyperboria git>/hyperboria-route: ")
 
 
-def find_cjdroute_conf():
+def find_hyperboria-route_conf():
     for path in conflocations:
         path = os.path.expanduser(path)
         if os.path.isfile(path):
             return path
 
-    return raw_input("Can't find cjdroute.conf, please give the path to it here: ")
+    return raw_input("Can't find hyperboria-route.conf, please give the path to it here: ")
 
 
-def load_cjdroute_conf(conf):
+def load_hyperboria-route_conf(conf):
     print "Loading " + conf
     try:
         with open(conf) as conffile:
@@ -84,15 +84,15 @@ def load_cjdroute_conf(conf):
 def cleanup_config(conf):
     print "Making valid JSON out of " + conf
     print "First, we need to find the cleanconfig program"
-    cjdroute = find_cjdroute_bin()
-    print "Using " + cjdroute
-    process = subprocess.Popen([cjdroute, "--cleanconf"], stdin=open(conf), stdout=subprocess.PIPE)
+    hyperboria-route = find_hyperboria-route_bin()
+    print "Using " + hyperboria-route
+    process = subprocess.Popen([hyperboria-route, "--cleanconf"], stdin=open(conf), stdout=subprocess.PIPE)
     try:
         return json.load(process.stdout)
     except ValueError:
         print "Failed to parse! Check:"
         print "-" * 8
-        print "{} --cleanconf < {}".format(cjdroute, conf)
+        print "{} --cleanconf < {}".format(hyperboria-route, conf)
         print "-" * 8
         sys.exit(1)
 
@@ -110,8 +110,8 @@ except IOError:
     print "This script will attempt to create " + cjdnsadmin_path
 
 
-conf = find_cjdroute_conf()
-cjdrouteconf = load_cjdroute_conf(conf)
+conf = find_hyperboria-route_conf()
+cjdrouteconf = load_hyperboria-route_conf(conf)
 
 addr, port = cjdrouteconf['admin']['bind'].split(":")
 

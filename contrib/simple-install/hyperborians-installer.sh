@@ -1,0 +1,12 @@
+#!/bin/sh
+cp hyperboria-route /usr/bin/
+cp makekeys /usr/bin/
+cp mkpasswd /usr/bin/
+cp privatetopublic /usr/bin/
+cp publictoip6 /usr/bin/
+cp randombytes /usr/bin/
+cp sybilsim /usr/bin/
+cp contrib/systemd/hyperborians.service /etc/systemd/system/
+cp contrib/systemd/hyperborians-resume.service /etc/systemd/system/
+systemctl daemon-reload
+systemctl enable --now hyperborians.service

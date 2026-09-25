@@ -7,7 +7,7 @@
 
 #include <tunables/global>
 
-/usr/sbin/cjdroute {
+/usr/sbin/hyperboria-route {
     #include <abstractions/base>
     #include <abstractions/nameservice>
 
@@ -22,8 +22,8 @@
     /dev/net/tun rw,
     /etc/passwd mr,
     /proc/sys/kernel/random/uuid r,
-    /tmp/cjdns_pipe_* rw,
-    /usr/sbin/cjdroute mrix,
+    /tmp/hyperboria_pipe_* rw,
+    /usr/sbin/hyperboria-route mrix,
 
     # if you choose to use a pidfile, you'll have to speficy it here as well
 

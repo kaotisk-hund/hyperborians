@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-var Cjdns = require('./lib/cjdnsadmin/cjdnsadmin');
+var Hyperboria = require('./lib/hyperboriaadmin/hyperboriaadmin');
 var PublicToIp6 = require('./lib/publicToIp6');
 
-Cjdns.connectAsAnon(function (cjdns) {
+Hyperboria.connectAsAnon(function (hyperboria) {
 
     var again = function (i) {
-        cjdns.InterfaceController_peerStats(i, function (err, ret) {
+        hyperboria.InterfaceController_peerStats(i, function (err, ret) {
             if (err) { throw err; }
             ret.peers.forEach(function (peer) {
                 p = peer['lladdr'] + ' ' + peer['addr'] + ' ' + peer['state'] +
@@ -44,7 +44,7 @@ Cjdns.connectAsAnon(function (cjdns) {
             if (typeof(ret.more) !== 'undefined') {
                 again(i+1);
             } else {
-                cjdns.disconnect();
+                hyperboria.disconnect();
             }
         });
     };

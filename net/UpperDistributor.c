@@ -218,7 +218,7 @@ static Iface_DEFUN incomingFromSessionManagerIf(struct Message* msg, struct Ifac
     if (type <= ContentType_IP6_MAX) {
         return Iface_next(&ud->pub.tunAdapterIf, msg);
     }
-    if (type == ContentType_CJDHT) {
+    if (type == ContentType_HYPERBORIADHT) {
         Er_assert(Message_epush32be(msg, 0xffffffff));
         Er_assert(Message_epush32be(msg, PFChan_Core_MSG));
         return Iface_next(&ud->eventIf, msg);

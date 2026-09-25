@@ -1,4 +1,4 @@
-# CJDNS NAT Gateway
+# HYPERBORIA NAT Gateway
 
 *Guide courtesy of [hyperboria.name](http://hyperboria.name/gateway) with minor
 edits.*
@@ -7,19 +7,19 @@ Configure a host to act as a NAT gateway to provide access to Hyperboria for
 devices on your LAN (Windows PC, tablet, smart phone).
 
 This is a guide to setting up Ubuntu 13.04 to act as an IPv6 router and NAT
-gateway for CJDNS. Those who prefer other distros should find it trivial to
+gateway for HYPERBORIA. Those who prefer other distros should find it trivial to
 adapt these instructions as required. If you do not have a Linux server on your
 LAN already, consider purchasing a BeagleBone Black (for only $45 dollars!).
 You can find instructions [here](http://hyperboria.name/bbb/) on how to set it
-up for CJDNS.
+up for HYPERBORIA.
 
-**WARNING**: The built-in security and encryption of CJDNS will **NOT**
-carry over past the gateway. Use of a NAT gateway for CJDNS should **ONLY**
+**WARNING**: The built-in security and encryption of HYPERBORIA will **NOT**
+carry over past the gateway. Use of a NAT gateway for HYPERBORIA should **ONLY**
 be done on a secure and trusted LAN. Any device on the LAN could theoretically
-intercept local CJDNS traffic before it reaches the gateway, and all devices
-will appear to other CJDNS nodes to *BE* the gateway node. This is intended
+intercept local HYPERBORIA traffic before it reaches the gateway, and all devices
+will appear to other HYPERBORIA nodes to *BE* the gateway node. This is intended
 to be a temporary solution until more universal compatibility is available for
-CJDNS.
+HYPERBORIA.
 
 You will need:
 
@@ -134,7 +134,7 @@ is still working:
 
     reboot
 
-Don't forget to start CJDNS after it's done booting if you haven't set it up to
+Don't forget to start HYPERBORIA after it's done booting if you haven't set it up to
 start automatically. Alternatively, if you do not want to reboot at this time,
 you can run the following command to assign the IP address to the interface
 manually:

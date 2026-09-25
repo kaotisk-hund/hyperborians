@@ -44,7 +44,7 @@
       },
       'Release': {
         'defines': [
-            # 'NDEBUG' ## cjdns remove NDEBUG in order to get all of the assertions
+            # 'NDEBUG' ## hyperboria remove NDEBUG in order to get all of the assertions
         ],
         'cflags': [
 ## This will be passed from make.js          '-O3',

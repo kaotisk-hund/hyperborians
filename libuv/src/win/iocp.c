@@ -53,7 +53,7 @@ int uv_iocp_stop(uv_iocp_t* handle) {
   if (!handle->activecnt) {
     return UV_EINVAL;
   }
-  /* TODO(cjd): DeleteIoCompletionPort()? */
+  /* TODO(hyperboria): DeleteIoCompletionPort()? */
   handle->iocp_cb = NULL;
   UNREGISTER_HANDLE_REQ(handle->loop, handle, &handle->req);
 }

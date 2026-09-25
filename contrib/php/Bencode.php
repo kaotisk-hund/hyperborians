@@ -175,7 +175,7 @@ class Decoder
 
         $value = substr($this->_source, $this->_offset, $offsetOfE - $this->_offset);
 
-        // Cjdns pads zeros which is a CLEAR violation of the bencode standard,
+        // Hyperboria pads zeros which is a CLEAR violation of the bencode standard,
         // so we have to adjust the validation.
         
         // $absoluteValue = (string) abs($value);

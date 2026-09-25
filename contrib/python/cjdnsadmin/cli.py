@@ -22,12 +22,12 @@ def usage():
   """ print usage information """
 
   print """
-Cjdns admin command line interface.
+Hyperboria admin command line interface.
 Usage: [OPTION]... RPC
   RPC              the function name w/ arguments of the RPC you want to make.
 
 options:
-  -c  --config=    the cjdnsadmin file to use.  Defaults to ~/.cjdnsadmin
+  -c  --config=    the cjdnsadmin file to use.  Defaults to ~/.hyperboriaadmin
   -h, --help       display this help and exit
   -p, --pretty     format the output of the RPC as formatted JSON
 

@@ -295,7 +295,7 @@ List* UDPInterface_getBroadcastAddrs(struct UDPInterface* udpif, struct Allocato
     struct UDPInterface_pvt* ctx = Identity_check((struct UDPInterface_pvt*) udpif);
     List* out = List_new(alloc);
     if (updateBcastAddrs(ctx)) {
-        // TODO(cjd): There should be some way to return the fact that there was an error
+        // TODO(hyperboria): There should be some way to return the fact that there was an error
         return out;
     }
     for (int i = 0; i < ctx->bcastAddrs->length; i++) {

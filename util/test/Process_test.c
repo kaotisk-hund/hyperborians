@@ -157,10 +157,10 @@ int main(int argc, char** argv)
     struct Random* rand = Random_new(alloc, log, NULL);
     char randName[32] = {0};
     Random_base32(rand, (uint8_t*)randName, 31);
-    String* name = String_printf(alloc, "%s%scjdns-test-%s", Pipe_PATH, Pipe_PATH_SEP, randName);
+    String* name = String_printf(alloc, "%s%shyperboria-test-%s", Pipe_PATH, Pipe_PATH_SEP, randName);
     if (!Defined(win32)) {
         String* textName =
-            String_printf(alloc, "%s%scjdns-test-%s.txt", Pipe_PATH, Pipe_PATH_SEP, randName);
+            String_printf(alloc, "%s%shyperboria-test-%s.txt", Pipe_PATH, Pipe_PATH_SEP, randName);
         int fd = open(textName->bytes, O_CREAT | O_TRUNC | O_RDWR, 0600);
         Assert_true(fd >= 0);
         Assert_true(write(fd, name->bytes, name->len) == ((ssize_t)name->len));

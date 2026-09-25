@@ -16,9 +16,9 @@ import cjdnsadmin.graphMaker as gm
 import networkx as nx
 import numpy as np
 
-cjdns=at.connect()
+hyperboria=at.connect()
 
-root=at.whoami(cjdns)
+root=at.whoami(hyperboria)
 root=root['IP']
 
 G=gm.makeGraph()

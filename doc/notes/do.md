@@ -27,6 +27,6 @@ Next, we call getsha256sum. If its output is falsey, then the script dies with t
 
 Next, we call **hasOkNode**. If this returns 0, then we call **getNode**, if this is unsuccessful, then the script dies with the error "could not get working nodejs impl".
 
-Finally, we use the environment variable **$NODE** to call **cjdns/node_build/make.js** with the arguments "${@}".
+Finally, we use the environment variable **$NODE** to call **hyperboria/node_build/make.js** with the arguments "${@}".
 
 

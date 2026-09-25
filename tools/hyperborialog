@@ -15,16 +15,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-var Cjdns = require('./lib/cjdnsadmin/cjdnsadmin');
+var Hyperboria = require('./lib/hyperboriaadmin/hyperboriaadmin');
 
 var usage = function () {
-    console.log("Usage: cjdnslog.js [-v <verbosity>] [-f <filename>] [-l <lineNum>]");
-    console.log("cjdnslog.js -v INFO                 <-- log all INFO and higher (WARN, ERROR, or CRITICAL) messages.");
-    console.log("cjdnslog.js                         <-- log everything");
-    console.log("cjdnslog.js -f CryptoAuth.c         <-- log everything in CryptoAuth.c");
-    console.log("cjdnslog.js -v INFO -f CryptoAuth.c <-- log INFO and higher in CryptoAuth.c");
-    console.log("cjdnslog.js -f CryptoAuth.c -l 747  <-- print messages from log statement on line 747 of CryptoAuth.c");
-    console.log("cjdnslog.js -l 747                  <-- print messages from log statements on line 747 of any file at all.");
+    console.log("Usage: hyperborialog.js [-v <verbosity>] [-f <filename>] [-l <lineNum>]");
+    console.log("hyperborialog.js -v INFO                 <-- log all INFO and higher (WARN, ERROR, or CRITICAL) messages.");
+    console.log("hyperborialog.js                         <-- log everything");
+    console.log("hyperborialog.js -f CryptoAuth.c         <-- log everything in CryptoAuth.c");
+    console.log("hyperborialog.js -v INFO -f CryptoAuth.c <-- log INFO and higher in CryptoAuth.c");
+    console.log("hyperborialog.js -f CryptoAuth.c -l 747  <-- print messages from log statement on line 747 of CryptoAuth.c");
+    console.log("hyperborialog.js -l 747                  <-- print messages from log statements on line 747 of any file at all.");
 };
 
 if (process.argv[process.argv.length-1] === '--help') {
@@ -36,7 +36,7 @@ var printMsg = function (data) {
     console.log(data['time'] + ' ' + data['level'] + ' ' + data['file'] + ':' + data['line'] + ' ' + data['message']);
 }
 
-Cjdns.connectWithAdminInfo(function (cjdns) {
+Hyperboria.connectWithAdminInfo(function (hyperboria) {
 
     var n;
     var verbosity;
@@ -46,17 +46,17 @@ Cjdns.connectWithAdminInfo(function (cjdns) {
     if ((n = process.argv.indexOf('-f')) !== -1) { file = process.argv[n+1]; }
     if ((n = process.argv.indexOf('-l')) !== -1) { line = process.argv[n+1]; }
 
-    cjdns.setDefaultHandler(function (err, msg) {
+    hyperboria.setDefaultHandler(function (err, msg) {
         if (err) { throw err; }
         printMsg(msg);
     });
-    cjdns.AdminLog_subscribe(line, verbosity, file, function (err, ret) {
+    hyperboria.AdminLog_subscribe(line, verbosity, file, function (err, ret) {
         if (err) { throw err; }
         if (ret.error !== 'none') { throw new Error(ret.error); }
 
-        // make sure cjdns doesn't think we've gone missing!
+        // make sure hyperboria doesn't think we've gone missing!
         setInterval(function () {
-            cjdns.ping(function (err, ret) {
+            hyperboria.ping(function (err, ret) {
                 if (err) { throw err; }
             });
         }, 10000);
@@ -65,10 +65,10 @@ Cjdns.connectWithAdminInfo(function (cjdns) {
         process.on('SIGINT', function () {
             if (sigint) { process.exit(100); }
             console.error('Disconnecting...');
-            cjdns.AdminLog_unsubscribe(ret.streamId, function (err, ret) {
+            hyperboria.AdminLog_unsubscribe(ret.streamId, function (err, ret) {
                 if (err) { throw err; }
                 console.error('done');
-                cjdns.disconnect();
+                hyperboria.disconnect();
                 process.exit(0);
             });
         });

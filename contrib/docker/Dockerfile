@@ -7,9 +7,9 @@ ADD . /src
 
 WORKDIR /src
 
-RUN adduser -D -h /etc/cjdns -u 1000 cjdns \
+RUN adduser -D -h /etc/hyperboria -u 1000 hyperboria \
     && rm -rf build_* && ./do \
-    && cp cjdroute /usr/bin \
+    && cp hyperboria-route /usr/bin \
     && cp -r tools/* /usr/bin \
     && cp makekeys \
           mkpasswd \
@@ -21,6 +21,6 @@ RUN adduser -D -h /etc/cjdns -u 1000 cjdns \
     && rm -rf /src /var/cache/apk/* \
     && apk del --purge python build-base linux-headers
 
-VOLUME [ "/etc/cjdns" ]
+VOLUME [ "/etc/hyperboria" ]
 
 ENTRYPOINT [ "/entrypoint.sh" ]

@@ -21,7 +21,7 @@ static int usage(char* appName)
 {
     printf("Usage: %s <public key>\n"
            "\n"
-           "Get a cjdns IPv6 address from a public key.\n"
+           "Get a hyperboria IPv6 address from a public key.\n"
            "The key should be in Base32 and end in '.k'.\n",
            appName);
     return 0;

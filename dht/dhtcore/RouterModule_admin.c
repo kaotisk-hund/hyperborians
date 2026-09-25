@@ -22,7 +22,7 @@
 #include "dht/dhtcore/Router.h"
 #include "dht/dhtcore/ReplySerializer.h"
 #include "dht/Address.h"
-#include "dht/CJDHTConstants.h"
+#include "dht/HyperboriaDHTConstants.h"
 #include "memory/Allocator.h"
 #include "util/AddrTools.h"
 #include "util/Hex.h"
@@ -81,7 +81,7 @@ static void pingResponse(struct RouterModule_Promise* promise,
     struct Allocator* tempAlloc = promise->alloc;
     Dict* resp = Dict_new(tempAlloc);
 
-    String* versionBin = Dict_getString(responseDict, CJDHTConstants_VERSION);
+    String* versionBin = Dict_getString(responseDict, HyperboriaDHTConstants_VERSION);
     if (versionBin && versionBin->len == 20) {
         String* versionStr = String_newBinary(NULL, 40, tempAlloc);
         Hex_encode(versionStr->bytes, 40, versionBin->bytes, 20);
@@ -93,7 +93,7 @@ static void pingResponse(struct RouterModule_Promise* promise,
     String* result = (responseDict) ? String_CONST("pong") : String_CONST("timeout");
     Dict_putStringC(resp, "result", result, tempAlloc);
 
-    int64_t* protocolVersion = Dict_getInt(responseDict, CJDHTConstants_PROTOCOL);
+    int64_t* protocolVersion = Dict_getInt(responseDict, HyperboriaDHTConstants_PROTOCOL);
     if (protocolVersion) {
         Dict_putIntC(resp, "protocol", *protocolVersion, tempAlloc);
     }
@@ -137,7 +137,7 @@ static void genericResponse(struct RouterModule_Promise* promise,
         }
         Dict_putList(out, name, nodes, promise->alloc);
 
-        String* schemeDefinition = Dict_getString(responseDict, CJDHTConstants_ENC_SCHEME);
+        String* schemeDefinition = Dict_getString(responseDict, HyperboriaDHTConstants_ENC_SCHEME);
         if (schemeDefinition) {
             struct EncodingScheme* scheme =
                 EncodingScheme_deserialize(schemeDefinition, promise->alloc);

@@ -11,28 +11,28 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from cjdnsadmin.cjdnsadmin import connectWithAdminInfo;
+from cjdnsadmin.hyperboriaadmin import connectWithAdminInfo;
 from cjdnsadmin.publicToIp6 import PublicToIp6_convert;
 
-cjdns = connectWithAdminInfo();
+hyperboria = connectWithAdminInfo();
 
 def getLink(node, num, nodes, spaces, parentPath):
-    resp = cjdns.NodeStore_getLink(node, num);
+    resp = hyperboria.NodeStore_getLink(node, num);
     getNode(resp['result'], resp['result']['cannonicalLabel'], nodes, spaces + '  ', parentPath);
 
 def getNode(next, path, nodes, spaces, parentPath):
     if (next['child'] in nodes): return;
     #nodes = list(nodes);
     nodes.append(next['child']);
-    resp = cjdns.NodeStore_getNode(next['child']);
-    #print 'cjdns.NodeStore_getNode(' + next['child'] + '); --> ' + str(resp);
+    resp = hyperboria.NodeStore_getNode(next['child']);
+    #print 'hyperboria.NodeStore_getNode(' + next['child'] + '); --> ' + str(resp);
     #next['child'] = PublicToIp6_convert(resp['result']['key']);
     path = '';
     if (parentPath != 'ffff.ffff.ffff.ffff' and len(parentPath) == 19):
-        path = cjdns.NodeStore_getRouteLabel(parentPath, next['child']);
+        path = hyperboria.NodeStore_getRouteLabel(parentPath, next['child']);
         if path['error'] != 'none':
             path = path['error'] + '  ' + str(nodes);
-            print 'cjdns.NodeStore_getRouteLabel(' + parentPath + ', ' + next['child'] + '); --> ' + path;
+            print 'hyperboria.NodeStore_getRouteLabel(' + parentPath + ', ' + next['child'] + '); --> ' + path;
             exit(1);
         else: path = path['result'];
     print spaces + str(next['child']) + '  ' + str(next['cannonicalLabel']) + " -> " + path;
@@ -41,6 +41,6 @@ def getNode(next, path, nodes, spaces, parentPath):
         getLink(next['child'], i, nodes, spaces, path);
 
 
-resp = cjdns.NodeStore_getNode(0);
+resp = hyperboria.NodeStore_getNode(0);
 myIp6 = PublicToIp6_convert(resp['result']['key']);
 getNode({"child":myIp6,"cannonicalLabel":""}, '', [], '', '0000.0000.0000.0001');

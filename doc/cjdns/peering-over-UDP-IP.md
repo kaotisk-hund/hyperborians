@@ -12,16 +12,16 @@ Structure:
     - [Inbound Peering](#inbound)
         - [Authorized passwords](#authorizedpasswords)
         - [connectTo block creation](#connectTo)
-        - [Edit cjdroute.conf](#edit-cjdroute-inbound)
-        - [Update cjdroute](#update-cjdroute-inbound)
+        - [Edit hyperboria-route.conf](#edit-hyperboria-route-inbound)
+        - [Update hyperboria-route](#update-hyperboria-route-inbound)
         - [Update your peer](#update-peer)
     - [Outbound Peering](#outbound)
-        - [Edit cjdroute.conf](#edit-cjdroute-outbound)
-        - [Update cjdroute](#update-cjdroute-outbound)
+        - [Edit hyperboria-route.conf](#edit-hyperboria-route-outbound)
+        - [Update hyperboria-route](#update-hyperboria-route-outbound)
 
 Prerequisites:
 
-- cjdroute
+- hyperboria-route
 - a network to peer over
 - _preferably_ a static IP
 - some time
@@ -35,7 +35,7 @@ Giving other people your IP address will not be a good way for your peer to reac
 
 ## cexec <a name="cexec"></a>
 
-If you have any trouble in this section it is safe to skip but, you will need to use another tool or shutdown your cjdroute to add a new peer.
+If you have any trouble in this section it is safe to skip but, you will need to use another tool or shutdown your hyperboria-route to add a new peer.
 
 Usage:
 
@@ -45,15 +45,15 @@ put something like this inside:
 
 ```javascript
 {
-    "password": "from your admin section in your cjdroute.conf",
-    "config": "/path/to/cjdroute.conf",
+    "password": "from your admin section in your hyperboria-route.conf",
+    "config": "/path/to/hyperboria-route.conf",
     "addr": "127.0.0.1",
     "port": 11234
 }
 ```
 make an alias:
 ```bash
-alias cjdadmin='/path/to/cjdns/contrib/python/cexec'
+alias cjdadmin='/path/to/hyperboria/contrib/python/cexec'
 ```
 If you like you can put it in your `~/.*rc` for your terminal flavor.
 
@@ -103,7 +103,7 @@ Prerequisites:
 - A long passphrase that you do not have to remember
 - Your pubkey
 - Your static IP
-- The open port your cjdroute is listening on
+- The open port your hyperboria-route is listening on
 - Any other information you would like for your peer to have
 
 #### Make your authorizedPasswords block <a name="authorizedpasswords"></a>
@@ -125,7 +125,7 @@ Everything else is for humans.
 
 #### Make your peers connectTo block <a name="connectTo"></a>
 
-(alredy indented just enough for the current cjdroute.conf section it goes in)
+(alredy indented just enough for the current hyperboria-route.conf section it goes in)
 
 ```javascript
                         "[your IP address]:[your open port]": {
@@ -147,7 +147,7 @@ Things that are parsed:
 
 Everything else is for humans.
 
-#### Edit cjdroute.conf <a name="edit-cjdroute-inbound"></a>
+#### Edit hyperboria-route.conf <a name="edit-hyperboria-route-inbound"></a>
 
 After verifying that your made up password matches the password you will give to your friend, paste your authorizedPasswords block into your authorizedPasswords section.
 
@@ -180,19 +180,19 @@ Like this.
         // "your.external.ip.goes.here:43653":{"login": "default-login", "password":"vt1ly5f4ydmm9gjk196t160z23t6uju","publicKey":"3u2fz3fcyblrz7nspwzkcxp7xph80h5hwu1qu4qrumrqym80r0u0.k"}
     ],
 ```
-Save cjdroute.conf
+Save hyperboria-route.conf
 
-#### Update cjdroute <a name="update-cjdroute-inbound"></a>
+#### Update hyperboria-route <a name="update-hyperboria-route-inbound"></a>
 
 There are 2 ways to do this.
 ```bash
-sudo killall cjdroute
+sudo killall hyperboria-route
 ```
 Or
 ```bash
 cjdadmin 'AuthorizedPasswords_add("[YourLongPasswordYouWillGiveAway]","[peerUserName_aka_frendlyname]",1,0)'
 ```
-Find out more about this command in the [admin/README.md][cjd-admin-readme] ([clearnet][cjd-admin-readme-clearnet]) section of the cjdns repository.
+Find out more about this command in the [admin/README.md][hyperboria-admin-readme] ([clearnet][hyperboria-admin-readme-clearnet]) section of the hyperboria repository.
 
 #### Update your peer <a name="update-peer"></a>
 
@@ -212,7 +212,7 @@ Prerequisites:
 - A peer that has agreed to accept an inbound connection
 - A connectTo block from your peer
 
-#### Edit cjdroute.conf <a name="edit-cjdroute-outbound"></a>
+#### Edit hyperboria-route.conf <a name="edit-hyperboria-route-outbound"></a>
 
 Paste your peers info inside your connectTo block.
 ```javascript
@@ -235,19 +235,19 @@ Paste your peers info inside your connectTo block.
                     // Ask somebody who is already connected.
                 }
 ```
-Save cjdroute.conf
+Save hyperboria-route.conf
 
-#### Update cjdroute <a name="update-cjdroute-outbound"></a>
+#### Update hyperboria-route <a name="update-hyperboria-route-outbound"></a>
 
 There are 2 ways to do this.
 ```bash
-sudo killall cjdroute
+sudo killall hyperboria-route
 ```
 Or
 ```bash
 cjdadmin 'UDPInterface_beginConnection("[yourPeersPubkeyGoesHereItEndsWith.k]","[address]:[port]",0,"[longPasswordYourPeerGaveYou]")'
 ```
-Find out more about this command in the [admin/README.md][cjd-admin-readme] ([clearnet][cjd-admin-readme-clearnet]) section of the cjdns repository.
+Find out more about this command in the [admin/README.md][hyperboria-admin-readme] ([clearnet][hyperboria-admin-readme-clearnet]) section of the hyperboria repository.
 
 ## questions?
 
@@ -256,5 +256,5 @@ Find out more about this command in the [admin/README.md][cjd-admin-readme] ([cl
 [Tox]: https://tox.im/
 [OTR]: https://otr.cypherpunks.ca/
 [GPG]: https://www.gnupg.org/
-[cjd-admin-readme]: http://gitboria.com/cjd/cjdns/blob/master/admin/README.md
-[cjd-admin-readme-clearnet]: https://github.com/cjdelisle/cjdns/blob/master/admin/README.md
+[hyperboria-admin-readme]: http://gitboria.com/hyperboria/hyperboria/blob/master/admin/README.md
+[hyperboria-admin-readme-clearnet]: https://github.com/cjdelisle/hyperboria/blob/master/admin/README.md

@@ -1,7 +1,7 @@
 #!/system/bin/sh
 
 # Config and runtime directory (if changed, also change in cjdaemon and 99cjdroute)
-CJDPATH="/sdcard/cjdns"
+CJDPATH="/sdcard/hyperboria"
 
 # Partition/disk the $BINDIR and $INITDIR are on
 SYSDISK="/system"
@@ -47,8 +47,8 @@ if [ -n "$1" ]; then
     if [ "$1" = "-h" -o "$1" = "--help" ]; then
         echo -e "\nUsage:\n\t${APPNAME} [option]\n"
         echo -e "\t* This script requires root permissions to run"
-        echo -e "\t* Run this script with no arguments to install cjdns"
-        echo -e "\t* Install cjdns again after flashing new/upated ROMs"
+        echo -e "\t* Run this script with no arguments to install hyperboria"
+        echo -e "\t* Install hyperboria again after flashing new/upated ROMs"
         echo -e "\nOptions:"
         echo -e "\t-u|--uninstall: uninstall from ${SYSDISK}"
         echo -e "\t-h|--help: display this help output\n"
@@ -78,12 +78,12 @@ if [ ! -e "$SYSBLOCK" ]; then
     exit 1
 fi
 
-# Stop cjdroute if it's running
-if [ `pgrep cjdroute | wc -l` -gt 0 ]; then
+# Stop hyperboria-route if it's running
+if [ `pgrep hyperboria-route | wc -l` -gt 0 ]; then
     echo
-    echo "Killing cjdroute..."
+    echo "Killing hyperboria-route..."
     echo
-    killall cjdroute
+    killall hyperboria-route
 fi
 
 # The uninstall functionality and a catch for invalid arguments
@@ -108,11 +108,11 @@ if [ -n "$1" ]; then
             echo " Warning: ${BINDIR}/cjdctl is not present to be removed"
         fi
 
-        # Remove cjdroute
-        if [ -f "$BINDIR"/cjdroute ]; then
-            rm "$BINDIR"/cjdroute
+        # Remove hyperboria-route
+        if [ -f "$BINDIR"/hyperboria-route ]; then
+            rm "$BINDIR"/hyperboria-route
         else
-            echo " Warning: ${BINDIR}/cjdroute is not present to be removed"
+            echo " Warning: ${BINDIR}/hyperboria-route is not present to be removed"
         fi
 
         # Remove 99cjdroute
@@ -126,7 +126,7 @@ if [ -n "$1" ]; then
         _sysro
 
         # Exit successfully if all the cjdroid files are gone, otherwise complain
-        if [ ! -f "$BINDIR"/cjdaemon -a ! -f "$BINDIR"/cjdctl -a ! -f "$BINDIR"/cjdroute -a ! -f "$INITDIR"/99cjdroute ]; then
+        if [ ! -f "$BINDIR"/cjdaemon -a ! -f "$BINDIR"/cjdctl -a ! -f "$BINDIR"/hyperboria-route -a ! -f "$INITDIR"/99cjdroute ]; then
             echo
             echo "Uninstallation successfully completed!"
             echo
@@ -147,44 +147,44 @@ fi
 # Remount the system partition read/write
 _sysrw
 
-# Copy cjdns-related-files to $SYSDISK
+# Copy hyperboria-related-files to $SYSDISK
 echo
 echo "Copying files to the ${SYSDISK} partition..."
-if [ ! -f "files/cjdaemon" -o ! -f "files/cjdctl" -o ! -f "files/cjdroute" -o ! -f "files/99cjdroute" ]; then
+if [ ! -f "files/cjdaemon" -o ! -f "files/cjdctl" -o ! -f "files/hyperboria-route" -o ! -f "files/99cjdroute" ]; then
     echo "Error: one or more of the required files in 'files/' are missing"
     echo
     exit 1
 fi
 install -D -m755 files/cjdaemon "$BINDIR"/cjdaemon
 install -D -m755 files/cjdctl "$BINDIR"/cjdctl
-install -D -m755 files/cjdroute "$BINDIR"/cjdroute
+install -D -m755 files/hyperboria-route "$BINDIR"/hyperboria-route
 install -D -m755 files/99cjdroute "$INITDIR"/99cjdroute
 
 # Remount the system partition read-only
 _sysro
 
 # Exit successfully if all the files are where they should be, otherwise complain
-if [ -f "$BINDIR"/cjdaemon -a -f "$BINDIR"/cjdctl -a -f "$BINDIR"/cjdroute -a -f "$INITDIR"/99cjdroute ]; then
+if [ -f "$BINDIR"/cjdaemon -a -f "$BINDIR"/cjdctl -a -f "$BINDIR"/hyperboria-route -a -f "$INITDIR"/99cjdroute ]; then
     # Create the config directory if it doesn't already exist
     if [ ! -d "$CJDPATH" ]; then
         echo
-        echo "Creating cjdns config folder @ ${CJDPATH}..."
+        echo "Creating hyperboria config folder @ ${CJDPATH}..."
         echo
         install -d "$CJDPATH"
     fi
 
     # Generate a config file if the user doesn't already have one
-    if [ ! -f "$CJDPATH"/cjdroute.conf ]; then
+    if [ ! -f "$CJDPATH"/hyperboria-route.conf ]; then
         echo
-        echo "Creating cjdns config file @ ${CJDPATH}/cjdroute.conf..."
+        echo "Creating hyperboria config file @ ${CJDPATH}/hyperboria-route.conf..."
         echo
-        /system/bin/cjdroute --genconf > "$CJDPATH"/cjdroute.conf
+        /system/bin/hyperboria-route --genconf > "$CJDPATH"/hyperboria-route.conf
     fi
 
     echo
     echo "Installation successfully completed!"
-    echo " Ensure ${CJDPATH}/cjdroute.conf is configured then"
-    echo " run 'cjdctl enable' to start the cjdroute service"
+    echo " Ensure ${CJDPATH}/hyperboria-route.conf is configured then"
+    echo " run 'cjdctl enable' to start the hyperboria-route service"
     echo
     exit 0
 else

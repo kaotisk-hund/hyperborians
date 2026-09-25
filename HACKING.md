@@ -1,7 +1,7 @@
 Patches are very much welcome!
 ==============================
 
-If you want to get a change included in cjdns, the best thing to do is start by
+If you want to get a change included in hyperboria, the best thing to do is start by
 asking in IRC if the change fits the spirit of the project, then developing
 your change in your own git tree and then asking for it to be merged in with
 the others.
@@ -13,7 +13,7 @@ to understand and prove safe.
 Minutiae:
 ---------
 
-* Cjdns has no issue tracker, this is on purpose, it's for the same reasons that
+* Hyperboria has no issue tracker, this is on purpose, it's for the same reasons that
 [git has no issue tracker](https://apenwarr.ca/log/20080628).
 * Everything gets merged to the `crashey` branch, merges to master **only**
 happen during releases, so making your pull requests against `crashey` is nicest.
@@ -75,7 +75,7 @@ makes sense.
 Debugging
 ---------
 
-        sudo gdb ./cjdroute -ex 'set follow-fork-mode child' -ex 'r < /etc/cjdroute.conf'
+        sudo gdb ./hyperboria-route -ex 'set follow-fork-mode child' -ex 'r < /etc/hyperboria-route.conf'
 
 If it crashes, type `backtrace` to get some useful information.
 The backtrace will show where in the program it crashed and where called that
@@ -103,23 +103,23 @@ See: http://www.valgrind.org/docs/manual/manual-core.html#manual-core.limits
 Profiling
 ---------
 
-The best way to profile cjdns is using Brendan Gregg's FlameGraph generator.
+The best way to profile hyperboria is using Brendan Gregg's FlameGraph generator.
 http://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html
 You can do this on Linux using the `perf` utility.
 
-    sudo perf record -a -g -F 997 -p `pidof cjdroute`
-    # let this run for a while, put cjdroute through some exercises
+    sudo perf record -a -g -F 997 -p `pidof hyperboria-route`
+    # let this run for a while, put hyperboria-route through some exercises
     <ctrl+c>
-    sudo perf script | ../FlameGraph/stackcollapse-perf.pl > ./cjdns-stackcollapse.out
-    ../FlameGraph/flamegraph.pl < ./cjdns-stackcollapse.out > ./cjdns-stackcollapse.svg
-    chromium ./cjdns-stackcollapse.svg
+    sudo perf script | ../FlameGraph/stackcollapse-perf.pl > ./hyperboria-stackcollapse.out
+    ../FlameGraph/flamegraph.pl < ./hyperboria-stackcollapse.out > ./hyperboria-stackcollapse.svg
+    chromium ./hyperboria-stackcollapse.svg
 
 
 Simulating
 ----------
 
-Cjdns comes with it's own simulator, it will create *n* nodes and link them together
-however you wish. It's like having many cjdns processes all running together but they're
+Hyperboria comes with it's own simulator, it will create *n* nodes and link them together
+however you wish. It's like having many hyperboria processes all running together but they're
 all in the same process so it is much more efficient. You can set admin credentials on
 one node and then use the admin tools to access it as you would an ordinary router.
 You will however need private keys whose public keys hash to ip addresses beginning with
@@ -130,7 +130,7 @@ fc. To make these keys, use the `makekeys` utility.
 To convert the list of keys into a simulator configuration, use `makesim.js`, note there
 are interesting constants inside of `makesim.js` which you might want to alter.
 
-    node ./tools/lib/makesim.js keys.txt > ~/my-cjdns-simulation.json
+    node ./tools/lib/makesim.js keys.txt > ~/my-hyperboria-simulation.json
 
 Once you have a simulation setup, you may want to add your admin credentials to one of
 the nodes so you can inspect it, dump the table, etc...
@@ -155,7 +155,7 @@ Example simulation config entry with added admin block:
 
 And to start it up (in the debugger):
 
-    gdb ./sybilsim -ex 'r < ~/my-cjdns-simulation.json'
+    gdb ./sybilsim -ex 'r < ~/my-hyperboria-simulation.json'
 
 BUG: Sometimes the simulator doesn't really start up correctly! If you could figure out
 what is going wrong, your help would be most appreciated, if not, you can just quit and

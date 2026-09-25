@@ -93,7 +93,7 @@ void Allocator_snapshot(struct Allocator* allocator, int includeAllocations)
     struct Allocator_FirstCtx* rootAlloc = Identity_check(alloc->rootAlloc);
     alloc = Identity_check((struct Allocator_pvt*)rootAlloc);
 
-    fprintf(stderr, "----- %scjdns memory snapshot -----\n", "");
+    fprintf(stderr, "----- %shyperboria memory snapshot -----\n", "");
 
     uint64_t totalAllocated = rootAlloc->maxSpace - rootAlloc->spaceAvailable;
     uint64_t realAllocated = bytesAllocated(alloc);
@@ -108,7 +108,7 @@ void Allocator_snapshot(struct Allocator* allocator, int includeAllocations)
                     (long)rootAlloc->maxSpace,
                     (long)rootAlloc->spaceAvailable);
 
-    fprintf(stderr, "----- %scjdns memory snapshot -----\n", "end ");
+    fprintf(stderr, "----- %shyperboria memory snapshot -----\n", "end ");
 }
 
 Gcc_NORETURN
@@ -236,7 +236,7 @@ static void releaseAllocation(struct Allocator_pvt* context,
 {
     checkCanaries(allocation, context);
 
-    // TODO(cjd): make this optional.
+    // TODO(hyperboria): make this optional.
     Bits_memset(&(&allocation->pub)[1],
                 0xee,
                 allocation->pub.size - sizeof(struct Allocator_Allocation));

@@ -92,7 +92,7 @@ struct AdminClient_Promise
 
 struct AdminClient
 {
-    /** How long to wait for a response from the cjdns node. */
+    /** How long to wait for a response from the hyperboria node. */
     uint32_t millisecondsToWait;
 };
 

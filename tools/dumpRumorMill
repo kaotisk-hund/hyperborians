@@ -14,18 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-var Cjdns = require('./lib/cjdnsadmin/cjdnsadmin');
+var Hyperboria = require('./lib/hyperboriaadmin/hyperboriaadmin');
 var nThen = require('nthen');
 
 var dump = function (millName) {
 
-var cjdns;
+var hyperboria;
 nThen(function (waitFor) {
-    Cjdns.connectWithAdminInfo(waitFor(function (x) { cjdns = x; }));
+    Hyperboria.connectWithAdminInfo(waitFor(function (x) { hyperboria = x; }));
 }).nThen(function (waitFor) {
     var list = [];
     var again = function (i) {
-        cjdns.Janitor_dumpRumorMill(i, millName, function (err, out) {
+        hyperboria.Janitor_dumpRumorMill(i, millName, function (err, out) {
             if (err) { throw err; }
             list.push.apply(list, out.addresses);
             if (out.addresses.length) {
@@ -34,7 +34,7 @@ nThen(function (waitFor) {
                 list.sort();
                 list.forEach(function (addr) { console.log(addr); });
                 console.log("total " + out.total);
-                cjdns.disconnect();
+                hyperboria.disconnect();
             }
         });
     };

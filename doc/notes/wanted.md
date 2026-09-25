@@ -4,9 +4,9 @@ First and foremost, we need someone to constantly review this repository, and ke
 
 If you see something listed here that has been taken care of, please knock it off the list. If you see something here, and take care of it yourself, please do us another favour and cross it out and link to your work.
 
-* cjdns
-  + breakdown of 3 parts of cjdns as explained in the [whitepaper](https://github.com/cjdelisle/cjdns/blob/master/doc/Whitepaper.md)
-  + how to [cjdroute.conf](https://wiki.projectmeshnet.org/Cjdroute.conf)
+* hyperboria
+  + breakdown of 3 parts of hyperboria as explained in the [whitepaper](https://github.com/cjdelisle/hyperboria/blob/master/doc/Whitepaper.md)
+  + how to [hyperboria-route.conf](https://wiki.projectmeshnet.org/Hyperboria-route.conf)
   + Admin API
 * Community
   + latest news
@@ -29,27 +29,27 @@ If you see something listed here that has been taken care of, please knock it of
   + over iodine
 * Security mechanisms (seccomp, angel/core, etc.)
 * WiFi Recommendations
-* cjdns/contrib/ scripts
+* hyperboria/contrib/ scripts
   + dumpTable
   + systemd/upstart
   + peerStats
   + python/cjdnsadminmaker
 * the build system :(
-  + cjdns/node_build/make.js
+  + hyperboria/node_build/make.js
 * in the media
 * [FAQ](../faq/)
-  + how does cjdns choose which path to take? latency? number of hops?
-    * choosing paths presupposes knowing them, which can get in the way of finding the _optimal_ path. Paths to nodes are stored preferentially based on the [xor metric](../cjdns/functions/Address_xorcmp.md).
-    * the path choice metric is a combination of various factors (latency and number of hops are among them). This is poorly documented, and we need someone to explore the exact details. Contributions should go in `../cjdns/functions/`
+  + how does hyperboria choose which path to take? latency? number of hops?
+    * choosing paths presupposes knowing them, which can get in the way of finding the _optimal_ path. Paths to nodes are stored preferentially based on the [xor metric](../hyperboria/functions/Address_xorcmp.md).
+    * the path choice metric is a combination of various factors (latency and number of hops are among them). This is poorly documented, and we need someone to explore the exact details. Contributions should go in `../hyperboria/functions/`
   + My service doesn't like ipv6. how can I get it to run on hype? [6tunnel?](http://toxygen.net/6tunnel/)
     * inet6 with tcp6 and netcat
   + How can I help?
     * documentation!
     * coding
-      - C - help build cjdroute!
-      - [Android](https://github.com/berlinmeshnet/cjdns-android)
+      - C - help build hyperboria-route!
+      - [Android](https://github.com/berlinmeshnet/hyperboria-android)
       - Go - help jph build zlarkd!
-      - Windows/CrossPlatform devs - Help us make cjdns portable to *all* the devices!
+      - Windows/CrossPlatform devs - Help us make hyperboria portable to *all* the devices!
   + Jargon file
 * [Known bugs && their circumstances](../bugs/index.md)
   + Failure to reestablish connection after disconnect/ipv4 change

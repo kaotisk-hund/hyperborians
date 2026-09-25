@@ -2,16 +2,16 @@
 
 * Private Keys are represented internally as 32 element Uint8 Arrays.
 * Represented in text form as 64 digits of hexadecimal.
-* cjdns does not currently require anything more than the private key at launch time. It derives the public key and ipv6 after loading the private key to avoid errors.
+* hyperboria does not currently require anything more than the private key at launch time. It derives the public key and ipv6 after loading the private key to avoid errors.
 
 ## Public Keys
 
 * The public key is entirely dependent on the privateKey.
 * Represented internally as another 32 element Uint8 Array.
-* Represented in text form as a 52 character string of [cjdns' base32 encoding](https://github.com/ansuz/cjdnsjs/blob/master/scripts/keys/cjdb32.js).
-* cjdns base32 consists of the following characters:
+* Represented in text form as a 52 character string of [hyperboria' base32 encoding](https://github.com/ansuz/cjdnsjs/blob/master/scripts/keys/cjdb32.js).
+* hyperboria base32 consists of the following characters:
   + 0123456789bcdfghjklmnpqrstuvwxyz
-* Any string matching the following regex is **invalid** cjdns base32
+* Any string matching the following regex is **invalid** hyperboria base32
   + /[^0-9b-df-hj-np-z]/
 
 ## IPV6 Addresses
@@ -30,7 +30,7 @@
   + spaces ( )
   + tabs (\t)
   + curly braces ({,})
-  + `<@cjd> be careful of non a-zA-Z0-9_`
+  + `<@hyperboria> be careful of non a-zA-Z0-9_`
 * There may be more invalid characters, please let us know if you find any!
 * They can be generated in bash with the following one-liner:
 

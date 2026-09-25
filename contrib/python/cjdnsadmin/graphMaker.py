@@ -17,8 +17,8 @@ def makeGraph():
     from publicToIp6 import PublicToIp6_convert
     from collections import deque
 
-    cjdns=admin.connect()
-    root=admin.whoami(cjdns)
+    hyperboria=admin.connect()
+    root=admin.whoami(hyperboria)
     rootIP=root['IP']
 
     G=nx.Graph()
@@ -28,7 +28,7 @@ def makeGraph():
     nodes.append(rootIP)
     while len(nodes) != 0:
         parentIP=nodes.popleft()
-        resp=cjdns.NodeStore_nodeForAddr(parentIP)
+        resp=hyperboria.NodeStore_nodeForAddr(parentIP)
         numLinks=0
 	if 'result' in resp:
             link=resp['result']
@@ -37,7 +37,7 @@ def makeGraph():
                 G.node[parentIP[-4:]]['version']=resp['result']['protocolVersion']
 
         for i in range(0,numLinks):
-            resp = cjdns.NodeStore_getLink(i, parent=parentIP)
+            resp = hyperboria.NodeStore_getLink(i, parent=parentIP)
             childLink=resp['result']
             if not childLink: continue
             childAddr=admin.parseAddr(childLink['child'])

@@ -1,5 +1,5 @@
 
-# cjdns
+# hyperboria
 
 [English](README.md)
 [Русская версия](README_RU.md)
@@ -12,16 +12,16 @@
 
 #### *重朔整個網路*
 
-Cjdns 利用「加密的IPv6」及「公鑰加密」來分配網路地址並利用「Distributed Hash Table」逕行路由。它能提供近似「零配置網路（Zero-Configuration Networking）」，並且能防範在現有網路中存在的很多和安全、可擴展性相關的問題。
+Hyperboria 利用「加密的IPv6」及「公鑰加密」來分配網路地址並利用「Distributed Hash Table」逕行路由。它能提供近似「零配置網路（Zero-Configuration Networking）」，並且能防範在現有網路中存在的很多和安全、可擴展性相關的問題。
 
-[![Build Status](https://travis-ci.org/cjdelisle/cjdns.svg?branch=master)](https://travis-ci.org/cjdelisle/cjdns)
+[![Build Status](https://travis-ci.org/cjdelisle/hyperboria.svg?branch=master)](https://travis-ci.org/cjdelisle/hyperboria)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/387/badge)](https://bestpractices.coreinfrastructure.org/projects/387)
-[![tip for next commit](https://tip4commit.com/projects/941.svg)](https://tip4commit.com/github/cjdelisle/cjdns)
-[![irc](https://img.shields.io/badge/irc%20chat-%23cjdns-blue.svg)](https://kiwiirc.com/client/irc.efnet.org/?nick=visitor|?#cjdns)
+[![tip for next commit](https://tip4commit.com/projects/941.svg)](https://tip4commit.com/github/cjdelisle/hyperboria)
+[![irc](https://img.shields.io/badge/irc%20chat-%23hyperboria-blue.svg)](https://kiwiirc.com/client/irc.efnet.org/?nick=visitor|?#hyperboria)
 
 ## 評價
 
-    23:26 <@jercos> well, cjdns is now officially more reliable than the open
+    23:26 <@jercos> well, hyperboria is now officially more reliable than the open
                     internet for getting to my cheaper VPSes :|
 
     12:52 < mariner> so i don't know if it's been done before, and i assume it's
@@ -33,14 +33,14 @@ Cjdns 利用「加密的IPv6」及「公鑰加密」來分配網路地址並利�
 
     <DuoNoxSol> it's notably more reliable than the normal internet
 
-    09:46 < Kubuxu> I so love cjdns code base
+    09:46 < Kubuxu> I so love hyperboria code base
 
     <whyrusleeping> my internet is way better now.
     <whyrusleeping> thanks
     <whyrusleeping> i'm really upset and sad that its better
     <whyrusleeping> but also quite happy
 
-    21:01 <@grewalsat> this is amazing. with my workpalce speedtest.net results I get around 6+mb speed, and with my cjdns-gate as vpn network I'm getting like 11-15mb download speed in speedtest.net
+    21:01 <@grewalsat> this is amazing. with my workpalce speedtest.net results I get around 6+mb speed, and with my hyperboria-gate as vpn network I'm getting like 11-15mb download speed in speedtest.net
     21:01 <@grewalsat> :P
     21:01 <@grewalsat> plus, access anything! :D
 
@@ -48,31 +48,31 @@ Cjdns 利用「加密的IPv6」及「公鑰加密」來分配網路地址並利�
 
 ## 社群
 
-* [irc://irc.efnet.org/#cjdns][IRC Web]
-* [Hyperboria][] 目前最大的 cjdns 網路，至2015年10月止有2100個節點。
+* [irc://irc.efnet.org/#hyperboria][IRC Web]
+* [Hyperboria][] 目前最大的 hyperboria 網路，至2015年10月止有2100個節點。
 * [Project Meshnet][]
 * [/r/darknetplan][]
-* [#cjdns on Twitter][]
+* [#hyperboria on Twitter][]
 
 
 ## 相關文件
 
 * [Project Goals](doc/projectGoals.md)
-* [Cjdns Whitepaper](doc/Whitepaper.md)
-* [Cjdns on Wikipedia][]
+* [Hyperboria Whitepaper](doc/Whitepaper.md)
+* [Hyperboria on Wikipedia][]
 
 進階配置（英文）:
 
-* [Setup a cjdns NAT gateway for your LAN](doc/nat-gateway.md)
-* [Install cjdns on OpenIndiana](doc/open-indiana.md)
+* [Setup a hyperboria NAT gateway for your LAN](doc/nat-gateway.md)
+* [Install hyperboria on OpenIndiana](doc/open-indiana.md)
 
 感謝你的時間和關注
 
-cjdns 開發人員 敬上
+hyperboria 開發人員 敬上
 
 --------------------------------------------------------------------------------
 
-## 如何安裝 cjdns
+## 如何安裝 hyperboria
 
 這些說明雖然是在基於 Debian 的 Linux 發行版系統與 macOS 系統上的，但是已經為在其它發行版作業系統安裝提供了足夠多的信息，只是不要期望可以一字不差的執行指令。
 
@@ -100,11 +100,11 @@ cjdns 開發人員 敬上
 
 利用 [Homebrew](https://brew.sh/) 安裝:
 
-    brew install cjdns
+    brew install hyperboria
 
 利用 [MacPorts](https://www.macports.org/) 安裝:
 
-    sudo port install cjdns
+    sudo port install hyperboria
 
 #### OpenBSD 系統:
 
@@ -122,45 +122,45 @@ cjdns 開發人員 敬上
 
 #### Arch 系統:
 
-你可以用以下指令安裝 cjdns
+你可以用以下指令安裝 hyperboria
 
-    pacman -S cjdns
+    pacman -S hyperboria
 
 如果你需要從原始碼重新編譯，所有需要的程式可以用以下方式安裝
 
     pacman -S nodejs git base-devel
     
-另外，你可能會想利用 AUR 安裝包裝 `cjdns-git`。
-安裝完成後，配置檔在 `/etc/cjdroute.conf`。
-用以下指令啟動 `cjdns.service`：
+另外，你可能會想利用 AUR 安裝包裝 `hyperboria-git`。
+安裝完成後，配置檔在 `/etc/hyperboria-route.conf`。
+用以下指令啟動 `hyperboria.service`：
 
-        systemctl start cjdns
+        systemctl start hyperboria
 
 停止指令：
 
-       systemctl stop cjdns
+       systemctl stop hyperboria
 
-### 1. 從 GitHub 取得 cjdns 
+### 1. 從 GitHub 取得 hyperboria 
 
 從 Github 複製 Repository 並切換至下載檔案資料夾：
 
-    git clone https://github.com/cjdelisle/cjdns.git cjdns
-    cd cjdns
+    git clone https://github.com/cjdelisle/hyperboria.git hyperboria
+    cd hyperboria
 
 ### 2. 初始化
 
     ./do
 
-當你看見 `Build completed successfully, type ./cjdroute to begin setup.`，
+當你看見 `Build completed successfully, type ./hyperboria-route to begin setup.`，
 再繼續以下步驟:
 
 --------------------------------------------------------------------------------
 
 ## 安裝
 
-不帶參數執行 cjdroute 時會顯示幫助信息：
+不帶參數執行 hyperboria-route 時會顯示幫助信息：
 
-    ./cjdroute
+    ./hyperboria-route
 
 ### 0. 確定你已經準備好必要的資料。
 
@@ -184,7 +184,7 @@ cjdns 開發人員 敬上
 
 ### 1. 產生一個新的配置檔（請先閱讀下方「保護好你的配置檔」部份）
 
-    ./cjdroute --genconf >> cjdroute.conf
+    ./hyperboria-route --genconf >> hyperboria-route.conf
 
 **保護好你的配置檔！**
 
@@ -193,7 +193,7 @@ cjdns 開發人員 敬上
 
 產生一個僅有你的使用者才有權限讀寫的配置檔：
 
-    (umask 077 && ./cjdroute --genconf > cjdroute.conf)
+    (umask 077 && ./hyperboria-route --genconf > hyperboria-route.conf)
 
 
 ### 2. 找一個朋友
@@ -327,22 +327,22 @@ cjdns 開發人員 敬上
 
 ### 5. 開始使用！
 
-    sudo ./cjdroute < cjdroute.conf
+    sudo ./hyperboria-route < hyperboria-route.conf
 
 如果你希望將紀錄存成一個檔案：
 
-    sudo ./cjdroute < cjdroute.conf > cjdroute.log
+    sudo ./hyperboria-route < hyperboria-route.conf > hyperboria-route.log
 
-停止 cjdns:
+停止 hyperboria:
 
-    sudo killall cjdroute
+    sudo killall hyperboria-route
 
-如果出現問題用 `killall cjdroute` 指令來結束一切。
-用 `pgrep cjdroute` 或 `top` 指令來確認是否正在執行。
+如果出現問題用 `killall hyperboria-route` 指令來結束一切。
+用 `pgrep hyperboria-route` 或 `top` 指令來確認是否正在執行。
 
 **注意！**
 
-這將會讓 cjdns 以 Root 權限執行並設定你的系統，避免要求權限等提示。 請參閱[doc/non-root-user.md](doc/non-root-user.md) 來以非 Root 權限執行。
+這將會讓 hyperboria 以 Root 權限執行並設定你的系統，避免要求權限等提示。 請參閱[doc/non-root-user.md](doc/non-root-user.md) 來以非 Root 權限執行。
 
 
 ### 6. 加入 IRC
@@ -352,12 +352,12 @@ cjdns 開發人員 敬上
 
 ## 管理者界面
 
-當 cjdroute 正在執行時，你可以在 `udp://localhost:11234` 看到管理者界面 (這可以在 `cjdroute.conf` 更改). 這個檔案 [doc/admin-api.md](doc/admin-api.md) 有更多有關管理者界面的資訊。一些在 `contrib/` 的工具可以配合使用。
+當 hyperboria-route 正在執行時，你可以在 `udp://localhost:11234` 看到管理者界面 (這可以在 `hyperboria-route.conf` 更改). 這個檔案 [doc/admin-api.md](doc/admin-api.md) 有更多有關管理者界面的資訊。一些在 `contrib/` 的工具可以配合使用。
 
 你可以透過以下方式使用 Admin API ：
 
 * **Python library**; 按 [這裡](contrib/python/README.md).
-* **Perl library**, 由 Mikey 維護; 按 [這裡](contrib/perl/CJDNS/README).
+* **Perl library**, 由 Mikey 維護; 按 [這裡](contrib/perl/HYPERBORIA/README).
 
 
 ## 回報問題
@@ -371,18 +371,18 @@ cjdns 開發人員 敬上
 
 ### 安全
 安全問題應該同樣與其他 Bug 一樣在 IRC 回報。 我們並沒有一個擁有特殊技術的封閉團隊，所以預設的安全問題回報是完全公開。
-請參閱： https://github.com/cjdelisle/cjdns/blob/master/doc/security_specification.md 來確認可能安全問題是真的安全問題。
+請參閱： https://github.com/cjdelisle/hyperboria/blob/master/doc/security_specification.md 來確認可能安全問題是真的安全問題。
 
 
-[IRC Web]: http://chat.efnet.org/irc.cgi?chan=%23cjdns
+[IRC Web]: http://chat.efnet.org/irc.cgi?chan=%23hyperboria
 [Hyperboria]: http://hyperboria.net
 [Project Meshnet]: https://projectmeshnet.org
 [/r/darknetplan]: http://www.reddit.com/r/darknetplan
-[#cjdns on Twitter]: https://twitter.com/hashtag/cjdns
+[#hyperboria on Twitter]: https://twitter.com/hashtag/hyperboria
 [Hyperboria Map]: http://www.fc00.org/
-[Buildbots]: https://buildbot.meshwith.me/cjdns/waterfall
+[Buildbots]: https://buildbot.meshwith.me/hyperboria/waterfall
 
-[Cjdns on Wikipedia]: https://en.wikipedia.org/wiki/Cjdns
+[Hyperboria on Wikipedia]: https://en.wikipedia.org/wiki/Hyperboria
 [Distributed Hash Table]: https://en.wikipedia.org/wiki/Distributed_hash_table
 [Beyond Pain]: https://lists.torproject.org/pipermail/tor-dev/2012-October/004063.html
 [Kademlia]: https://en.wikipedia.org/wiki/Kademlia

@@ -10,7 +10,7 @@ distributed IP address allocation, and DHT-based Source Routing.
 - Low entry barriers for users and ISPs
 - Runs on Linux, Android, OpenWrt, OS X, and many others
 
-Hyperboria is based on the cjdns routing protocol.
+Hyperboria is based on the hyperboria routing protocol.
 
 You can contribute to its documentaion: https://github.com/hyperboria/docs
 
@@ -28,7 +28,7 @@ You can contribute to its documentaion: https://github.com/hyperboria/docs
 - [Glossary](faq/glossary.md)
 
 
-## The cjdns routing protocol
+## The hyperboria routing protocol
 
 - About
   - [Goals](projectGoals.md) ([russian](projectGoals_ru.md))
@@ -52,20 +52,20 @@ You can contribute to its documentaion: https://github.com/hyperboria/docs
     - [Securing your Windows system](notes/windows-firewall.md)
 - Usage
   - [Setup](configure.md)
-  - [Operator guidelines](cjdns/Operator_Guidelines.md)
+  - [Operator guidelines](hyperboria/Operator_Guidelines.md)
   - [Securing your system](network-services.md)
   - [Tools](tools/index.md) *TODO*
     - [Third party tools](ctrls.md)
   - [Admin API](admin-api.md)
-- Working with cjdns
-  - [Anatomy of cjdroute](cjdns/anatomy.md)
-  - [Peering over UDP](cjdns/peering-over-UDP-IP.md)
-  - [nodeinfo.json](cjdns/nodeinfo-json.md)
-  - [Changelog](cjdns/changelog.md)
+- Working with hyperboria
+  - [Anatomy of hyperboria-route](hyperboria/anatomy.md)
+  - [Peering over UDP](hyperboria/peering-over-UDP-IP.md)
+  - [nodeinfo.json](hyperboria/nodeinfo-json.md)
+  - [Changelog](hyperboria/changelog.md)
 - HowTo
-  - [Using cjdns as a VPN](tunnel.md)
+  - [Using hyperboria as a VPN](tunnel.md)
   - [Shorewall and VPN gateway](shorewall_and_vpn_gateway_howto.md)
-  - [NAT gateway for non-cjdns nodes](nat-gateway.md)
+  - [NAT gateway for non-hyperboria nodes](nat-gateway.md)
   - [Autostart at login](autostart-at-login.md)
   - [Run as non-root user](non-root-user.md)
 - Troubleshooting
@@ -90,9 +90,9 @@ These notes are unstructured, and most of them likely outdated.
 
 * [Interesting links](notes/links.md)
 * [ansuz' Q&A with Arceliar](notes/arc-workings.md)
-* [cjdns-core](notes/cjdns-core.md)
+* [hyperboria-core](notes/hyperboria-core.md)
 * [cryptography](notes/cryptography.md)
-* [cjdroute.conf](notes/cjdroute.md)
+* [hyperboria-route.conf](notes/hyperboria-route.md)
 * [./do](notes/do.md)
 * [DNS ideas](notes/dns.md)
 * [DJC layer model](djc_layer_model.md)

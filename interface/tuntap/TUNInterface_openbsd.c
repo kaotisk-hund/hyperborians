@@ -66,7 +66,7 @@ Er_DEFUN(struct Iface* TUNInterface_new(const char* interfaceName,
         close(tunFd);
         Er_raise(alloc, "%s [%s]", "open(\"/dev/tunX\")", strerror(err));
     }
-    // Since devices are numbered rather than named, it's not possible to have tun0 and cjdns0
+    // Since devices are numbered rather than named, it's not possible to have tun0 and hyperboria0
     // so we'll skip the pretty names and call everything tunX
     if (assignedInterfaceName) {
         if (ppa == -1) {

@@ -13,7 +13,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// TODO(cjd): this is nasty, we need a wrapper.
+// TODO(hyperboria): this is nasty, we need a wrapper.
 #include "util/events/libuv/UvWrapper.h"
 #include "util/events/libuv/EventBase_pvt.h"
 

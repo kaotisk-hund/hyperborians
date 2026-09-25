@@ -1,6 +1,6 @@
 # Configurator.c: Timed out waiting for a response
 
-In some scenario cjdns could fail at starting up with the following cryptic
+In some scenario hyperboria could fail at starting up with the following cryptic
 messages:
 
 ```
@@ -14,7 +14,7 @@ messages:
 
 ## Cause
 
-cjdns is configured via the admin interface, listening by default on
+hyperboria is configured via the admin interface, listening by default on
 `localhost`, port `11234`.
 
 However, there are some machine configurations where the firewall has a default
@@ -49,7 +49,7 @@ Piece of cake: just run `iptables -t filter -P INPUT ACCEPT`.
 ### Add an exception for loopback traffic
 
 This solution is more complex, but allows you to retain your full firewall
-functionality while allowing cjdns at the same time.
+functionality while allowing hyperboria at the same time.
 You have to allow both inbound and outbound traffic on the loopback interface,
 usually named `lo`. That name is the one which is going to be used in the
 following code snippet.

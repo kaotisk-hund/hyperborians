@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-var Cjdns = require('./lib/cjdnsadmin/cjdnsadmin');
+var Hyperboria = require('./lib/hyperboriaadmin/hyperboriaadmin');
 var PublicToIp6 = require('./lib/publicToIp6');
 
 var distance = function (myAddr, theirAddr) {
@@ -28,12 +28,12 @@ var distance = function (myAddr, theirAddr) {
     return 127;
 };
 
-Cjdns.connectWithAdminInfo(function (cjdns) {
+Hyperboria.connectWithAdminInfo(function (hyperboria) {
 
     var list = [];
 
     var again = function (i) {
-        cjdns.NodeStore_dumpTable(i, function (err, table) {
+        hyperboria.NodeStore_dumpTable(i, function (err, table) {
             if (err) { throw err; }
             var j;
             for (j = 0; j < table.routingTable.length; j++) {
@@ -55,7 +55,7 @@ Cjdns.connectWithAdminInfo(function (cjdns) {
                 });
 
                 console.log(table.count + ' nodes ' + table.peers + ' peers');
-                cjdns.disconnect();
+                hyperboria.disconnect();
             }
         });
     };

@@ -125,7 +125,7 @@ static Iface_DEFUN receiveMessage(struct Message* msg, struct Iface* external)
         uint16_t ethertype = Er_assert(TUNMessageType_pop(msg));
         if (ethertype != Ethernet_TYPE_IP6) {
         } else if (isNeighborSolicitation(msg, ns)) {
-            //TODO(cjdns, Kubuxu): Filtering basing on cjdns network and tunnels.
+            //TODO(hyperboria, Kubuxu): Filtering basing on hyperboria network and tunnels.
             return answerNeighborSolicitation(msg, ns);
         }
         Er_assert(TUNMessageType_push(msg, ethertype));

@@ -1,4 +1,4 @@
-# cjdns
+# hyperboria
 
 [English](README.md)
 [Русская версия](README_RU.md)
@@ -11,17 +11,17 @@
 
 #### *Umrežavanje iznova*
 
-Cjdns je šifrirana IPv6 mreža koja koristi public-key kriptografiju za
+Hyperboria je šifrirana IPv6 mreža koja koristi public-key kriptografiju za
 dodjelu adresa i DHT za usmjeravanje. To omogućuje gotovo nikakvu
 mrežnu konfiguraciju i sprječava mnoge sigurnosne i
 skalabilne probleme koje muče trenutne mreže.
 
-[![Build Status](https://api.travis-ci.org/cjdelisle/cjdns.svg?branch=master)](https://travis-ci.org/cjdelisle/cjdns)
-[![napojnica za sljedeću promjenu](https://tip4commit.com/projects/941.svg)](https://tip4commit.com/github/cjdelisle/cjdns)
+[![Build Status](https://api.travis-ci.org/cjdelisle/hyperboria.svg?branch=master)](https://travis-ci.org/cjdelisle/hyperboria)
+[![napojnica za sljedeću promjenu](https://tip4commit.com/projects/941.svg)](https://tip4commit.com/github/cjdelisle/hyperboria)
 
 ## Iskustva
 
-    23:26 <@jercos> well, cjdns is now officially more reliable than the open
+    23:26 <@jercos> well, hyperboria is now officially more reliable than the open
                     internet for getting to my cheaper VPSes :|
 
     12:52 < mariner> so i don't know if it's been done before, and i assume it's
@@ -38,32 +38,32 @@ skalabilne probleme koje muče trenutne mreže.
 
 ## Zajednica
 
-* irc://irc.efnet.org/#cjdns ([web client][IRC Web])
+* irc://irc.efnet.org/#hyperboria ([web client][IRC Web])
 * [Hyperboria][]
 * [Projekt Meshnet][]
 * [/r/darknetplan][]
-* [#cjdns na Twitteru][]
+* [#hyperboria na Twitteru][]
 
 
 ## Dokumentacija
 
 * [Ciljevi projekta](doc/projectGoals.md)
-* [Cjdns Whitepaper](doc/Whitepaper.md)
-* [Cjdns na Wikipediji][]
+* [Hyperboria Whitepaper](doc/Whitepaper.md)
+* [Hyperboria na Wikipediji][]
 
 
 Napredna konfiguracija:
 
-* [Setup a cjdns NAT gateway for your LAN](doc/nat-gateway.md)
-* [Instaliraj cjdns na OpenIndiani](doc/open-indiana.md)
+* [Setup a hyperboria NAT gateway for your LAN](doc/nat-gateway.md)
+* [Instaliraj hyperboria na OpenIndiani](doc/open-indiana.md)
 
 Hvala Vam za vaše vrijeme i interes,
 
-Cjdns programeri.
+Hyperboria programeri.
 
 --------------------------------------------------------------------------------
 
-## Kako instalirati cjdns
+## Kako instalirati hyperboria
 
 Ove instrukcije su namijenjene za distribucije bazirane na Debian Linux-u i macOS-u.
 Trebale bi biti dovoljno informativne za korištenje na ostalim distribucijama,
@@ -94,11 +94,11 @@ it will be downloaded and installed in the source tree.
 
 Instalacija putem [Homebrewa](https://brew.sh/):
 
-    brew install cjdns
+    brew install hyperboria
 
 Instalacija putem [MacPortsa](https://www.macports.org/):
 
-    sudo port install cjdns
+    sudo port install hyperboria
 
 #### OpenBSD:
 
@@ -112,27 +112,27 @@ Odaberite verziju gcc-4.8.1p2 ili noviju.
     
 #### Arch:
 
-Možete instalirati cjdns sljedećom naredbom;
+Možete instalirati hyperboria sljedećom naredbom;
 
-    pacman -S cjdns
+    pacman -S hyperboria
 
 If you need to build from source, everything you need can be installed like this
 
     pacman -S nodejs git base-devel
 
-Alternatively, you may like to install via AUR from the package, `cjdns-git`.
-Nakon instalacije konfiguracijska datoteka će se nalaziti u `/etc/cjdroute.conf`.
-Za pokrenuti servis `cjdns.service`, pokrenite sljedeću naredbu:
+Alternatively, you may like to install via AUR from the package, `hyperboria-git`.
+Nakon instalacije konfiguracijska datoteka će se nalaziti u `/etc/hyperboria-route.conf`.
+Za pokrenuti servis `hyperboria.service`, pokrenite sljedeću naredbu:
 
-        systemctl start cjdns
+        systemctl start hyperboria
 
 Za zaustavljanje:
 
-       systemctl stop cjdns
+       systemctl stop hyperboria
 
 #### Gentoo:
 
-cjdns is not yet in the main Gentoo repository, so you will have to use an overlay.
+hyperboria is not yet in the main Gentoo repository, so you will have to use an overlay.
 The easiest way is to use Layman but you can do it by hand, too.
 
 ##### Layman:
@@ -150,9 +150,9 @@ For future update of the overlay use
 
       layman -S
 
-Now you can install cjdns
+Now you can install hyperboria
 
-      emerge cjdns
+      emerge hyperboria
 
 ##### By hand:
 
@@ -176,20 +176,20 @@ Now sync
 
        emerge --sync
 
-And install cjdns
+And install hyperboria
 
-   emerge cjdns
+   emerge hyperboria
 
 #### Automatic crash detection and restart
 
 Copy the the openrc init script from `contrib/openrc` to `/etc/init.d/` and modify the `CONFFILE` and `command` parameter to your needs.
-Then start cjdns by issuing
+Then start hyperboria by issuing
 
-   /etc/init.d/cjdns start
+   /etc/init.d/hyperboria start
 
-Configure the init system to autostart cjdns
+Configure the init system to autostart hyperboria
 
-   rc-update add cjdns default
+   rc-update add hyperboria default
 
 Copy the service_restart script `contrib/gentoo/service_restart.sh` to any convenient directory on
 your system and modify the eMail address. If you do not wish to be notified, comment out the whole line.
@@ -208,26 +208,26 @@ Then Follow the steps below:
 
 *Sorry for so many steps. A package is being worked on currently*
     
-### 1. Preuzmite cjdns sa GitHuba
+### 1. Preuzmite hyperboria sa GitHuba
 
 Clone the repository from GitHub and change to the source directory:
 
-    git clone https://github.com/cjdelisle/cjdns.git cjdns
-    cd cjdns
+    git clone https://github.com/cjdelisle/hyperboria.git hyperboria
+    cd hyperboria
 
 ### 2. Build
 
     ./do
 
-Potražite `Build completed successfully, type ./cjdroute to begin setup.`, zatim nastavite:
+Potražite `Build completed successfully, type ./hyperboria-route to begin setup.`, zatim nastavite:
 
 --------------------------------------------------------------------------------
 
 ## Setup
 
-Run cjdroute without options for HELP:
+Run hyperboria-route without options for HELP:
 
-    ./cjdroute
+    ./hyperboria-route
 
 ### 0. Provjerite imate li potrebne stvari
 
@@ -251,7 +251,7 @@ Ako ste na macOSu, ne morate se brinuti u vezi ove greške.
 
 ### 1. Stvorite novu konfiguracijsku datoteku
 
-    ./cjdroute --genconf >> cjdroute.conf
+    ./hyperboria-route --genconf >> hyperboria-route.conf
 
 **Zaštitite Vašu konfiguraciju!** A lost conf file means you lost your password and
 connections and anyone who connected to you will no longer be able to connect.
@@ -261,7 +261,7 @@ network.
 To set generate a conf file with permissions set so that only your user can
 read it and write to it:
 
-    (umask 077 && ./cjdroute --genconf > cjdroute.conf)
+    (umask 077 && ./hyperboria-route --genconf > hyperboria-route.conf)
 
 
 ### 2. Pronađite prijatelja
@@ -383,7 +383,7 @@ but traffic flows both ways once the connection is established.
 
 
 See [doc/configure.md](doc/configure.md) for more details on configuration,
-including how to peer with other cjdns nodes over ethernet and wifi.
+including how to peer with other hyperboria nodes over ethernet and wifi.
 
 
 ### 4. Zaštitite Vaš sustav - check for listening services
@@ -398,21 +398,21 @@ Pogledajte [doc/network-services.md](doc/network-services.md) za instrukcije.
 
 ### 5. Pokrenite ga!
 
-    sudo ./cjdroute < cjdroute.conf
+    sudo ./hyperboria-route < hyperboria-route.conf
 
 Ako želite da se logovi zapisuju u datoteku:
 
-    sudo ./cjdroute < cjdroute.conf > cjdroute.log
+    sudo ./hyperboria-route < hyperboria-route.conf > hyperboria-route.log
 
-Za zaustavljanje cjdns-a:
+Za zaustavljanje hyperboria-a:
 
-    sudo killall cjdroute
+    sudo killall hyperboria-route
 
-Ako imate problema koristite `killall cjdroute`.
-Koristite `pgrep cjdroute` ili `top` kako bi ste provjerili radi li cjdns.
+Ako imate problema koristite `killall hyperboria-route`.
+Koristite `pgrep hyperboria-route` ili `top` kako bi ste provjerili radi li hyperboria.
 
-**Note:** ovo pokreće cjdns kao putem korisnika tako da može konfigurirati Vaš sustav
-bez potrebnih dozvola. Za pokretanje cjdns-a putem običnog korisnika, pogledajte
+**Note:** ovo pokreće hyperboria kao putem korisnika tako da može konfigurirati Vaš sustav
+bez potrebnih dozvola. Za pokretanje hyperboria-a putem običnog korisnika, pogledajte
 [doc/non-root-user.md](doc/non-root-user.md).
 
 
@@ -426,7 +426,7 @@ Budite na [IRC-u](#community) kako bi vas ljudi mogli kontaktirati.
 ## Administratorsko sučelje
 
 Kada je cjdnroute pokrenut, administratorsko sučelje biti će dostupna na
-`udp://localhost:11234` (ovo se može promijeniti u cjdroute.conf
+`udp://localhost:11234` (ovo se može promijeniti u hyperboria-route.conf
 konfiguracijskoj datoteci). Pogledajte [doc/admin-api.md](doc/admin-api.md) za više
 informacija o administratorskom sučelju. U `contrib/` se nalazi nekoliko alata
 s kojima može komunicirati.
@@ -436,17 +436,17 @@ Možete pristupiti administratorskom API-ju putem:
 * the **Python library**; pogledajte
   [contrib/python/README.md](contrib/python/README.md).
 * the **Perl library**, održava Mikey; pogledajte
-  [contrib/perl/CJDNS/README](contrib/perl/CJDNS/README).
+  [contrib/perl/HYPERBORIA/README](contrib/perl/HYPERBORIA/README).
 
 
-[IRC Web]: http://chat.efnet.org/irc.cgi?chan=%23cjdns
+[IRC Web]: http://chat.efnet.org/irc.cgi?chan=%23hyperboria
 [Hyperboria]: https://hyperboria.net
 [/r/darknetplan]: https://www.reddit.com/r/darknetplan
-[#cjdns na Twitteru]: https://twitter.com/hashtag/cjdns
+[#hyperboria na Twitteru]: https://twitter.com/hashtag/hyperboria
 [Hyperboria Map]: https://www.fc00.org/
-[Buildbots]: https://buildbot.meshwith.me/cjdns/waterfall
+[Buildbots]: https://buildbot.meshwith.me/hyperboria/waterfall
 
-[Cjdns na Wikepediji]: https://en.wikipedia.org/wiki/Cjdns
+[Hyperboria na Wikepediji]: https://en.wikipedia.org/wiki/Hyperboria
 [Distribuirana hash tablica]: https://en.wikipedia.org/wiki/Distributed_hash_table
 [Beyond Pain]: https://lists.torproject.org/pipermail/tor-dev/2012-October/004063.html
 [Kademlia]: https://en.wikipedia.org/wiki/Kademlia

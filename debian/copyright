@@ -1,6 +1,6 @@
 Format: http://dep.debian.net/deps/dep5
-Upstream-Name: cjdns
-Source: https://github.com/cjdelisle/cjdns/
+Upstream-Name: hyperboria
+Source: https://github.com/cjdelisle/hyperboria/
 
 Files: *
 Copyright: 2010-2013 Caleb James DeLisle

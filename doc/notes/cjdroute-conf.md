@@ -1,8 +1,8 @@
 # What does everything in your configuration file do?
 
-If you've never worked with [JSON](https://en.wikipedia.org/wiki/JSON) before, you might feel a little overwhelmed editing your  **cjdroute.conf** for the first time.
+If you've never worked with [JSON](https://en.wikipedia.org/wiki/JSON) before, you might feel a little overwhelmed editing your  **hyperboria-route.conf** for the first time.
 
-One thing that makes matters more difficult is that your cjdroute.conf is **not** actually valid JSON.
+One thing that makes matters more difficult is that your hyperboria-route.conf is **not** actually valid JSON.
 
 This document will:
 
@@ -56,11 +56,11 @@ This document will:
 
 ### privateKey, publicKey, ipv6
 
-As indicated in [this article on cjdns' cryptographic functions](cryptography.md), your ipv6 is derived from your publicKey, which is in turn derived from your privateKey.
+As indicated in [this article on hyperboria' cryptographic functions](cryptography.md), your ipv6 is derived from your publicKey, which is in turn derived from your privateKey.
 
-**cjdroute --genconf** produces a sample configuration file which includes all three, but they are not all actually required to launch your router.
+**hyperboria-route --genconf** produces a sample configuration file which includes all three, but they are not all actually required to launch your router.
 
-Instead, cjdns only uses your privateKey, then derives the rest. As such, the publicKey and ipv6 are only there for your benefit.
+Instead, hyperboria only uses your privateKey, then derives the rest. As such, the publicKey and ipv6 are only there for your benefit.
 
 ### authorizedPasswords
 

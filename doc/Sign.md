@@ -1,6 +1,6 @@
 # Signing
 
-Cjdns allows for signing and verification of messages using the RPC. To sign a message you need to send an authenticated RPC message to `Sign_sign()` RPC endpoint and to verify, you send a request (authentication not necessary) to `Sign_checkSig()`.
+Hyperboria allows for signing and verification of messages using the RPC. To sign a message you need to send an authenticated RPC message to `Sign_sign()` RPC endpoint and to verify, you send a request (authentication not necessary) to `Sign_checkSig()`.
 
 ## Sign_sign()
 
@@ -8,7 +8,7 @@ Cjdns allows for signing and verification of messages using the RPC. To sign a m
 * **msgHash**: `string`: is a short string (less than or equal to 64 bytes).
 
 If you have a large message to sign, you should instead hash the message and sign the hash. `Sign_sign()` uses
-the private key of the cjdns node to sign with.
+the private key of the hyperboria node to sign with.
 
 Result:
 * **error**: `string`: "none" or a string representing the error
@@ -16,7 +16,7 @@ Result:
 
 ### Example of signing
 ```
-user@underscore cjdns % ./tools/cexec 'Sign_sign("test message")'
+user@underscore hyperboria % ./tools/cexec 'Sign_sign("test message")'
 {
   "error": "none",
   "signature": "0ytl2njc1hy86tlxtc2zc3449up47uqb0u04kcy233d7zrn2cwh1_y96duzwpvmslj8b7pnk2b32m0rhs738yujwtrtlcq81r0u114svygwn56phn9yncpyzhswpj3bd808lgd5bknlj8xwf7purl0r0hc30",
@@ -31,12 +31,12 @@ user@underscore cjdns % ./tools/cexec 'Sign_sign("test message")'
 
 Result:
 * **error**: `string`: "none" or a string representing the error
-* **ipv6**: `string` (optional): If the signature is valid, the cjdns IPv6 address of the signer.
+* **ipv6**: `string` (optional): If the signature is valid, the hyperboria IPv6 address of the signer.
 * **pubkey**: `string` (optional): If the signature is valid, the pubkey of the signer.
 
 ### Example of signature verification
 ```
-user@underscore cjdns % ./tools/cexec 'Sign_checkSig("0ytl2njc1hy86tlxtc2zc3449up47uqb0u04kcy233d7zrn2cwh1_y96duzwpvmslj8b7pnk2b32m0rhs738yujwtrtlcq81r0u114svygwn56phn9yncpyzhswpj3bd808lgd5bknlj8xwf7purl0
+user@underscore hyperboria % ./tools/cexec 'Sign_checkSig("0ytl2njc1hy86tlxtc2zc3449up47uqb0u04kcy233d7zrn2cwh1_y96duzwpvmslj8b7pnk2b32m0rhs738yujwtrtlcq81r0u114svygwn56phn9yncpyzhswpj3bd808lgd5bknlj8xwf7purl0
 r0hc30", "test message")'
 {
   "error": "none",
@@ -48,7 +48,7 @@ r0hc30", "test message")'
 
 ### Example with wrong message
 ```
-user@underscore cjdns % ./tools/cexec 'Sign_checkSig("0ytl2njc1hy86tlxtc2zc3449up47uqb0u04kcy233d7zrn2cwh1_y96duzwpvmslj8b7pnk2b32m0rhs738yujwtrtlcq81r0u114svygwn56phn9yncpyzhswpj3bd808lgd5bknlj8xwf7purl0
+user@underscore hyperboria % ./tools/cexec 'Sign_checkSig("0ytl2njc1hy86tlxtc2zc3449up47uqb0u04kcy233d7zrn2cwh1_y96duzwpvmslj8b7pnk2b32m0rhs738yujwtrtlcq81r0u114svygwn56phn9yncpyzhswpj3bd808lgd5bknlj8xwf7purl0
 r0hc30", "not the right message")'                                       
 {                                                                                                     
   "error": "invalid signature",                                                      
@@ -59,7 +59,7 @@ r0hc30", "not the right message")'
 ### Examples with corrupt signature
 The last character of the signature was changed to an x
 ```
-user@underscore cjdns % ./tools/cexec 'Sign_checkSig("0ytl2njc1hy86tlxtc2zc3449up47uqb0u04kcy233d7zrn2cwh1_y96duzwpvmslj8b7pnk2b32m0rhs738yujwtrtlcq81r0u114svygwn56phn9yncpyzhswpj3bd808lgd5bknlj8xwf7purl0
+user@underscore hyperboria % ./tools/cexec 'Sign_checkSig("0ytl2njc1hy86tlxtc2zc3449up47uqb0u04kcy233d7zrn2cwh1_y96duzwpvmslj8b7pnk2b32m0rhs738yujwtrtlcq81r0u114svygwn56phn9yncpyzhswpj3bd808lgd5bknlj8xwf7purl0
 r0hc3x", "test message")'                                                
 {                                                                        
   "error": "malformed signature, failed to decode signature",
@@ -69,7 +69,7 @@ r0hc3x", "test message")'
 
 The separator `_` was replaced with `+`
 ```
-user@underscore cjdns % ./tools/cexec 'Sign_checkSig("0ytl2njc1hy86tlxtc2zc3449up47uqb0u04kcy233d7zrn2cwh1+y96duzwpvmslj8b7pnk2b32m0rhs738yujwtrtlcq81r0u114svygwn56phn9yncpyzhswpj3bd808lgd5bknlj8xwf7purl0
+user@underscore hyperboria % ./tools/cexec 'Sign_checkSig("0ytl2njc1hy86tlxtc2zc3449up47uqb0u04kcy233d7zrn2cwh1+y96duzwpvmslj8b7pnk2b32m0rhs738yujwtrtlcq81r0u114svygwn56phn9yncpyzhswpj3bd808lgd5bknlj8xwf7purl0
 r0hc30", "test message")'                                                
 { 
   "error": "malformed signature, missing separator",
@@ -79,7 +79,7 @@ r0hc30", "test message")'
 
 The first character of the signature was replaced with a `_`
 ```
-user@underscore cjdns % ./tools/cexec 'Sign_checkSig("_ytl2njc1hy86tlxtc2zc3449up47uqb0u04kcy233d7zrn2cwh1_y96duzwpvmslj8b7pnk2b32m0rhs738yujwtrtlcq81r0u114svygwn56phn9yncpyzhswpj3bd808lgd5bknlj8xwf7purl0
+user@underscore hyperboria % ./tools/cexec 'Sign_checkSig("_ytl2njc1hy86tlxtc2zc3449up47uqb0u04kcy233d7zrn2cwh1_y96duzwpvmslj8b7pnk2b32m0rhs738yujwtrtlcq81r0u114svygwn56phn9yncpyzhswpj3bd808lgd5bknlj8xwf7purl0
 r0hc30", "test message")'
 {
   "error": "malformed signature, failed to decode pubkey",

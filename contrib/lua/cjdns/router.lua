@@ -1,8 +1,8 @@
--- Cjdns admin module for Lua
+-- Hyperboria admin module for Lua
 -- Written by Philip Horger
 -- hacked up dumpTable, switchpinger, peerstats
 -- and other oddities by William Fleurant
-common = require 'cjdns/common'
+common = require 'hyperboria/common'
 
 RouterFunctions = {}
 RouterFunctions.__index = RouterFunctions

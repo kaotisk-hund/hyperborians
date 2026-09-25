@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-var Cjdns = require('./lib/cjdnsadmin/cjdnsadmin');
+var Hyperboria = require('./lib/hyperboriaadmin/hyperboriaadmin');
 var nThen = require('nthen');
 var PublicToIP6 = require('./lib/publicToIp6');
 var Dns =  require('dns');
@@ -41,10 +41,10 @@ var main = function (argv) {
 
     var target = argv[argv.length-1];
 
-    var cjdns;
+    var hyperboria;
     nThen(function (waitFor) {
 
-        Cjdns.connectWithAdminInfo(waitFor(function (c) { cjdns = c; }));
+        Hyperboria.connectWithAdminInfo(waitFor(function (c) { hyperboria = c; }));
 
         if (!IP6_REGEX.test(target)) {
             Dns.lookup(target, 6, waitFor(function (err, res) {
@@ -70,11 +70,11 @@ var main = function (argv) {
         var handleMessage = function (err, msg) {
             if (err) { throw err; }
             if (msg.error && msg.error !== 'none') {
-                cjdns.disconnect();
+                hyperboria.disconnect();
                 console.log(msg);
             }
             if (msg.complete === "1") {
-                cjdns.disconnect();
+                hyperboria.disconnect();
                 console.log("Done -- first result in " + (timeOfFirstFind - startTime) + "ms." +
                             " total: " + ((new Date()).getTime() - startTime) + "ms.");
                 return;
@@ -93,8 +93,8 @@ var main = function (argv) {
             }
         };
 
-        cjdns.setDefaultHandler(handleMessage);
-        cjdns.SearchRunner_search(target, count, handleMessage);
+        hyperboria.setDefaultHandler(handleMessage);
+        hyperboria.SearchRunner_search(target, count, handleMessage);
     });
 };
 

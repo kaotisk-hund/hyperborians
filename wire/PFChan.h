@@ -285,7 +285,7 @@ enum PFChan_Core
 
     /**
      * Will be emitted by the core when a control message (response) is incoming.
-     * TODO(cjd): This doesn't cover all control message types yet.
+     * TODO(hyperboria): This doesn't cover all control message types yet.
      */
     PFChan_Core_CTRL_MSG = 1037,
 
@@ -349,7 +349,7 @@ struct PFChan_Core_Connect
     /** This pathfinder's ID. */
     uint32_t pathfinderId_be;
 
-    /** The public key of this cjdns node. */
+    /** The public key of this hyperboria node. */
     uint8_t publicKey[32];
 };
 #define PFChan_Core_Connect_SIZE 40

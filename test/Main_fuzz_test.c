@@ -95,7 +95,7 @@ static void checkLinkage(void* vContext)
     Timeout_clearAll(ctx->base);
 }
 
-void* CJDNS_FUZZ_INIT(struct Allocator* allocator, struct Random* rand)
+void* HYPERBORIA_FUZZ_INIT(struct Allocator* allocator, struct Random* rand)
 {
     struct Writer* logwriter = FileWriter_new(stdout, allocator);
     struct Log* logger = WriterLog_new(logwriter, allocator);
@@ -137,7 +137,7 @@ void* CJDNS_FUZZ_INIT(struct Allocator* allocator, struct Random* rand)
     return ctx;
 }
 
-void CJDNS_FUZZ_MAIN(void* vctx, struct Message* msg)
+void HYPERBORIA_FUZZ_MAIN(void* vctx, struct Message* msg)
 {
     if (msg->length > 2048) { return; }
     struct Context* ctx = Identity_check((struct Context*) vctx);

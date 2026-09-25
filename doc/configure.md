@@ -1,19 +1,19 @@
-Configuring cjdns
+Configuring hyperboria
 =================
 
-In this document we are going to go over how to configure cjdns and what exactly each setting means. Note that this is a living document and this software is still in the alpha stages so things are subject to change.
+In this document we are going to go over how to configure hyperboria and what exactly each setting means. Note that this is a living document and this software is still in the alpha stages so things are subject to change.
 
-Let's start from the top of the file. First off you may notice it's JSON, except this JSON has comments. Technically that's not valid but it's also not uncommon. Cjdns strips out the comments before parsing it so no worries.
+Let's start from the top of the file. First off you may notice it's JSON, except this JSON has comments. Technically that's not valid but it's also not uncommon. Hyperboria strips out the comments before parsing it so no worries.
 
 Your Keys and Address
 ---------------------
 
-The top part of the file specifies where the cjdns executable is, your encryption keys, and your cjdns IPv6 address.
+The top part of the file specifies where the hyperboria executable is, your encryption keys, and your hyperboria IPv6 address.
 
 ````javascript
 {
-    // The path to the cjdns core executable.
-    "corePath": "/opt/cjdns/cjdns",
+    // The path to the hyperboria core executable.
+    "corePath": "/opt/hyperboria/hyperboria",
 
     // Private key:
     // Your confidentiality and data integrity depend on this key, keep it secret!
@@ -24,18 +24,18 @@ The top part of the file specifies where the cjdns executable is, your encryptio
     "ipv6": "fcff:a215:1e7b:a4e9:c00d:0813:93b3:7c87",
 ````
 
-- `corePath`: This specifies where the core cjdns executable file is. If you downloaded the source to /opt/cjdns, then the default is fine. If you downloaded it somewhere else, like your home directory for example, then this needs to be updated accordingly.
+- `corePath`: This specifies where the core hyperboria executable file is. If you downloaded the source to /opt/hyperboria, then the default is fine. If you downloaded it somewhere else, like your home directory for example, then this needs to be updated accordingly.
 - `privateKey`: Your private key is part of the system that ensures all the data coming and going out of your computer is encrypted. You must protect your private key. Do not give it out to anyone.
 - `publicKey`: The public key is what your computer gives to other computers to encrypt data with. This data can then only be decrypted with your private key, that way no one can access your information as it moves across the network.
-- `ipv6`: This is your IP address on the cjdns network. It is unique to you and is created by securely hashing your public key.
+- `ipv6`: This is your IP address on the hyperboria network. It is unique to you and is created by securely hashing your public key.
 
-Cjdns provides the publicKey and ipv6 fields for convenience, but does not actually require them. If for some reason you want to remove them from the configuration file, you can. At launch, the privateKey will be used to generate the corresponding publicKey, and the publicKey will be used to find the corresponding ipv6 address. Their relationships are deterministic, and passing only the most fundamental attribute avoids configuration errors.
+Hyperboria provides the publicKey and ipv6 fields for convenience, but does not actually require them. If for some reason you want to remove them from the configuration file, you can. At launch, the privateKey will be used to generate the corresponding publicKey, and the publicKey will be used to find the corresponding ipv6 address. Their relationships are deterministic, and passing only the most fundamental attribute avoids configuration errors.
 
 Incoming Connections
 --------------------
 
 The `authorizedPasswords` section is the area where you can specify passwords to allow people to connect to you. Any system that presents a valid password will be allowed access.
-**NOTE:** These passwords should be long and random. There is no reason to make them short, easily remembered words because they are only going to be used by cjdns.
+**NOTE:** These passwords should be long and random. There is no reason to make them short, easily remembered words because they are only going to be used by hyperboria.
 
 ````javascript
     // Anyone connecting and offering these passwords on connection will be allowed.
@@ -71,7 +71,7 @@ The `authorizedPasswords` section is the area where you can specify passwords to
 Admin Interface
 ---------------
 
-The `admin ` section defines the settings for the administrative interface of cjdns. Many of the scripts in `/contrib/` use this to interact with cjdns. You probably wont need to use anything in there unless you are helping to test something out.
+The `admin ` section defines the settings for the administrative interface of hyperboria. Many of the scripts in `/contrib/` use this to interact with hyperboria. You probably wont need to use anything in there unless you are helping to test something out.
 
 ````javascript
     // Settings for administering and extracting information from your router.
@@ -86,13 +86,13 @@ The `admin ` section defines the settings for the administrative interface of cj
     },
 ````
 
-- `bind`: This tells cjdns what IP and port the admin interface should bind to. Since you don't want random people connecting to your admin interface, it is probably fine to leave it like this.
+- `bind`: This tells hyperboria what IP and port the admin interface should bind to. Since you don't want random people connecting to your admin interface, it is probably fine to leave it like this.
 - `password`: This is the password that is needed in order to perform certain functions through the admin interface. If you wish to expose the admin interface to the network, then you should use a password like the one above. If you are binding only to a local address, then you can use `"NONE"` as a password. This is the new default behaviour on the `crashey` branch, so as to provide an easier default configuration to work with.
 
 Connection Interface(s)
 -----------------------
 
-This specifies the settings for the connection interfaces to your node. Right now most people use the `UDPInterface` to connect to other cjdns peers over the internet or other traditional networks. You may also use `ETHInterface` to physically connect to another machine. Note that this is not a standard TCP/IP connection like you are used to.
+This specifies the settings for the connection interfaces to your node. Right now most people use the `UDPInterface` to connect to other hyperboria peers over the internet or other traditional networks. You may also use `ETHInterface` to physically connect to another machine. Note that this is not a standard TCP/IP connection like you are used to.
 
 ````javascript
     // Interfaces to connect to the switch core.
@@ -115,7 +115,7 @@ This specifies the settings for the connection interfaces to your node. Right no
                 // beaconDevices is a list which can contain names of devices such
                 // as eth0, as well as broadcast addresses to send to, such as
                 // 192.168.101.255, or the pseudo-name "all".
-                // in order to auto-peer, all cjdns nodes must use the same
+                // in order to auto-peer, all hyperboria nodes must use the same
                 // beaconPort.
                 "beacon": 2,
                 "beaconDevices": [ "all" ],
@@ -137,15 +137,15 @@ This specifies the settings for the connection interfaces to your node. Right no
                 // Bind to this device (interface name, not MAC etc.)
                 "bind": "eth0",
 
-                // Auto-connect to other cjdns nodes on the same network.
+                // Auto-connect to other hyperboria nodes on the same network.
                 // Options:
                 //
                 // 0 -- Disabled.
                 //
-                // 1 -- Accept beacons, this will cause cjdns to accept incoming
+                // 1 -- Accept beacons, this will cause hyperboria to accept incoming
                 //      beacon messages and try connecting to the sender.
                 //
-                // 2 -- Accept and send beacons, this will cause cjdns to broadcast
+                // 2 -- Accept and send beacons, this will cause hyperboria to broadcast
                 //      messages on the local network which contain a randomly
                 //      generated per-session password, other nodes which have this
                 //      set to 1 or 2 will hear the beacon messages and connect
@@ -167,7 +167,7 @@ This specifies the settings for the connection interfaces to your node. Right no
 ````
 
 - `UDPInterface`:
-    - `bind`: This tells cjdns what IP and port to use for listening to connections.
+    - `bind`: This tells hyperboria what IP and port to use for listening to connections.
     - `beacon`: his controls peer auto-discovery. Set to 0 to disable auto-peering, 1 to use broadcast
     auto-peering passwords contained in "beacon" messages from other nodes, and 2 to both broadcast and accept beacons.
     - `beaconDevices`: A list of broadcast devices, including device names such as "eth0", address names and the
@@ -180,7 +180,7 @@ This specifies the settings for the connection interfaces to your node. Right no
             "password": "thisIsAnExampleOfAPassword",
             "publicKey": "z4s2EXAMPLEPUBLICKEYEXAMPLEPUBLICKEYEXAMPLEKEY4yjp0.k"
         },
-    It is important to note that while some people may put additional fields in such as `node`, only `password` and `publicKey` are actually read by cjdns.
+    It is important to note that while some people may put additional fields in such as `node`, only `password` and `publicKey` are actually read by hyperboria.
     - more recently generated configuration files will also feature a second block within the `UDPInterface` section, which is to be used to configure UDP peering over IPv6. Such blocks will look like this,
         "[2001:db8::2:1]:12345":
         {
@@ -188,43 +188,43 @@ This specifies the settings for the connection interfaces to your node. Right no
             "publicKey": "z4s2EXAMPLEPUBLICKEYEXAMPLEPUBLICKEYEXAMPLEKEY4yjp0.k"
         },
 - `ETHInterface`:
-    - `bind`: This tells cjdns which device the ETHInterface should bind to. This may be different depending on your setup.
+    - `bind`: This tells hyperboria which device the ETHInterface should bind to. This may be different depending on your setup.
     - `connectTo`: The connectTo for the ETHInterface functions almost exactly like it does for the the UDPInterface, except instead of an IP address and a port at the beginning, it is a MAC address.
     - `beacon`: This controls peer auto-discovery. Set to 0 to disable auto-peering, 1 to use broadcast auto-peering passwords contained in "beacon" messages from other nodes, and 2 to both broadcast and accept beacons.
-    - In earlier versions of cjdns, it was necessary to uncomment the ETHInterface if you want to use it, however, now it is uncommented by default.
+    - In earlier versions of hyperboria, it was necessary to uncomment the ETHInterface if you want to use it, however, now it is uncommented by default.
 
 Router
 ------
 
-This is where you configure routing settings of your cjdns node.
+This is where you configure routing settings of your hyperboria node.
 
 ````javascript
     // Configuration for the router.
     "router":
     {
-        // The interface which is used for connecting to the cjdns network.
+        // The interface which is used for connecting to the hyperboria network.
         "interface":
         {
             // The type of interface (only TUNInterface is supported for now)
             "type": "TUNInterface"
 
             // The name of a persistent TUN device to use.
-            // This for starting cjdroute as its own user.
+            // This for starting hyperboria-route as its own user.
             // *MOST USERS DON'T NEED THIS*
             //"tunDevice": "tun0"
         },
 ````
 
-- `type`: This specifies the type of interface cjdns should use to connect to the network. Only TUNInterface is supported at the moment.
-- `tunDevice`: This specifies which TUN device cjdns should use to connect to the network. Most users do not need this.
+- `type`: This specifies the type of interface hyperboria should use to connect to the network. Only TUNInterface is supported at the moment.
+- `tunDevice`: This specifies which TUN device hyperboria should use to connect to the network. Most users do not need this.
 
 IP Tunneling
 ------------
 
-IP Tunneling will allow you to connect from the cjdns network to another outside network. This is still a work in-progress; although it does function, it requires a bit of manual configuration on both ends to make it useful.
+IP Tunneling will allow you to connect from the hyperboria network to another outside network. This is still a work in-progress; although it does function, it requires a bit of manual configuration on both ends to make it useful.
 ````javascript
         // System for tunneling IPv4 and ICANN IPv6 through cjdn which will eventually be merged to master..
-        // This is using the cjdns switch layer as a VPN carrier.
+        // This is using the hyperboria switch layer as a VPN carrier.
         "ipTunnel":
         {
             // Nodes allowed to connect to us.

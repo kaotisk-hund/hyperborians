@@ -2,17 +2,17 @@
 
 --[[ Variables ]]--
 
-local confpath = "../../cjdroute.conf"
-local cjdns    = require "cjdns/init"
-local conf     = cjdns.ConfigFile.new(confpath)
+local confpath = "../../hyperboria-route.conf"
+local hyperboria    = require "hyperboria/init"
+local conf     = hyperboria.ConfigFile.new(confpath)
 local admin    = conf:makeInterface()
 local keypunch = ""
 local params   = ""
 
 -- Make some new stuff up.
-randomQuote = "<@cjd> I fucking hate Ducttape.c :( \n"
+randomQuote = "<@hyperboria> I fucking hate Ducttape.c :( \n"
 .. "<werecat> Well, it has to be better than krazyglue.c"
--- "    It's not a product, its a process. -cjd"
+-- "    It's not a product, its a process. -hyperboria"
 
 
 --[[ Functions ]]--
@@ -121,7 +121,7 @@ meshLua_cmd = {
 
 	--[[ Other functions not include ]]--
 	-- h = { info = { "[h]yperboria - hype or not." },
-	-- b = { info = { "[b]roadcast meshbox-cjdns Wi-Fi" },
+	-- b = { info = { "[b]roadcast meshbox-hyperboria Wi-Fi" },
 	-- splash = { info = { "[splash] Turn Wi-Fi splash on: /www-federated-wiki/" },
 	-- ping = { info = { "[ping] all connected nodes" },
 
@@ -131,8 +131,8 @@ meshLua_cmd = {
 		function(x)
 
 			local dkjson = require "dkjson"  -- http://dkolf.de/src/dkjson-lua.fsl/home
-			local cjdroute = io.open(confpath)
-			local conf, pos, err = dkjson.decode(cjdroute:read("*a"), 1, nil)
+			local hyperboria-route = io.open(confpath)
+			local conf, pos, err = dkjson.decode(hyperboria-route:read("*a"), 1, nil)
 
 			local page = 0
 			local totalpeers = 0

@@ -8,7 +8,7 @@
 19:44 < ansuz> where to look for documentation, how to explore the network
 19:44 < ansuz> how to format bug reports, where to report them
 
-19:47 <@larsg> what can we do to make things better? -- invent a new name for cjdns
+19:47 <@larsg> what can we do to make things better? -- invent a new name for hyperboria
 
 19:50 <@larsg> what can we do to make things better? -- develop apps which fit the p2p character of the network
 

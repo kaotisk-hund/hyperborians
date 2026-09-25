@@ -1,5 +1,5 @@
 # Shorewall and VPN gateway
-Tutorial for setting up an IP tunnel gateway from cjdns to clearnet, using a VPN and Shorewall.
+Tutorial for setting up an IP tunnel gateway from hyperboria to clearnet, using a VPN and Shorewall.
 
 * From: https://wiki.projectmeshnet.org/Gateway_server_howto
 
@@ -15,7 +15,7 @@ Connect to a VPN provider (I used mullvad.net). Make sure you can pay with bitco
 ```
  #ZONE INTERFACE BROADCAST OPTIONS
  net eth0 detect routefilter,dhcp,tcpflags,logmartians,nosmurfs
- cjdns tun0 detect routefilter,dhcp,tcpflags,logmartians,nosmurfs
+ hyperboria tun0 detect routefilter,dhcp,tcpflags,logmartians,nosmurfs
  vpn tun1 detect routefilter,dhcp,tcpflags,logmartians,nosmurfs
 ```
 ### Zones
@@ -24,7 +24,7 @@ Connect to a VPN provider (I used mullvad.net). Make sure you can pay with bitco
  #                                       OPTIONS                 OPTIONS
  fw      firewall
  net     ipv4
- cjdns   ipv4
+ hyperboria   ipv4
  vpn     ipv4
 ```
 ### Policy
@@ -32,12 +32,12 @@ Connect to a VPN provider (I used mullvad.net). Make sure you can pay with bitco
  #SOURCE         DEST            POLICY          LOG LEVEL       LIMIT:BURST
  $FW             net             ACCEPT
  $FW             vpn             ACCEPT
- cjdns		vpn		ACCEPT
- vpn		cjdns		DROP		info
+ hyperboria		vpn		ACCEPT
+ vpn		hyperboria		DROP		info
  net             $FW             DROP            info
  vpn             $FW             DROP            info
- cjdns		$FW		DROP		info
- $FW		cjdns		DROP		info
+ hyperboria		$FW		DROP		info
+ $FW		hyperboria		DROP		info
  net             all             DROP            info
  # The FOLLOWING POLICY MUST BE LAST
  all             all             REJECT          info
@@ -46,7 +46,7 @@ Connect to a VPN provider (I used mullvad.net). Make sure you can pay with bitco
 ```
  #ACTION         SOURCE                  DEST            PROTO   DEST
  #                                                       PORT
- # Cjdns over vpn:
+ # Hyperboria over vpn:
  ACCEPT          vpn                     $FW             udp     31777
  # ping
  ACCEPT          net                     $FW             icmp    8
@@ -54,15 +54,15 @@ Connect to a VPN provider (I used mullvad.net). Make sure you can pay with bitco
  Ping/REJECT     net                     $FW
  # Permit all ICMP traffic FROM the firewall TO the net zone
  ACCEPT          $FW                     net             icmp
- ACCEPT          $FW                     cjdns           icmp
- ACCEPT          cjdns                   $FW             icmp
+ ACCEPT          $FW                     hyperboria           icmp
+ ACCEPT          hyperboria                   $FW             icmp
 ```
 ## Networking
-Give an IPV4 address to the server side of the cjdns tunnel:
+Give an IPV4 address to the server side of the hyperboria tunnel:
 
  `ip addr add 10.42.0.3/32 dev tun0`
 
-Add route to each client side of the cjdns tunnel:
+Add route to each client side of the hyperboria tunnel:
 
  `ip route add 10.42.42.42 via 10.42.0.3 dev tun0`
 
@@ -100,7 +100,7 @@ For convenience, I check the last 20 characters of the public key (not including
  echo $NODE
  4m1mwsxggjx5kfzfk120.k
 ```
-And I use it as part of the password added to cjdroute.conf under "authorizedPasswords":
+And I use it as part of the password added to hyperboria-route.conf under "authorizedPasswords":
  `{"password":"4m1mwsxggjx5kfzfk120.k.foobarpassword"},`
 
 And under `ipTunnel` `allowedConnections`:

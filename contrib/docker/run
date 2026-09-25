@@ -4,17 +4,17 @@ set -ex
 
 # Usage:
 #   contrib/docker/run [<name>]
-#   docker exec -it cjdns[-<name>] cjdnslog
-#   docker exec -it cjdns[-<name>] peerStats
-#   docker exec -it cjdns[-<name>] sessionState
-#   docker exec -it cjdns[-<name>] dumptable
-#   docker exec -it cjdns[-<name>] <any-command-from-tools/>
-#   cat contrib/docker/cjdns[-<name>]/cjdroute.conf
+#   docker exec -it hyperboria[-<name>] hyperborialog
+#   docker exec -it hyperboria[-<name>] peerStats
+#   docker exec -it hyperboria[-<name>] sessionState
+#   docker exec -it hyperboria[-<name>] dumptable
+#   docker exec -it hyperboria[-<name>] <any-command-from-tools/>
+#   cat contrib/docker/hyperboria[-<name>]/hyperboria-route.conf
 
-# Location of cjdroute.conf within the container
-CONF_DIR="/etc/cjdns"
+# Location of hyperboria-route.conf within the container
+CONF_DIR="/etc/hyperboria"
 
-[ "$1" = "" ] && name="cjdns" || name="cjdns-$1"
+[ "$1" = "" ] && name="hyperboria" || name="hyperboria-$1"
 
 docker build -f contrib/docker/Dockerfile -t $name .
 

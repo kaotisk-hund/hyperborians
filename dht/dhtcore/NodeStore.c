@@ -666,7 +666,7 @@ static struct Node_Link* linkNodes(struct Node_Two* parent,
 #define removeLinkFromLabel_IMPOSSIBLE UINT64_MAX
 #define removeLinkFromLabel_OVERSIZE (UINT64_MAX-1)
 #define removeLinkFromLabel_ERR(x) (((uint64_t)x) >> 63)
-// TODO(cjd): This does not depend on nodeStore or alter the link, consider moving to Node.c
+// TODO(hyperboria): This does not depend on nodeStore or alter the link, consider moving to Node.c
 static uint64_t removeLinkFromLabel(struct Node_Link* link, uint64_t label)
 {
     // First we splice off the parent's Director leaving the child's Director.
@@ -914,7 +914,7 @@ static struct Node_Link* discoverLinkC(struct NodeStore_pvt* store,
     //          will fail (calls to _check() will still succeed). We have linked parent with child
     //          but we have not split all of the splitLinks from parent.
     //
-    // FIXME(arceliar,cjd): linking every node with 0 link cost, this can't be right.
+    // FIXME(arceliar,hyperboria): linking every node with 0 link cost, this can't be right.
     struct Node_Link* parentLink = linkNodes(parent,
                                              child,
                                              pathParentChild,
@@ -1538,7 +1538,7 @@ uint64_t NodeStore_getRouteLabel(struct NodeStore* nodeStore,
             if (linkToParent == store->selfLink) {
                 return linkToChild->cannonicalLabel;
             }
-            // TODO(cjd): this could return ~0
+            // TODO(hyperboria): this could return ~0
             return extendRoute(pathToParent,
                                linkToChild->parent->encodingScheme,
                                linkToChild->cannonicalLabel,
@@ -1558,7 +1558,7 @@ uint64_t NodeStore_optimizePath(struct NodeStore* nodeStore, uint64_t path)
     }
     if (EncodingScheme_isSelfRoute(linkToParent->child->encodingScheme, next)) {
         // cannoicalize all the other wild ways that they can represent self routes.
-        // TODO(cjd): this has been the source of assert failures and we might be sweeping
+        // TODO(hyperboria): this has been the source of assert failures and we might be sweeping
         //            a significant bug under the carpet.
         next = 1;
     }
@@ -1659,7 +1659,7 @@ struct NodeStore* NodeStore_new(struct Address* myAddress,
 struct Node_Two* NodeStore_dumpTable(struct NodeStore* nodeStore, uint32_t index)
 {
     struct NodeStore_pvt* store = Identity_check((struct NodeStore_pvt*)nodeStore);
-    // TODO(cjd): Schlameil the painter
+    // TODO(hyperboria): Schlameil the painter
     uint32_t i = 0;
     struct Node_Two* nn = NULL;
     RB_FOREACH(nn, NodeRBTree, &store->nodeTree) {
@@ -2069,7 +2069,7 @@ void NodeStore_pathTimeout(struct NodeStore* nodeStore, uint64_t path)
     if (!link) { return; }
     struct Node_Two* node = link->child;
 
-    // TODO(cjd): What we really should be doing here is storing this link in a
+    // TODO(hyperboria): What we really should be doing here is storing this link in a
     //            potentially-down-list, after pinging the parent, if the parent does not respond
     //            and then we replace the link with the parent's link and walk backwards up
     //            the tree. If the parent does respond then we keep pinging the child of the path

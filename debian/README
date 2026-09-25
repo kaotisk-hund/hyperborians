@@ -1,20 +1,20 @@
-Ubuntu Packaging for cjdns
+Ubuntu Packaging for hyperboria
 ----------------------------
 
 This packaging is designed for use in daily builds and targets Ubuntu 14.04 and higher.
 
 It provides three binary packages:
- * "cjdns" contains:
-   - cjdns itself
-   - Upstart script for autostart on boot and easy control through commands like "sudo restart cjdns"
-   - skeleton configuration file in /etc/cjdns.conf
-   - advanced tools for messing with cjdns internals in /usr/lib/cjdns
-   - Python modules for interfacing with cjdns admin port for use in your own Python scripts
- * "cjdns-dynamic" contains:
-   - Separate wrapper that allows peering by a dynamic domain name instead of IP address, already chained to cjdns
-   - config file for the said wrapper at /etc/cjdns-dynamic.conf
- * "cjdns-dbgsym":
-   - Debugging symbols for cjdns, useful for reporting and investigating crashes.
+ * "hyperboria" contains:
+   - hyperboria itself
+   - Upstart script for autostart on boot and easy control through commands like "sudo restart hyperboria"
+   - skeleton configuration file in /etc/hyperboria.conf
+   - advanced tools for messing with hyperboria internals in /usr/lib/hyperboria
+   - Python modules for interfacing with hyperboria admin port for use in your own Python scripts
+ * "hyperboria-dynamic" contains:
+   - Separate wrapper that allows peering by a dynamic domain name instead of IP address, already chained to hyperboria
+   - config file for the said wrapper at /etc/hyperboria-dynamic.conf
+ * "hyperboria-dbgsym":
+   - Debugging symbols for hyperboria, useful for reporting and investigating crashes.
 
 The package provides both Upstart and systemd configs and should, in theory,
 work on Debian Jessie. It was not tested.

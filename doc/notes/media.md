@@ -1,4 +1,4 @@
-# Cjdns in the media
+# Hyperboria in the media
 
 ## English
 
@@ -8,15 +8,15 @@ http://marsocial.com/2015/07/the-declaration-of-internet-independence/
 
 http://curiousmatic.com/meet-the-young-techies-who-want-to-change-the-way-nyc-connects-to-the-internet/
 
-https://en.wikipedia.org/wiki/Cjdns
+https://en.wikipedia.org/wiki/Hyperboria
 
 https://www.youtube.com/watch?v=sCFmzGknUew
 
 http://www.newscientist.com/article/mg21929294.500-meshnet-activists-rebuilding-the-internet-from-scratch.html
 
-https://www.fsf.org/blogs/licensing/interview-with-caleb-james-delisle-of-cjdns
+https://www.fsf.org/blogs/licensing/interview-with-caleb-james-delisle-of-hyperboria
 
-http://yourlisten.com/opencu/caleb-james-delisle-of-on-cjdns-a-new-internet-in-8-minutes
+http://yourlisten.com/opencu/caleb-james-delisle-of-on-hyperboria-a-new-internet-in-8-minutes
 
 http://resources.infosecinstitute.com/project-meshnet/
 
@@ -44,7 +44,7 @@ http://www.zive.cz/clanky/sest-alternativnich-a-zapomenutych-internetu/sc-3-a-16
 
 ## German???
 
-http://scratchbook.ch/2013/06/24/cjdns/
+http://scratchbook.ch/2013/06/24/hyperboria/
 
 http://www.nzz.ch/digital/neustart-1.18140845
 

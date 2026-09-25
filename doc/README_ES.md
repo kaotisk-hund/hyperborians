@@ -3,18 +3,18 @@
 
 ## ¿Que es Hyperboria?
 
-Hyperboria es la red de prueba de nodos cjdns
+Hyperboria es la red de prueba de nodos hyperboria
 
-## ¿Que es cjdns?
+## ¿Que es hyperboria?
 
-Cjdns es una suite criptográfica para hacer redes mallas experimentales.
+Hyperboria es una suite criptográfica para hacer redes mallas experimentales.
 
-## ¿Que es notable acerca de cjdns? ¿Porque debería de usarlo?
-Cjdns construye una [red malla](https://es.wikipedia.org/wiki/Red_en_malla) [IPv6](https://es.wikipedia.org/wiki/IPv6) [cifrada punto a punto](https://en.wikipedia.org/wiki/End-to-end_encryption) que utiliza el [espacio de direcciones fc00::/8](https://en.wikipedia.org/wiki/Unique_local_address).
+## ¿Que es notable acerca de hyperboria? ¿Porque debería de usarlo?
+Hyperboria construye una [red malla](https://es.wikipedia.org/wiki/Red_en_malla) [IPv6](https://es.wikipedia.org/wiki/IPv6) [cifrada punto a punto](https://en.wikipedia.org/wiki/End-to-end_encryption) que utiliza el [espacio de direcciones fc00::/8](https://en.wikipedia.org/wiki/Unique_local_address).
 
 ### Cifrado
 
-Cjdns provee un túnel cifrado que utiliza un [set de claves privada/publica](https://es.wikipedia.org/wiki/Criptograf%C3%ADa_asim%C3%A9trica) para cifrar, con [el cifrador en flujo SALSA20](https://en.wikipedia.org/wiki/Salsa20), todo lo que pasa por ello, que otorga al usuario [secrecía sucesiva perfecta](https://es.wikipedia.org/wiki/Perfect_forward_secrecy).
+Hyperboria provee un túnel cifrado que utiliza un [set de claves privada/publica](https://es.wikipedia.org/wiki/Criptograf%C3%ADa_asim%C3%A9trica) para cifrar, con [el cifrador en flujo SALSA20](https://en.wikipedia.org/wiki/Salsa20), todo lo que pasa por ello, que otorga al usuario [secrecía sucesiva perfecta](https://es.wikipedia.org/wiki/Perfect_forward_secrecy).
 
 ### Asignación de Direcciones
 
@@ -22,7 +22,7 @@ La ipv6 asignada a la interfaz TUN, esta compuesta de los primeros 16 bytes de e
 
 ### Topología híbrida
 
-Cjdns fue diseñado para ser usado en una topología de [amigo de una amigo](https://en.wikipedia.org/wiki/Friend_of_a_friend). Construye una [red superpuesta](https://es.wikipedia.org/wiki/Red_superpuesta) que atraviesa la NAT ([Traducción de Direcciones de Red])(https://es.wikipedia.org/wiki/Traducci%C3%B3n_de_direcciones_de_red), exponiendo todos los puertos de cada nodo a cada otro nodo dentro de la red. Aquellos que acostumbran usar la NAT para proteger sus dispositivos pudieran encontrar esto problemático.
+Hyperboria fue diseñado para ser usado en una topología de [amigo de una amigo](https://en.wikipedia.org/wiki/Friend_of_a_friend). Construye una [red superpuesta](https://es.wikipedia.org/wiki/Red_superpuesta) que atraviesa la NAT ([Traducción de Direcciones de Red])(https://es.wikipedia.org/wiki/Traducci%C3%B3n_de_direcciones_de_red), exponiendo todos los puertos de cada nodo a cada otro nodo dentro de la red. Aquellos que acostumbran usar la NAT para proteger sus dispositivos pudieran encontrar esto problemático.
 
 Hasta cierto punto se esperaba que cada persona que conectara, lo haría con solo amigos de confianza. No necesita confiar los nodos intermedios con la confidencialidad o la integridad de los paquetes, sin embargo, si usted desea restringir el acceso a solo unos servicios, es su responsabilidad el implementar reglas efectivas de acceso.
 
@@ -34,10 +34,10 @@ Establecer un enlace entre dos nodos incluye un proceso de autorización criptog
 
 Debido a la relación entre la clave publica de cada nodo y su ipv6, y el hecho de que esta relación esta verificada antes de conectar a un nodo, un usuario puede estar seguro que si conecta con una dirección IPv6 y recibe una respuesta, entonces el nodo que responde posee el clave privada requerida para decifrar la respuesta.
 
-Si puede del todo conectar a cjdns, entonces puedes estar seguro de que el nodo que ha conectado posee la clave privada que corresponde a la IPv6.
+Si puede del todo conectar a hyperboria, entonces puedes estar seguro de que el nodo que ha conectado posee la clave privada que corresponde a la IPv6.
 
 ## ¿Como puedo involucrarme?
 
-Si usted es nuevo a cjdns, usted deseara empezar instalándolo en algún lugar y familiarizarse por su cuenta como es que trabaja. Tome notas de todo lo que usted encuentre difícil, poco intuitivo, o pobremente documentado, y comparta su conocimiento de tal manera que la próxima persona que instale cjdns y después de leer la documentación, tenga una buena experiencia.
+Si usted es nuevo a hyperboria, usted deseara empezar instalándolo en algún lugar y familiarizarse por su cuenta como es que trabaja. Tome notas de todo lo que usted encuentre difícil, poco intuitivo, o pobremente documentado, y comparta su conocimiento de tal manera que la próxima persona que instale hyperboria y después de leer la documentación, tenga una buena experiencia.
 
 También, lea nuestro documento de como [contribuir - documento en ingles -] (contributing.md) para tener nota de nuestras politicas para aceptar contribuciones.

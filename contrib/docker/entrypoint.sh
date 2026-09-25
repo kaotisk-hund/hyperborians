@@ -2,13 +2,13 @@
 
 set -e
 
-CONF_DIR="/etc/cjdns"
+CONF_DIR="/etc/hyperboria"
 
-if [ ! -f "$CONF_DIR/cjdroute.conf" ]; then
-  echo "generate $CONF_DIR/cjdroute.conf"
-  conf=$(cjdroute --genconf | cjdroute --cleanconf)
-  echo $conf > "$CONF_DIR/cjdroute.conf"
+if [ ! -f "$CONF_DIR/hyperboria-route.conf" ]; then
+  echo "generate $CONF_DIR/hyperboria-route.conf"
+  conf=$(hyperboria-route --genconf | hyperboria-route --cleanconf)
+  echo $conf > "$CONF_DIR/hyperboria-route.conf"
 fi
 
-cjdroute --nobg < "$CONF_DIR/cjdroute.conf"
+hyperboria-route --nobg < "$CONF_DIR/hyperboria-route.conf"
 exit $?

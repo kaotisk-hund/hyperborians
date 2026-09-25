@@ -105,7 +105,7 @@ static Er_DEFUN(void addIp4Address(const char* interfaceName,
                           struct Log* logger,
                           struct Allocator* alloc))
 {
-    // TODO(cjd): implement this and then remove the exception from TUNInterface_ipv4_root_test.c
+    // TODO(hyperboria): implement this and then remove the exception from TUNInterface_ipv4_root_test.c
     Er_raise(alloc, "unimplemented");
 }
 

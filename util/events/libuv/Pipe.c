@@ -389,7 +389,7 @@ Er_DEFUN(struct Pipe* Pipe_named(const char* fullPath,
     int err = 0;
 
     // We get the error back synchronously but windows doesn't support that
-    // TODO(cjd): Find a better way
+    // TODO(hyperboria): Find a better way
     #ifndef win32
         err = (&out->peer)->delayed_error;
     #endif

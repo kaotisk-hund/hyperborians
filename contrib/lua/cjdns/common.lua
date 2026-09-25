@@ -1,4 +1,4 @@
--- Cjdns admin module for Lua
+-- Hyperboria admin module for Lua
 -- Written by Philip Horger
 
 -- This table is preserved over multiple imports, and collects

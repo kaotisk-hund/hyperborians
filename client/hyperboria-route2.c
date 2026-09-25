@@ -67,8 +67,8 @@
 
 #define DEFAULT_TUN_DEV "tun0"
 
-#ifndef CJD_PACKAGE_VERSION
-    #define CJD_PACKAGE_VERSION "unknown"
+#ifndef HYPERBORIA_PACKAGE_VERSION
+    #define HYPERBORIA_PACKAGE_VERSION "unknown"
 #endif
 
 static int genconf(struct Allocator* alloc, struct Random* rand, bool eth, bool seed)
@@ -155,8 +155,8 @@ static int genconf(struct Allocator* alloc, struct Random* rand, bool eth, bool 
            "    // For a list of functions which can be called.\n"
            "    // For example: ./tools/cexec 'memory()'\n"
            "    // will call a function which gets the core's current memory consumption.\n"
-           "    // ./tools/cjdnslog\n"
-           "    // is a tool which uses this admin interface to get logs from cjdns.\n"
+           "    // ./tools/hyperborialog\n"
+           "    // is a tool which uses this admin interface to get logs from hyperboria.\n"
            "    \"admin\": {\n"
            "        // Port to bind the admin RPC server to.\n"
            "        \"bind\": \"127.0.0.1:11234\",\n"
@@ -164,7 +164,7 @@ static int genconf(struct Allocator* alloc, struct Random* rand, bool eth, bool 
            "        // Password for admin RPC server.\n"
            "        // This is a static password by default, so that tools like\n"
            "        // ./tools/cexec can use the API without you creating a\n"
-           "        // config file at ~/.cjdnsadmin first. If you decide to\n"
+           "        // config file at ~/.hyperboriaadmin first. If you decide to\n"
            "        // expose the admin API to the network, change the password!\n"
            "        \"password\": \"NONE\"\n");
     printf("    },\n"
@@ -189,7 +189,7 @@ static int genconf(struct Allocator* alloc, struct Random* rand, bool eth, bool 
            "                // beaconDevices is a list which can contain names of devices such\n"
            "                // as eth0, as well as broadcast addresses to send to, such as\n"
            "                // 192.168.101.255, or the pseudo-name \"all\".\n"
-           "                // in order to auto-peer, all cjdns nodes must use the same\n"
+           "                // in order to auto-peer, all hyperboria nodes must use the same\n"
            "                // beaconPort.\n"
            "                \"beacon\": 2,\n"
            "                \"beaconDevices\": [ \"all\" ],\n"
@@ -232,15 +232,15 @@ static int genconf(struct Allocator* alloc, struct Random* rand, bool eth, bool 
            "                // \"all\" is a pseudo-name which will try to connect to all devices.\n"
            "                \"bind\": \"all\",\n"
            "\n"
-           "                // Auto-connect to other cjdns nodes on the same network.\n"
+           "                // Auto-connect to other hyperboria nodes on the same network.\n"
            "                // Options:\n"
            "                //\n"
            "                // 0 -- Disabled.\n"
            "                //\n"
-           "                // 1 -- Accept beacons, this will cause cjdns to accept incoming\n"
+           "                // 1 -- Accept beacons, this will cause hyperboria to accept incoming\n"
            "                //      beacon messages and try connecting to the sender.\n"
            "                //\n"
-           "                // 2 -- Accept and send beacons, this will cause cjdns to broadcast\n"
+           "                // 2 -- Accept and send beacons, this will cause hyperboria to broadcast\n"
            "                //      messages on the local network which contain a randomly\n"
            "                //      generated per-session password, other nodes which have this\n"
            "                //      set to 1 or 2 will hear the beacon messages and connect\n"
@@ -269,14 +269,14 @@ static int genconf(struct Allocator* alloc, struct Random* rand, bool eth, bool 
            "            //\"6743gf5tw80ExampleExampleExampleExamplevlyb23zfnuzv0.k\",\n"
            "        ],\n"
            "\n"
-           "        // The interface which is used for connecting to the cjdns network.\n"
+           "        // The interface which is used for connecting to the hyperboria network.\n"
            "        \"interface\": {\n"
            "            // The type of interface (only TUNInterface is supported for now)\n"
            "            \"type\": \"TUNInterface\"\n");
 #ifndef __APPLE__
     printf("\n"
            "            // The name of a persistent TUN device to use.\n"
-           "            // This for starting cjdroute as its own user.\n"
+           "            // This for starting hyperboria-route as its own user.\n"
            "            // *MOST USERS DON'T NEED THIS*\n"
            "            //\"tunDevice\": \"" DEFAULT_TUN_DEV "\"\n");
 #endif
@@ -292,11 +292,11 @@ static int genconf(struct Allocator* alloc, struct Random* rand, bool eth, bool 
            "            \"type\": \"SocketInterface\",\n"
            "\n"
            "            // The filesystem path to the socket to create or connect to.\n"
-           "            \"socketFullPath\": \"/var/run/cjdns.sock\"\n"
+           "            \"socketFullPath\": \"/var/run/hyperboria.sock\"\n"
            "        },\n"
            "\n");
-    printf("        // System for tunneling IPv4 and ICANN IPv6 through cjdns.\n"
-           "        // This is using the cjdns switch layer as a VPN carrier.\n"
+    printf("        // System for tunneling IPv4 and ICANN IPv6 through hyperboria.\n"
+           "        // This is using the hyperboria switch layer as a VPN carrier.\n"
            "        \"ipTunnel\": {\n"
            "            // Nodes allowed to connect to us.\n"
            "            // When a node with the given public key connects, give them the\n"
@@ -343,15 +343,15 @@ static int genconf(struct Allocator* alloc, struct Random* rand, bool eth, bool 
            "    },\n"
            "\n");
     printf("    // Dropping permissions.\n"
-           "    // In the event of a serious security exploit in cjdns, leak of confidential\n"
+           "    // In the event of a serious security exploit in hyperboria, leak of confidential\n"
            "    // network traffic and/or keys is highly likely but the following rules are\n"
-           "    // designed to prevent the attack from spreading to the system on which cjdns\n"
+           "    // designed to prevent the attack from spreading to the system on which hyperboria\n"
            "    // is running.\n"
-           "    // Counter-intuitively, cjdns is *more* secure if it is started as root because\n"
+           "    // Counter-intuitively, hyperboria is *more* secure if it is started as root because\n"
            "    // non-root users do not have permission to use chroot or change usernames,\n"
            "    // limiting the effectiveness of the mitigations herein.\n"
            "    \"security\": [\n"
-           "        // Change the user id to sandbox the cjdns process after it starts.\n"
+           "        // Change the user id to sandbox the hyperboria process after it starts.\n"
            "        // If keepNetAdmin is set to 0, IPTunnel will be unable to set IP addresses\n"
            "        // and ETHInterface will be unable to hot-add new interfaces\n"
            "        // Use { \"setuser\": 0 } to disable.\n"
@@ -362,7 +362,7 @@ static int genconf(struct Allocator* alloc, struct Random* rand, bool eth, bool 
     printf("        { \"setuser\": \"nobody\", \"keepNetAdmin\": 1 },\n");
            }
     printf("\n"
-           "        // Chroot changes the filesystem root directory which cjdns sees, blocking it\n"
+           "        // Chroot changes the filesystem root directory which hyperboria sees, blocking it\n"
            "        // from accessing files outside of the chroot sandbox, if the user does not\n"
            "        // have permission to use chroot(), this will fail quietly.\n"
            "        // Use { \"chroot\": 0 } to disable.\n");
@@ -375,20 +375,20 @@ static int genconf(struct Allocator* alloc, struct Random* rand, bool eth, bool 
            "        { \"chroot\": \"/var/run/\" },\n");
           }
     printf("\n"
-           "        // Nofiles is a deprecated security feature which prevents cjdns from opening\n"
+           "        // Nofiles is a deprecated security feature which prevents hyperboria from opening\n"
            "        // any files at all, using this will block setting of IP addresses and\n"
            "        // hot-adding ETHInterface devices but for users who do not need this, it\n"
            "        // provides a formidable sandbox.\n"
            "        // Default: disabled\n"
            "        { \"nofiles\": 0 },\n"
            "\n"
-           "        // Noforks will prevent cjdns from spawning any new processes or threads,\n"
+           "        // Noforks will prevent hyperboria from spawning any new processes or threads,\n"
            "        // this prevents many types of exploits from attacking the wider system.\n"
            "        // Default: enabled\n"
            "        { \"noforks\": 1 },\n"
            "\n"
-           "        // Seccomp is the most advanced sandboxing feature in cjdns, it uses\n"
-           "        // SECCOMP_BPF to filter the system calls which cjdns is able to make on a\n"
+           "        // Seccomp is the most advanced sandboxing feature in hyperboria, it uses\n"
+           "        // SECCOMP_BPF to filter the system calls which hyperboria is able to make on a\n"
            "        // linux system, strictly limiting it's access to the outside world\n"
            "        // This will fail quietly on any non-linux system\n");
           if (Defined(android)) {
@@ -412,23 +412,23 @@ static int genconf(struct Allocator* alloc, struct Random* rand, bool eth, bool 
            "\n"
            "    // Logging\n"
            "    \"logging\": {\n"
-           "        // Uncomment to have cjdns log to stdout rather than making logs available\n"
+           "        // Uncomment to have hyperboria log to stdout rather than making logs available\n"
            "        // via the admin socket.\n"
            "        // \"logTo\": \"stdout\"\n"
            "    },\n"
            "\n"
-           "    // If set to non-zero, cjdns will not fork to the background.\n"
+           "    // If set to non-zero, hyperboria will not fork to the background.\n"
            "    // Recommended for use in conjunction with \"logTo\":\"stdout\".\n");
     printf("    \"noBackground\": %d,\n", Defined(win32) ? 1 : 0);
     printf("\n"
            "    // Path for admin control pipe:\n"
-           "    // If you pass only a filename then cjdns will guess the full path\n"
+           "    // If you pass only a filename then hyperboria will guess the full path\n"
            "    // On unix the default path is /tmp/\n"
            "    // On windows: \\\\.\\pipe\\\n"
-           "    \"pipe\": \"cjdroute.sock\",\n");
+           "    \"pipe\": \"hyperboria-route.sock\",\n");
     printf("\n"
            "    // This is to make the configuration be parsed in strict mode, which allows\n"
-           "    // it to be edited externally using cjdnsconf.\n"
+           "    // it to be edited externally using hyperboria-conf.\n"
            "    \"version\": 2\n");
     printf("}\n");
 
@@ -438,38 +438,38 @@ static int genconf(struct Allocator* alloc, struct Random* rand, bool eth, bool 
 static int usage(struct Allocator* alloc, char* appName)
 {
     char* sysInfo = SysInfo_describe(SysInfo_detect(), alloc);
-    printf("Cjdns %s %s\n"
+    printf("Hyperboria %s %s\n"
            "Usage:\n"
-           "    cjdroute --help                This information\n"
-           "    cjdroute --genconf [--eth]     Generate a configuration file, write it to stdout\n"
+           "    hyperboria-route --help                This information\n"
+           "    hyperboria-route --genconf [--eth]     Generate a configuration file, write it to stdout\n"
            "                                   if --eth is specified then eth beaconing will\n"
            "                                   be enabled. Caution it can interfere with UDP\n"
            "                                   beaconing\n"
-           "    cjdroute --genconf-seed [--eth] Generate a configuration file from a 64 byte seed\n"
+           "    hyperboria-route --genconf-seed [--eth] Generate a configuration file from a 64 byte seed\n"
            "                                   which is read in from stdin."
-           "    cjdroute --bench               Run some cryptography performance benchmarks.\n"
-           "    cjdroute --version             Print the protocol version which this node speaks.\n"
-           "    cjdroute --cleanconf < conf    Print a clean (valid json) version of the config.\n"
-           "    cjdroute --nobg                Never fork to the background no matter the config.\n"
+           "    hyperboria-route --bench               Run some cryptography performance benchmarks.\n"
+           "    hyperboria-route --version             Print the protocol version which this node speaks.\n"
+           "    hyperboria-route --cleanconf < conf    Print a clean (valid json) version of the config.\n"
+           "    hyperboria-route --nobg                Never fork to the background no matter the config.\n"
            "\n"
            "To get the router up and running.\n"
            "Step 1:\n"
            "  Generate a new configuration file.\n"
-           "    cjdroute --genconf > cjdroute.conf\n"
+           "    hyperboria-route --genconf > hyperboria-route.conf\n"
            "\n"
            "Step 2:\n"
            "  Find somebody to connect to.\n"
-           "  Check out the IRC channel #cjdns on Efnet and Freenode\n"
+           "  Check out the IRC channel #hyperboria on Efnet and Freenode\n"
            "  for information about how to meet new people and make connect to them.\n"
-           "  Read more here: https://github.com/cjdelisle/cjdns/#2-find-a-friend\n"
+           "  Read more here: https://github.com/cjdelisle/hyperboria/#2-find-a-friend\n"
            "\n"
            "Step 3:\n"
-           "  Add that somebody's node to your cjdroute.conf file.\n"
-           "  https://github.com/cjdelisle/cjdns/#3-connect-your-node-to-your-friends-node\n"
+           "  Add that somebody's node to your hyperboria-route.conf file.\n"
+           "  https://github.com/cjdelisle/hyperboria/#3-connect-your-node-to-your-friends-node\n"
            "\n"
            "Step 4:\n"
            "  Fire it up!\n"
-           "    sudo cjdroute < cjdroute.conf\n"
+           "    sudo hyperboria-route < hyperboria-route.conf\n"
            "\n"
            "For more information about other functions and non-standard setups, see README.md\n",
            ArchInfo_getArchStr(), sysInfo);
@@ -533,7 +533,7 @@ static void checkRunningInstance(struct Allocator* allocator,
 
     Assert_true(ctx->res);
     if (ctx->res->err != AdminClient_Error_TIMEOUT) {
-        Except_throw(eh, "Startup failed: cjdroute is already running. [%d]", ctx->res->err);
+        Except_throw(eh, "Startup failed: hyperboria-route is already running. [%d]", ctx->res->err);
     }
 
     Allocator_free(alloc);
@@ -574,7 +574,7 @@ static struct Message* readToMsg(FILE* f, struct Allocator* alloc)
 static String* getPipePath(Dict* config, struct Allocator* alloc)
 {
     String* pipePath = Dict_getStringC(config, "pipe");
-    char* pp = (pipePath) ? pipePath->bytes : "cjdroute.sock";
+    char* pp = (pipePath) ? pipePath->bytes : "hyperboria-route.sock";
     if (pp[0] == Pipe_PATH_SEP[0]) {
         return pipePath;
     }
@@ -627,8 +627,8 @@ int main(int argc, char** argv)
         } else if ((CString_strcmp(argv[1], "--version") == 0)
             || (CString_strcmp(argv[1], "-v") == 0))
         {
-            printf("Cjdns version: %s\n", CJD_PACKAGE_VERSION);
-            printf("Cjdns protocol version: %d\n", Version_CURRENT_PROTOCOL);
+            printf("HyperboriaNS version: %s\n", HYPERBORIA_PACKAGE_VERSION);
+            printf("Hyperboria protocol version: %d\n", Version_CURRENT_PROTOCOL);
             return 0;
         } else if (CString_strcmp(argv[1], "--cleanconf") == 0) {
             // Performed after reading configuration
@@ -695,7 +695,7 @@ int main(int argc, char** argv)
         }
         uint64_t* version = Dict_getIntC(config, "version");
         if (version && *version >= 2) {
-            fprintf(stderr, "Invalid cjdroute.conf\n%s\n", err);
+            fprintf(stderr, "Invalid hyperboria-route.conf\n%s\n", err);
             return -1;
         }
     }
@@ -726,12 +726,12 @@ int main(int argc, char** argv)
         adminPass->len = CString_strlen(adminPass->bytes);
     }
     if (!adminBind) {
-        Except_throw(eh, "You must specify admin.bind in the cjdroute.conf file.");
+        Except_throw(eh, "You must specify admin.bind in the hyperboria-route.conf file.");
     }
 
-    // --------------------- Welcome to cjdns ---------------------- //
+    // --------------------- Welcome to hyperboria ---------------------- //
     char* sysInfo = SysInfo_describe(SysInfo_detect(), allocator);
-    Log_info(logger, "%s %s %s", CJD_PACKAGE_VERSION, ArchInfo_getArchStr(), sysInfo);
+    Log_info(logger, "%s %s %s", HYPERBORIA_PACKAGE_VERSION, ArchInfo_getArchStr(), sysInfo);
 
     // --------------------- Check for running instance  --------------------- //
 
@@ -765,8 +765,8 @@ int main(int argc, char** argv)
     char* corePath = Process_getPath(allocator);
 
     if (!corePath) {
-        Except_throw(eh, "Can't find a usable cjdns core executable, "
-                         "make sure it is in the same directory as cjdroute");
+        Except_throw(eh, "Can't find a usable hyperboria core executable, "
+                         "make sure it is in the same directory as hyperboria-route");
     }
 
     if (!privateKey) {
@@ -850,7 +850,7 @@ int main(int argc, char** argv)
 
     int64_t* noBackground = Dict_getIntC(config, "noBackground");
     if (forceNoBackground || (noBackground && *noBackground)) {
-        Log_debug(logger, "Keeping cjdns client alive because %s",
+        Log_debug(logger, "Keeping hyperboria client alive because %s",
             (forceNoBackground) ? "--nobg was specified on the command line"
                                 : "noBackground was set in the configuration");
         EventBase_beginLoop(eventBase);

@@ -1,10 +1,10 @@
-# Why is there a half a crypto library copy-pasted into cjdns?
+# Why is there a half a crypto library copy-pasted into hyperboria?
 > hysterical raisins
 
-In the beginning cjdns didn't use signing at all, only encryption.
+In the beginning hyperboria didn't use signing at all, only encryption.
 Then when the route server model was adopted, we needed to sign messages,
 particularly we needed to know that a message was signed with a key
-corrisponding to a particular cjdns IPv6 address.
+corrisponding to a particular hyperboria IPv6 address.
 
 Fortunately there exists a way to convert the same keys between the twisted
 edwards curve (ed25519) used for signing and the this conversion is widely
@@ -23,6 +23,6 @@ the sign function to not hash the key before usage, so that's what we did.
 My apologies to all of the security researchers out there who are now
 gritting their teeth at the prospect of reviewing "home-made crypto", the
 ugly is confined to
-[Sign.c](https://github.com/cjdelisle/cjdns/blob/master/crypto/Sign.c) and
+[Sign.c](https://github.com/cjdelisle/hyperboria/blob/master/crypto/Sign.c) and
 I've made efforts to explain what it's doing and why I believe it to be
 equivilent to nacl/libsodium's `crypto_sign()`.

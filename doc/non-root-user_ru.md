@@ -1,7 +1,7 @@
-Запуск cjdns не от имени суперпользователя (root)
+Запуск hyperboria не от имени суперпользователя (root)
 =================================================
 
-Есть два способа запуска cjdns не от имени суперпользователя. Они могут вам пригодится, если вы хотите запустить cjdns на OpenVZ,
+Есть два способа запуска hyperboria не от имени суперпользователя. Они могут вам пригодится, если вы хотите запустить hyperboria на OpenVZ,
 или запустить сеть от имени обычного пользователя.
 
 Метод 1: Преждевременно настроить интерфейс tun (нужно для OpenVZ)
@@ -10,13 +10,13 @@
 Если вы используйте VPS на базе OpenVZ, вам нужно использовать этот метод,
 так как OpenVZ запрещает постоянные туннели.
 
-Создать пользователя cjdns:
+Создать пользователя hyperboria:
 
-    sudo useradd cjdns
+    sudo useradd hyperboria
 
-Создать новый интерфейс TUN и разрешить cjdns к нему обращаться:
+Создать новый интерфейс TUN и разрешить hyperboria к нему обращаться:
 
-    sudo /sbin/ip tuntap add mode tun user cjdns dev cjdroute0
+    sudo /sbin/ip tuntap add mode tun user hyperboria dev cjdroute0
 
 
 ### 4b-1: Настройка интерфейса вручную
@@ -34,7 +34,7 @@
 
 Если при запуске /sbin/ip вы ввидите ошибку, версия iproute2 может быть устаревшей.
 
-    sudo /sbin/ip tuntap add mode tun user cjdns
+    sudo /sbin/ip tuntap add mode tun user hyperboria
     Object "tuntap" is unknown, try "ip help".
 
 Исправление: На данный момент, следует скопировать новую
@@ -43,16 +43,16 @@
 
 ### 4b-2: Запуск!
 
-    sudo -u cjdns ./cjdroute < cjdroute.conf
+    sudo -u hyperboria ./hyperboria-route < hyperboria-route.conf
 
 Чтобы удалить туннель, используйте следующую команду:
 
     sudo /sbin/ip tuntap del mode tun <имя туннеля>
 
-Метод 2: Дать исполняемому файлу cjdroute полномочия для создания устройства TUN.
+Метод 2: Дать исполняемому файлу hyperboria-route полномочия для создания устройства TUN.
 ---------------------------------------------------------------------------------
 
 Запустите эту команду с root-правами после сборки (и каждый раз при пересборке)
 
-    setcap "cap_net_admin+eip cap_net_raw+eip" cjdroute
+    setcap "cap_net_admin+eip cap_net_raw+eip" hyperboria-route
 

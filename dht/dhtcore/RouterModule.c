@@ -20,7 +20,7 @@
 #include "dht/dhtcore/NodeList.h"
 #include "dht/dhtcore/NodeStore.h"
 #include "dht/dhtcore/VersionList.h"
-#include "dht/CJDHTConstants.h"
+#include "dht/HyperboriaDHTConstants.h"
 #include "dht/DHTMessage.h"
 #include "dht/DHTModule.h"
 #include "dht/DHTModuleRegistry.h"
@@ -82,7 +82,7 @@
  * this operation is performed periodicly every LOCAL_MAINTENANCE_SEARCH_MILLISECONDS unless
  * a local maintainence search is being run which is not often once the network is stable.
  *
- * TODO(cjd): ---
+ * TODO(hyperboria): ---
  * In order to have the nodes with least distance:reach ratio ready to handle any incoming search,
  * we precompute the borders where the "best next node" changes. This computation is best understood
  * by graphing the nodes with their location in keyspace on the X axis and their reach on the Y
@@ -288,10 +288,10 @@ static inline int sendNodes(struct NodeList* nodeList,
     nodes->len = j * Address_SERIALIZED_SIZE;
     versions->length = j;
     if (j > 0) {
-        Dict_putString(message->asDict, CJDHTConstants_NODES, nodes, message->allocator);
+        Dict_putString(message->asDict, HyperboriaDHTConstants_NODES, nodes, message->allocator);
         String* versionsStr = VersionList_stringify(versions, message->allocator);
         Dict_putString(message->asDict,
-                       CJDHTConstants_NODE_PROTOCOLS,
+                       HyperboriaDHTConstants_NODE_PROTOCOLS,
                        versionsStr,
                        message->allocator);
     }
@@ -313,16 +313,16 @@ static inline int handleQuery(struct DHTMessage* message,
 {
     struct DHTMessage* query = message->replyTo;
 
-    int64_t* versionPtr = Dict_getInt(query->asDict, CJDHTConstants_PROTOCOL);
+    int64_t* versionPtr = Dict_getInt(query->asDict, HyperboriaDHTConstants_PROTOCOL);
     uint32_t version = (versionPtr && *versionPtr <= UINT32_MAX) ? *versionPtr : 0;
 
     struct NodeList* nodeList = NULL;
 
-    String* queryType = Dict_getString(query->asDict, CJDHTConstants_QUERY);
-    if (String_equals(queryType, CJDHTConstants_QUERY_FN)) {
+    String* queryType = Dict_getString(query->asDict, HyperboriaDHTConstants_QUERY);
+    if (String_equals(queryType, HyperboriaDHTConstants_QUERY_FN)) {
         Log_debug(module->logger, "FindNode Query");
         // get the target
-        String* target = Dict_getString(query->asDict, CJDHTConstants_TARGET);
+        String* target = Dict_getString(query->asDict, HyperboriaDHTConstants_TARGET);
         if (target == NULL || target->len != Address_SEARCH_TARGET_SIZE) {
             return 0;
         }
@@ -337,10 +337,10 @@ static inline int handleQuery(struct DHTMessage* message,
                                              version,
                                              message->allocator);
 
-    } else if (String_equals(queryType, CJDHTConstants_QUERY_GP)) {
+    } else if (String_equals(queryType, HyperboriaDHTConstants_QUERY_GP)) {
         Log_debug(module->logger, "GetPeers Query");
         // get the target
-        String* target = Dict_getString(query->asDict, CJDHTConstants_TARGET);
+        String* target = Dict_getString(query->asDict, HyperboriaDHTConstants_TARGET);
         if (target == NULL || target->len != 8) {
             return 0;
         }
@@ -351,10 +351,10 @@ static inline int handleQuery(struct DHTMessage* message,
         nodeList =
             NodeStore_getPeers(targetPath, RouterModule_K, message->allocator, module->nodeStore);
 
-    } else if (String_equals(queryType, CJDHTConstants_QUERY_NH)) {
+    } else if (String_equals(queryType, HyperboriaDHTConstants_QUERY_NH)) {
         Log_debug(module->logger, "HN Query");
         // get the target
-        String* target = Dict_getString(query->asDict, CJDHTConstants_TARGET);
+        String* target = Dict_getString(query->asDict, HyperboriaDHTConstants_TARGET);
         if (target == NULL || target->len != Address_SEARCH_TARGET_SIZE) {
             return 0;
         }
@@ -382,7 +382,7 @@ static int handleOutgoing(struct DHTMessage* message, void* vcontext)
     struct RouterModule* module = Identity_check((struct RouterModule*) vcontext);
 
     Dict_putInt(message->asDict,
-                CJDHTConstants_PROTOCOL,
+                HyperboriaDHTConstants_PROTOCOL,
                 Version_CURRENT_PROTOCOL,
                 message->allocator);
 
@@ -418,7 +418,7 @@ static void sendMsg(String* txid, void* vpingContext)
     struct PingContext* pc = Identity_check((struct PingContext*) vpingContext);
 
     // "t":"1234"
-    Dict_putString(pc->messageDict, CJDHTConstants_TXID, txid, pc->pp->pingAlloc);
+    Dict_putString(pc->messageDict, HyperboriaDHTConstants_TXID, txid, pc->pp->pingAlloc);
 
     struct Allocator* temp = Allocator_child(pc->pp->pingAlloc);
     struct Message* msg = Message_new(0, DHTMessage_MAX_SIZE + 512, temp);
@@ -458,8 +458,8 @@ static uint64_t pingTimeoutMilliseconds(struct RouterModule* module)
  */
 static int handleIncoming(struct DHTMessage* message, void* vcontext)
 {
-    String* txid = Dict_getString(message->asDict, CJDHTConstants_TXID);
-    String* query = Dict_getString(message->asDict, CJDHTConstants_QUERY);
+    String* txid = Dict_getString(message->asDict, HyperboriaDHTConstants_TXID);
+    String* query = Dict_getString(message->asDict, HyperboriaDHTConstants_QUERY);
     if (query || !txid) {
         return 0;
     }
@@ -539,7 +539,7 @@ static void onResponseOrTimeout(String* data, uint32_t milliseconds, void* vping
     }
 
     #ifdef Log_DEBUG
-        String* versionBin = Dict_getString(message->asDict, CJDHTConstants_VERSION);
+        String* versionBin = Dict_getString(message->asDict, HyperboriaDHTConstants_VERSION);
         if (versionBin && versionBin->len == 20) {
             uint8_t printedAddr[60];
             Address_print(printedAddr, message->address);
@@ -612,7 +612,7 @@ struct RouterModule_Promise* RouterModule_pingNode(struct Address* addr,
     struct RouterModule_Promise* promise =
         RouterModule_newMessage(addr, timeoutMilliseconds, module, alloc);
     Dict* d = Dict_new(promise->alloc);
-    Dict_putString(d, CJDHTConstants_QUERY, CJDHTConstants_QUERY_PING, promise->alloc);
+    Dict_putString(d, HyperboriaDHTConstants_QUERY, HyperboriaDHTConstants_QUERY_PING, promise->alloc);
     RouterModule_sendMessage(promise, d);
 
     #ifdef Log_DEBUG
@@ -636,9 +636,9 @@ struct RouterModule_Promise* RouterModule_nextHop(struct Address* whoToAsk,
     struct RouterModule_Promise* promise =
         RouterModule_newMessage(whoToAsk, timeoutMilliseconds, module, alloc);
     Dict* d = Dict_new(promise->alloc);
-    Dict_putString(d, CJDHTConstants_QUERY, CJDHTConstants_QUERY_NH, promise->alloc);
+    Dict_putString(d, HyperboriaDHTConstants_QUERY, HyperboriaDHTConstants_QUERY_NH, promise->alloc);
     String* targetStr = String_newBinary(target, 16, promise->alloc);
-    Dict_putString(d, CJDHTConstants_TARGET, targetStr, promise->alloc);
+    Dict_putString(d, HyperboriaDHTConstants_TARGET, targetStr, promise->alloc);
     RouterModule_sendMessage(promise, d);
     return promise;
 }
@@ -652,9 +652,9 @@ struct RouterModule_Promise* RouterModule_findNode(struct Address* whoToAsk,
     struct RouterModule_Promise* promise =
         RouterModule_newMessage(whoToAsk, timeoutMilliseconds, module, alloc);
     Dict* d = Dict_new(promise->alloc);
-    Dict_putString(d, CJDHTConstants_QUERY, CJDHTConstants_QUERY_FN, promise->alloc);
+    Dict_putString(d, HyperboriaDHTConstants_QUERY, HyperboriaDHTConstants_QUERY_FN, promise->alloc);
     String* targetStr = String_newBinary(target, 16, promise->alloc);
-    Dict_putString(d, CJDHTConstants_TARGET, targetStr, promise->alloc);
+    Dict_putString(d, HyperboriaDHTConstants_TARGET, targetStr, promise->alloc);
     RouterModule_sendMessage(promise, d);
     return promise;
 }
@@ -668,13 +668,13 @@ struct RouterModule_Promise* RouterModule_getPeers(struct Address* addr,
     struct RouterModule_Promise* promise =
         RouterModule_newMessage(addr, timeoutMilliseconds, module, alloc);
     Dict* d = Dict_new(promise->alloc);
-    Dict_putString(d, CJDHTConstants_QUERY, CJDHTConstants_QUERY_GP, promise->alloc);
+    Dict_putString(d, HyperboriaDHTConstants_QUERY, HyperboriaDHTConstants_QUERY_GP, promise->alloc);
 
     uint64_t nearbyLabel_be = Endian_hostToBigEndian64(nearbyLabel);
     uint8_t nearbyLabelBytes[8];
     Bits_memcpy(nearbyLabelBytes, &nearbyLabel_be, 8);
     String* target = String_newBinary(nearbyLabelBytes, 8, promise->alloc);
-    Dict_putString(d, CJDHTConstants_TARGET, target, promise->alloc);
+    Dict_putString(d, HyperboriaDHTConstants_TARGET, target, promise->alloc);
 
     RouterModule_sendMessage(promise, d);
     return promise;

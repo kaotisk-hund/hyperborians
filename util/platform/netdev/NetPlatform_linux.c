@@ -44,14 +44,14 @@
 #include <linux/rtnetlink.h>
 
 // Way to identify our routes as opposed to statically created or otherwise...
-#define RTPROT_CJDNS 52
+#define RTPROT_HYPERBORIA 52
 
 /**
  * This hack exists because linux/in.h and linux/in6.h define
  * the same structures, leading to redefinition errors.
  * For the second operand, we're grateful to android/bionic, platform level 21.
  */
-struct Cjdns_in6_ifreq
+struct Hyperboria_in6_ifreq
 {
     struct in6_addr ifr6_addr;
     uint32_t ifr6_prefixlen;
@@ -141,7 +141,7 @@ Er_DEFUN(void NetPlatform_addAddress(const char* interfaceName,
     Er(checkInterfaceUp(s, &ifRequest, logger, tempAlloc));
 
     if (addrFam == Sockaddr_AF_INET6) {
-        struct Cjdns_in6_ifreq ifr6 = {
+        struct Hyperboria_in6_ifreq ifr6 = {
             .ifr6_ifindex = ifIndex,
             .ifr6_prefixlen = prefixLen
         };
@@ -311,7 +311,7 @@ static Er_DEFUN(bool getMoreMessages(struct RouteInfo** rio,
         if (rtm.rtm_type != RTN_UNICAST) { continue; }
 
         if (ri.ifIndex != ifIndex) { continue; }
-        if (ri.protocol != RTPROT_CJDNS) { continue; }
+        if (ri.protocol != RTPROT_HYPERBORIA) { continue; }
         struct RouteInfo* outRi = Allocator_clone(alloc, &ri);
         outRi->next = *rio;
         *rio = outRi;
@@ -430,7 +430,7 @@ static struct RouteInfo* riForSockaddrs(struct Sockaddr** prefixSet,
     struct RouteInfo* out = NULL;
     for (int i = 0; i < prefixCount; i++) {
         struct RouteInfo* ri = Allocator_calloc(alloc, sizeof(struct RouteInfo), 1);
-        ri->protocol = RTPROT_CJDNS;
+        ri->protocol = RTPROT_HYPERBORIA;
         ri->prefix = Sockaddr_getPrefix(prefixSet[i]);
         ri->af = Sockaddr_getFamily(prefixSet[i]);
         ri->ifIndex = ifIndex;

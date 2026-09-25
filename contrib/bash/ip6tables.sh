@@ -40,24 +40,24 @@ echo-reply \
 "
 
 # There is no 'assert a chain exists.
-ip6tables -N CJD || ip6tables -F CJD
+ip6tables -N HYPERBORIA || ip6tables -F HYPERBORIA
 # Link the new table into the master INPUT table.
-ip6tables -C INPUT -i tun0 -j CJD || ip6tables -I INPUT -i tun0 -j CJD
+ip6tables -C INPUT -i tun0 -j HYPERBORIA || ip6tables -I INPUT -i tun0 -j HYPERBORIA
 
 # Allow related and established connection.
-ip6tables -A CJD -m state --state RELATED,ESTABLISHED -j ACCEPT
+ip6tables -A HYPERBORIA -m state --state RELATED,ESTABLISHED -j ACCEPT
 
 # Allow ICMP as defined in ALLOWED_ICMP
 if [ -n "$ALLOWED_ICMP" ] ; then
  for ICMP_TYPE in $ALLOWED_ICMP; do
-  ip6tables -A CJD -p icmpv6 --icmpv6-type ${ICMP_TYPE} -j ACCEPT
+  ip6tables -A HYPERBORIA -p icmpv6 --icmpv6-type ${ICMP_TYPE} -j ACCEPT
  done
 fi
 
 # Open allowed TCP ports if any
 if [ -n "$TCP_INPUT_PORTS" ] ; then
  for PORT in $TCP_INPUT_PORTS; do
-  ip6tables -A CJD -m state --state NEW -p tcp --dport ${PORT} \
+  ip6tables -A HYPERBORIA -m state --state NEW -p tcp --dport ${PORT} \
   -j ACCEPT
  done
 fi
@@ -65,11 +65,11 @@ fi
 # Open allowed UDP ports if any
 if [ -n "$UDP_INPUT_PORTS" ] ; then
  for PORT in $UDP_INPUT_PORTS; do
-  ip6tables -A CJD -m state --state NEW -p udp --dport ${PORT} \
+  ip6tables -A HYPERBORIA -m state --state NEW -p udp --dport ${PORT} \
   -j ACCEPT
  done
 fi
 
 # Deny all other traffic on tun0
-ip6tables -A CJD -j LOG
-ip6tables -A CJD -j DROP
+ip6tables -A HYPERBORIA -j LOG
+ip6tables -A HYPERBORIA -j DROP

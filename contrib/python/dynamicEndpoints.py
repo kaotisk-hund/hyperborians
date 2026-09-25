@@ -1,6 +1,6 @@
 #!/usr/bin/env python2
 """
-dynamicEndpoints.py: make cjdns reliably connect to remote nodes with dynamic IP
+dynamicEndpoints.py: make hyperboria reliably connect to remote nodes with dynamic IP
 addresses, identified by a DNS name.
 
 Requires a config file with a section for each dynamic-IP node, like this:
@@ -14,16 +14,16 @@ The section name (in square brackets) is the public key of the node. Then the
 hostname, port, and peering password for the node are given.
 
 By default, this program looks up the current Internet IP of each node defined
-in the config file, and add that node at that IP to the local cjdns instance.
+in the config file, and add that node at that IP to the local hyperboria instance.
 Unless the --noWait option is given, or the $nowait environment variable is
-true, the program then continues running, waiting for cjdns to log messages
+true, the program then continues running, waiting for hyperboria to log messages
 about those peers being unresponsive and updating the peers' Internet IP
 addresses as needed.
 
-If cjdns dies while the program is monitoring for messages, the program will
+If hyperboria dies while the program is monitoring for messages, the program will
 hang indefinitely.
 
-Requires that the $HOME/.cjdnsadmin file be correctly set up. See
+Requires that the $HOME/.hyperboriaadmin file be correctly set up. See
 cjdnsadminmaker.py if that is not the case.
 
 """
@@ -40,7 +40,7 @@ cjdnsadminmaker.py if that is not the case.
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from cjdnsadmin.cjdnsadmin import connectWithAdminInfo;
+from cjdnsadmin.hyperboriaadmin import connectWithAdminInfo;
 from cjdnsadmin.publicToIp6 import PublicToIp6_convert;
 from cjdnsadmin.bencode import *
 import sys
@@ -93,18 +93,18 @@ class DynamicEndpointWatcher(object):
     """
     Encapsulates all the stuff we need to actually keep an eye on our remote
     nodes and see if they change IPs. When a node with a dynamic IP is
-    unresponsive, we look up its IP address and tell cjdns to go connect to it.
+    unresponsive, we look up its IP address and tell hyperboria to go connect to it.
     """
 
-    def __init__(self, cjdns, configuration):
+    def __init__(self, hyperboria, configuration):
         """
-        Set up a new DynamicEndpointWatcher operating on the given CJDNS admin
+        Set up a new DynamicEndpointWatcher operating on the given HYPERBORIA admin
         connection, using the specified ConfigParser parsed configuration.
 
         """
 
-        # Keep the cjdns admin connection
-        self.cjdns = cjdns
+        # Keep the hyperboria admin connection
+        self.hyperboria = hyperboria
 
         # Holds a dict from public key string to Node object for the remote
         # peer, for all known nodes.
@@ -129,9 +129,9 @@ class DynamicEndpointWatcher(object):
         for node in self.nodes.values():
             self.lookup(node)
         logging.info("{} peers added!".format(len(self.nodes)))
-        # Holds a cjdns log message subscription to messages about unresponsive
+        # Holds a hyperboria log message subscription to messages about unresponsive
         # nodes.
-        self.sub = self.cjdns.AdminLog_subscribe(MESSAGE_LINE, MESSAGE_FILE,
+        self.sub = self.hyperboria.AdminLog_subscribe(MESSAGE_LINE, MESSAGE_FILE,
             'DEBUG')
 
         if self.sub['error'] == 'none':
@@ -155,21 +155,21 @@ class DynamicEndpointWatcher(object):
         
     def stop(self):
         """
-        Unsubscribe from the admin log and close the connection to cjdns because
-        we are shutting down the program. If we don't do this, cjdns might
-        crash. If we do do it, cjdns might still crash.
+        Unsubscribe from the admin log and close the connection to hyperboria because
+        we are shutting down the program. If we don't do this, hyperboria might
+        crash. If we do do it, hyperboria might still crash.
         """
 
         # Unsubscribe cleanly
         logging.info("Unsubscribing from stream {}".format(
             self.sub['streamId']))
-        unsub =  self.cjdns.AdminLog_unsubscribe(self.sub['streamId'])
+        unsub =  self.hyperboria.AdminLog_unsubscribe(self.sub['streamId'])
         if unsub['error'] != 'none':
             logging.error(unsub['error'])
         
         # Close the connection
         logging.info("Closing admin connection")
-        self.cjdns.disconnect()
+        self.hyperboria.disconnect()
 
 
     def addNode(self, host, port, password, key):
@@ -184,7 +184,7 @@ class DynamicEndpointWatcher(object):
     def lookup(self, node):
         """
         Look up the current IP address for the given Node object, and tell the
-        cjdns router to try to connect to it.
+        hyperboria router to try to connect to it.
 
         """
 
@@ -192,8 +192,8 @@ class DynamicEndpointWatcher(object):
         try:
 
             # Use AF_INET here to make sure we don't get an IPv6 address and try
-            # to connect to it when the cjdns UDPInterface is using only IPv4.
-            # TODO: Make cjdns bind its UDPInterface to IPv6 as well as IPv4.
+            # to connect to it when the hyperboria UDPInterface is using only IPv4.
+            # TODO: Make hyperboria bind its UDPInterface to IPv6 as well as IPv4.
             for info in socket.getaddrinfo(node.host,node.port,
                                            socket.AF_INET,socket.SOCK_DGRAM):
 
@@ -213,10 +213,10 @@ class DynamicEndpointWatcher(object):
                 logging.info("Connecting to {} at {}".format(
                     PublicToIp6_convert(node.key), sockaddr))
 
-                # Tell CJDNS to begin a UDPInterface connection to the given
+                # Tell HYPERBORIA to begin a UDPInterface connection to the given
                 # IP:port, with the given public key and password. Always use
                 # the 0th UDPInterface, which is the default.
-                reply = self.cjdns.UDPInterface_beginConnection(
+                reply = self.hyperboria.UDPInterface_beginConnection(
                     password=node.password, publicKey=node.key,
                     address=sockaddr)
 
@@ -248,7 +248,7 @@ class DynamicEndpointWatcher(object):
 
     def doLog(self, message):
         """
-        Process a log line from cjdns to see if it indicates that a peer we are
+        Process a log line from hyperboria to see if it indicates that a peer we are
         responsible for is unresponsive.
 
         """
@@ -290,14 +290,14 @@ class DynamicEndpointWatcher(object):
 
     def recieve(self, txid):
         """
-        Loop forever porcessing messages from the cjdns router. Takes a txid
+        Loop forever porcessing messages from the hyperboria router. Takes a txid
         pointing to the subscription to such messages.
 
         """
 
         while True:
             # Repeatedly get and process log messages.
-            self.doLog(self.cjdns.getMessage(txid)["message"])
+            self.doLog(self.hyperboria.getMessage(txid)["message"])
 
 def main(argv):
     """
@@ -318,7 +318,7 @@ def main(argv):
     parser.add_argument("--noWait", action="store_true",
         help="look up dynamic peers once and exit")
     parser.add_argument("--adminInfo",
-        help="use this file to load the cjdns admin password")
+        help="use this file to load the hyperboria admin password")
 
     # Parse all the command-line arguments
     options = parser.parse_args(argv[1:])
@@ -327,11 +327,11 @@ def main(argv):
         try:
             # Connect to the router, using the specified admin info file, if
             # given.
-            cjdns = connectWithAdminInfo(path=options.adminInfo)
+            hyperboria = connectWithAdminInfo(path=options.adminInfo)
             break
         except socket.error:
             # Connection probably refused. Retry in a bit
-            logging.error("Error connecting to cjdns. Retrying in 1 minute...")
+            logging.error("Error connecting to hyperboria. Retrying in 1 minute...")
             time.sleep(60)
             
     # Drop root if we have it. We can't do it before we load the admin info
@@ -364,16 +364,16 @@ def main(argv):
     # Read the config from the file
     parsedConfig.readfp(options.configFile)
 
-    # Make a new watcher on the cjdroute connection, with the config from the
+    # Make a new watcher on the hyperboria-route connection, with the config from the
     # config file. This automatically looks up all the peers and tries to
     # connect to them once.
-    watcher = DynamicEndpointWatcher(cjdns, parsedConfig)
+    watcher = DynamicEndpointWatcher(hyperboria, parsedConfig)
 
     if options.noWait or os.environ.get('nowait', False):
         # We're not supposed to wait. Quit while we're ahead
         sys.exit(0)
     else:
-        # Monitor for unresponsive nodes. This will loop until cjdns restarts,
+        # Monitor for unresponsive nodes. This will loop until hyperboria restarts,
         # at which point it will throw an exception.
         watcher.run()
 

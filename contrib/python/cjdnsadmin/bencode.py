@@ -23,7 +23,7 @@ def decode_string(x, f):
         n = int(x[f:colon])
     except (OverflowError, ValueError):
         n = long(x[f:colon])
-# Leading zeros are FINE --cjd
+# Leading zeros are FINE --hyperboria
 #    if x[f] == '0' and colon != f+1:
 #        raise ValueError
     colon += 1

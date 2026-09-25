@@ -1,6 +1,6 @@
 # Gentoo:
 
-cjdns is not yet in the main Gentoo repository, so you will have to use an overlay.
+hyperboria is not yet in the main Gentoo repository, so you will have to use an overlay.
 The easiest way is to use Layman but you can do it by hand, too.
 
 ## Layman:
@@ -18,9 +18,9 @@ For future update of the overlay use
 
     layman -S
 
-Now you can install cjdns
+Now you can install hyperboria
 
-    emerge cjdns
+    emerge hyperboria
 
 ## By hand:
 
@@ -44,20 +44,20 @@ Now sync
 
     emerge --sync
 
-And install cjdns
+And install hyperboria
 
-    emerge cjdns
+    emerge hyperboria
 
 ## Automatic crash detection and restart
 
 Copy the the openrc init script from `contrib/openrc` to `/etc/init.d/` and modify the `CONFFILE` and `command` parameter to your needs.
-Then start cjdns by issuing
+Then start hyperboria by issuing
 
-    /etc/init.d/cjdns start
+    /etc/init.d/hyperboria start
 
-Configure the init system to autostart cjdns
+Configure the init system to autostart hyperboria
 
-    rc-update add cjdns default
+    rc-update add hyperboria default
 
 Copy the service_restart script `contrib/gentoo/service_restart.sh` to any convenient directory on
 your system and modify the eMail address. If you do not wish to be notified, comment out the whole line.

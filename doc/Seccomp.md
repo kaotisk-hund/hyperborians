@@ -5,9 +5,9 @@ that they will never make certain system calls, thus any attempt to make one of
 these calls is interpreted as a security penetration and the kernel can forcibly
 kill off the program, preventing harm to the computer.
 
-## Seccomp failures in cjdns
+## Seccomp failures in hyperboria
 
-If you are reading this because cjdns is halting on you, you are probably getting
+If you are reading this because hyperboria is halting on you, you are probably getting
 a log message like the following:
 
         Attempted banned syscall number [232] see docs/Seccomp.md for more information
@@ -39,5 +39,5 @@ of entries such as the following.
 
 Add a similar entry for the syscall (make sure you put it with the others and not)
 below the `RET(SECCOMP_RET_TRAP),` line which triggers the failure). When you have
-finished adding your system call rebuild and re-test cjdns. If it works well then
+finished adding your system call rebuild and re-test hyperboria. If it works well then
 please make a Pull Request :-)   If not then open a bug report and explain the problem.

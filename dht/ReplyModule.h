@@ -28,7 +28,7 @@ Linker_require("dht/ReplyModule.c")
  * It also modifies outgoing replies to make sure that a reply packet has the
  * correct transaction id and is labeled as a reply. It adds the "y":"r" and
  * the "t":"aa" to the packet.
- * It is the core of the cjdns dht engine.
+ * It is the core of the hyperboria dht engine.
  */
 
 

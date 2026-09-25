@@ -243,7 +243,7 @@ Er_DEFUN(struct ETHInterface* ETHInterface_new(struct EventBase* eventBase,
 
     struct ifreq ifr = { .ifr_ifindex = 0 };
 
-    ctx->socket = socket(AF_PACKET, SOCK_DGRAM, Ethernet_TYPE_CJDNS);
+    ctx->socket = socket(AF_PACKET, SOCK_DGRAM, Ethernet_TYPE_HYPERBORIA);
     if (ctx->socket == -1) {
         Er_raise(alloc, "call to socket() failed. [%s]", strerror(errno));
     }
@@ -270,7 +270,7 @@ Er_DEFUN(struct ETHInterface* ETHInterface_new(struct EventBase* eventBase,
 
     ctx->addrBase = (struct sockaddr_ll) {
         .sll_family = AF_PACKET,
-        .sll_protocol = Ethernet_TYPE_CJDNS,
+        .sll_protocol = Ethernet_TYPE_HYPERBORIA,
         .sll_ifindex = ctx->ifindex,
         .sll_hatype = ARPHRD_ETHER,
         .sll_pkttype = PACKET_OTHERHOST,

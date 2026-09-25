@@ -1,0 +1,10 @@
+[Unit]
+Description=Restart hyperboria on resume from sleep
+After=sleep.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/systemctl restart hyperborians
+
+[Install]
+WantedBy=sleep.target

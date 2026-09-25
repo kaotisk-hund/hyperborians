@@ -17,7 +17,7 @@ identity.
 
 ## Limitation of Scope
 
-This document applies to the current version (latest master branch) of cjdns compiled and running
+This document applies to the current version (latest master branch) of hyperboria compiled and running
 on a Linux system using a version of GCC with no known security issues and running on an
 x86 or amd64 processor. Older versions and git branches may be non-compliant with this
 specification.
@@ -31,7 +31,7 @@ to anyone.
 identity (permanent public key) with which the session has been established.
 
 3. It must not be possible to reveal the content of any packet with an fc00::/8 destination address
-which enters cjdns through the TUN device, except to the holder(s) of the Matching
+which enters hyperboria through the TUN device, except to the holder(s) of the Matching
 Keypair for that address.
 
 4. It must not be possible to receive any packet with an fc00::/8 source address unless the sender

@@ -13,7 +13,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 #ifdef SUBNODE
-// TODO(cjd): Subnode beacon testing
+// TODO(hyperboria): Subnode beacon testing
 int main()
 {
     return 0;
@@ -245,7 +245,7 @@ static void sendMessage(struct TwoNodes* tn,
 static void runTest(struct TwoNodes* tn)
 {
     sendMessage(tn, "Hello World!", tn->nodeA, tn->nodeB);
-    sendMessage(tn, "Hello cjdns!", tn->nodeB, tn->nodeA);
+    sendMessage(tn, "Hello hyperboria!", tn->nodeB, tn->nodeA);
     sendMessage(tn, "send", tn->nodeA, tn->nodeB);
     sendMessage(tn, "a", tn->nodeB, tn->nodeA);
     sendMessage(tn, "few", tn->nodeA, tn->nodeB);

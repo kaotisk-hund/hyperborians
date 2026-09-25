@@ -44,7 +44,7 @@ char* Key_parse_strerror(int error)
         case Key_parse_TOO_SHORT:     return "key must be 52 characters long";
         case Key_parse_MALFORMED:     return "key must end in .k";
         case Key_parse_DECODE_FAILED: return "failed to base-32 decode key";
-        case Key_parse_INVALID:       return "not a valid cjdns public key";
+        case Key_parse_INVALID:       return "not a valid hyperboria public key";
         default:                      return "unknown error";
     }
 }

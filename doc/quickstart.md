@@ -3,7 +3,7 @@ The steps are just off the top of my head, based off of my experience walking pe
 
 Lots of this info is already in the repo, but it's scattered all over, and ideally we need just **one** document that can get people going if they read through it.
 
-## Getting going with cjdns
+## Getting going with hyperboria
 
 1. what is it?
 2. how can you install it? -> OS/Distro && hardware combos (click to go to appropriate page)

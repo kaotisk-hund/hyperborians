@@ -35,9 +35,9 @@ def main():
 
         
 
-    cjdns=at.anonConnect()
-    at.peerStats(cjdns,verbose=True,human_readable=human_readable);
-    cjdns.disconnect()
+    hyperboria=at.anonConnect()
+    at.peerStats(hyperboria,verbose=True,human_readable=human_readable);
+    hyperboria.disconnect()
 
 
 def usage():

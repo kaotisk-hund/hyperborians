@@ -8,7 +8,7 @@ read about in history books. Finally, becoming an ISP is no longer confined
 to the mighty telecoms, anyone can do it by running some wires or turning on
 a wireless device.
 
-This is the vision of cjdns.
+This is the vision of hyperboria.
 
 # Why?
 
@@ -76,12 +76,12 @@ nothing is impossible. How can this be anything short of lunacy?
 
 *In revolutionary times, the old book only weighs you down.*
 
-cjdns is built on the idea that the ISPs and hosting providers which exist
+hyperboria is built on the idea that the ISPs and hosting providers which exist
 now will never upgrade, not to LISP, not to DNSSEC, not even to IPv6 in any
 meaningful way. Building new systems to be compatible with old systems is
 catering to the audience you will never have. Asking existing ISPs to upgrade
 for the common good is asking them to take a risk with no immediate benefit.
-cjdns is about throwing out the book and redefining the specifications in a
+hyperboria is about throwing out the book and redefining the specifications in a
 way that will be fast, secure, and most importantly, *easy* for the next
 generation of ISPs to deploy and use.
 
@@ -172,7 +172,7 @@ competition in the ISP sphere, thus increasing prices and impeding progress.
 
 # How?
 
-cjdns is made of three major components which are woven together.
+hyperboria is made of three major components which are woven together.
 There is a switch, a router, and a CryptoAuth module. With total disregard for
 the OSI layers, each module is inherently dependent on both of the others. The
 router cannot function without routing in a small world which is made possible
@@ -193,7 +193,7 @@ does not need to store active connections and there is no connection setup.
 
 ### Definitions
 
-* Interface: A point-to-point link to another cjdns switch. This may be
+* Interface: A point-to-point link to another hyperboria switch. This may be
 emulated by Ethernet frames, UDP packets or other means.
 
 * Self Interface: A special Interface in each switch, packets sent for this
@@ -379,7 +379,7 @@ Because the conditions under which the switches operate may differ dramatically,
 the actual Encoding Scheme is left as an implementation detail. Some switches
 may be devices with 15 physical ports wherein a 4 bit fixed width Encoding
 Scheme would be wise, other switches may be in wireless networks where the
-number of reachable cjdns nodes, and thus the number of Interfaces may grow and
+number of reachable hyperboria nodes, and thus the number of Interfaces may grow and
 shrink. These devices may prefer a variable width encoding in order to save
 Label space without sacrificing expandability. There are however a few
 limitations placed upon encoding methods in order to allow the above
@@ -655,7 +655,7 @@ Possible keys in a router message include:
 * `np` (byte string): list of nodes' protocol version. The first byte is the
   number of bytes taken by each version in  the list (always 1 for now),
   followed by the versions themselves, encoded in big endian.
-* `p` (integer): protocol version. Matches the cjdns version.
+* `p` (integer): protocol version. Matches the hyperboria version.
 * `tar` (byte string): the target address. If provided, contains an address
   the sender wants to reach.
 * `txid` (byte string): transaction id. Opaque value choosen by senders of
@@ -692,7 +692,7 @@ The serialization of each item of the list of nodes `n` is:
 
 The CryptoAuth is a mechanism for wrapping interfaces, you supply it with an
 interface and optionally a key, and it gives you a new interface which allows
-you to send packets to someone who has that key. Like the rest of cjdns, it is
+you to send packets to someone who has that key. Like the rest of hyperboria, it is
 designed to function with best effort data transit. The CryptoAuth handshake
 is based on piggybacking headers on top of regular data packets and while the
 traffic in handshake packets is encrypted and authenticated, it is not secure
@@ -875,7 +875,7 @@ receiver if they are too much out of order.
 
 #### ReplayProtector
 
-The replay protector is a feature cjdns implementations provide.
+The replay protector is a feature hyperboria implementations provide.
 It is however not part of the protocol itself.
 
 ##### Simplest replay protector
@@ -887,7 +887,7 @@ This way, a packet can never be sent twice to a node, preventing
 
 ##### Replay protector with sliding window
 
-This section describes the replay protector used by the “official” cjdns
+This section describes the replay protector used by the “official” hyperboria
 implementation. It is not mandatory to implement it to support the protocol.
 
 Whenever a node receives a packet, it compares its nonce to the highest
@@ -985,7 +985,7 @@ the symmetric secret.
 The journey of a packet begins at the user interface device (TUN or similar).
 The user sends an IPv6 packet which comes in to the TUN device and enters the
 engine, it is checked to make sure its source and destination addresses are
-valid and then a router lookup is made on the destination address. cjdns
+valid and then a router lookup is made on the destination address. hyperboria
 addresses are the first 16 bytes of the SHA-512 of the SHA-512 of the public
 key. All addresses must begin with the byte `0xFC` otherwise they are invalid,
 generating a key is done by brute force key generation until the result of the
@@ -1037,7 +1037,7 @@ based on the source IPv6 address. The IPv6 header is then moved up to meet the
 content (into the place where the CryptoAuth header had been) and the final
 packet is written out to the TUN device.
 
-![illustration](https://github.com/cjdelisle/cjdns/raw/master/doc/CjdnsModules.png)
+![illustration](https://github.com/cjdelisle/hyperboria/raw/master/doc/CjdnsModules.png)
 
 
 [OLSR]: http://tools.ietf.org/html/rfc3626

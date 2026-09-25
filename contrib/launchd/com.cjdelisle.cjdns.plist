@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>com.cjdelisle.cjdns</string>
+	<string>com.cjdelisle.hyperboria</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/cjdroute</string>
+		<string>/usr/local/bin/hyperboria-route</string>
 	</array>
 	<key>UserName</key>
 	<string>root</string>
 	<key>StandardInPath</key>
-	<string>/etc/cjdroute.conf</string>
+	<string>/etc/hyperboria-route.conf</string>
 	<key>KeepAlive</key>
 	<true/>
 	<key>RunAtLoad</key>

@@ -12,12 +12,12 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import sys;
-from cjdnsadmin.cjdnsadmin import connectWithAdminInfo;
+from cjdnsadmin.hyperboriaadmin import connectWithAdminInfo;
 
-cjdns = connectWithAdminInfo();
+hyperboria = connectWithAdminInfo();
 inputDic = {}
 
 for ip in sys.argv[1:]:
     inputDic['ip'] = ip
-    outputDic = cjdns.NodeStore_getNode(inputDic)
+    outputDic = hyperboria.NodeStore_getNode(inputDic)
     print ip + ' ---> ' + outputDic['result']['key']

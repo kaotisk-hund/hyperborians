@@ -1,7 +1,7 @@
--- Cjdns address conversion functions
--- Translated from Cjdns C code to lua code by Alex <alex@portlandmeshnet.org>
+-- Hyperboria address conversion functions
+-- Translated from Hyperboria C code to lua code by Alex <alex@portlandmeshnet.org>
 
---- @module cjdns.addrcalc
+--- @module hyperboria.addrcalc
 local addrcalc = {}
 
 local bit32 = require("bit32")

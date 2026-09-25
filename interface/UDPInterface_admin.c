@@ -123,7 +123,7 @@ static void beginConnection(Dict* args,
                     break;
 
                 case InterfaceController_bootstrapPeer_BAD_KEY:
-                    error = "invalid cjdns public key.";
+                    error = "invalid hyperboria public key.";
                     break;
 
                 case InterfaceController_bootstrapPeer_OUT_OF_SPACE:

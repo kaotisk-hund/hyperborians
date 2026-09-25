@@ -72,7 +72,7 @@ static void checkBytes(struct Random* rand, int alignment, int length)
     }
 }
 
-/** https://github.com/cjdelisle/cjdns/issues/179 */
+/** https://github.com/cjdelisle/hyperboria/issues/179 */
 static void test179(struct Allocator* alloc, struct Log* logger)
 {
     uint8_t buff[32] = {0};

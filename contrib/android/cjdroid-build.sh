@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-# http://cjdns.ca/cjdns-droid.sh
+# http://hyperboria.ca/hyperboria-droid.sh
 
-# Does most things required to build cjdns for android.
+# Does most things required to build hyperboria for android.
 # See bottom of file for tips on installing/usage.
 # ADB, Android, plus basic command line skills required
 # ircerr 20140507
 
 # Parts stolen from:
-#  https://github.com/cjdelisle/cjdns/pull/476
+#  https://github.com/cjdelisle/hyperboria/pull/476
 #  https://gist.github.com/lgierth/01ce4bda638f8c863349
 #  larsg@HypeIRC
 # + mods by prurigro
@@ -33,25 +33,25 @@
 #   download it yourself), then install and run it to have it set
 #   one up for you.
 #
-#   http://cjdns.ca/com.aed.tun.installer.apk
+#   http://hyperboria.ca/com.aed.tun.installer.apk
 
 # Report success/failure including phone type, android version, kernel version,
-# and as much information as possible to #cjdns @ HypeIRC
+# and as much information as possible to #hyperboria @ HypeIRC
 
 # NOTES:
 #  Use a custom NDK directory:
 #   Before running this script, configure $NDK: export NDK="/path/to/ndk"
 #
 #  Use a different repo:
-#   Remove 'cjdns-android/cjdns' and below change: cjdns_repo="https://newaddr"
+#   Remove 'hyperboria-android/hyperboria' and below change: hyperboria_repo="https://newaddr"
 #
 #  Use a different branch:
 #   Run: cjdroid-bulid.sh branchname
 
 ##CONFIGURABLE VARIABLES
-cjdns_repo="https://github.com/cjdelisle/cjdns/"
+hyperboria_repo="https://github.com/cjdelisle/hyperboria/"
 [[ -n "$1" ]] \
-    && cjdns_repo_branch="-$1"
+    && hyperboria_repo_branch="-$1"
 
 build_dir="$PWD/build_android"
 src_dir="$build_dir/source"
@@ -116,16 +116,16 @@ COMPILER=arm-linux-androideabi-
 
 ##CLONE or PULL: the repo and change branch if requested
 cd "$build_dir"
-[[ -d cjdns ]] && {
-    cd cjdns
+[[ -d hyperboria ]] && {
+    cd hyperboria
     git pull --ff-only
 } || {
-    git clone $cjdns_repo cjdns
-    [[ ! -d cjdns ]] && {
-        echo "ERROR: Couldn't clone $cjdns_repo"
+    git clone $hyperboria_repo hyperboria
+    [[ ! -d hyperboria ]] && {
+        echo "ERROR: Couldn't clone $hyperboria_repo"
         exit 1
     }
-    cd cjdns
+    cd hyperboria
 }
 [[ -n "$1" ]] \
     && git checkout "$1"
@@ -134,31 +134,31 @@ cd "$build_dir"
 ##SETUP TOOLCHAIN VARS
 export PATH="$work_dir/android-arm-toolchain/bin:$PATH"
 
-##BUILD cjdns (without tests)
+##BUILD hyperboria (without tests)
 CROSS_COMPILE=$COMPILER ./cross-do 2>&1 \
-    | tee cjdns-build.log
-[[ ! -f 'cjdroute' ]] && {
+    | tee hyperboria-build.log
+[[ ! -f 'hyperboria-route' ]] && {
     echo -e "\nBUILD FAILED :("
     exit 1
 }
-echo -e "\nBUILD COMPLETE! @ $build_dir/cjdns/cjdroute"
+echo -e "\nBUILD COMPLETE! @ $build_dir/hyperboria/hyperboria-route"
 
 ##PACKAGE CJDROUTE AND ASSOCIATED SCRIPTS FOR DEPLOYMENT
 cd "$build_dir"
-cjdns_version=$(git -C cjdns describe --always | sed 's|-|.|g;s|[^\.]*\.||;s|\.[^\.]*$||')
-[[ -f ../cjdroid-$cjdns_version${cjdns_repo_branch}.tar.gz ]] && {
-    echo "Error: Package not built because $(readlink -f ../cjdroid-$cjdns_version${cjdns_repo_branch}.tar.gz) already exists"
+hyperboria_version=$(git -C hyperboria describe --always | sed 's|-|.|g;s|[^\.]*\.||;s|\.[^\.]*$||')
+[[ -f ../cjdroid-$hyperboria_version${hyperboria_repo_branch}.tar.gz ]] && {
+    echo "Error: Package not built because $(readlink -f ../cjdroid-$hyperboria_version${hyperboria_repo_branch}.tar.gz) already exists"
     exit 1
 }
-[[ ! -f cjdns/cjdroute ]] && {
-    echo "Error: Package not built because $PWD/cjdns/cjdroute does not exist"
+[[ ! -f hyperboria/hyperboria-route ]] && {
+    echo "Error: Package not built because $PWD/hyperboria/hyperboria-route does not exist"
     exit 1
 }
-[[ ! -d cjdns/contrib/android/cjdroid ]] && {
-    echo "Error: Package not built because $PWD/cjdns/contrib/android/cjdroid does not exist"
+[[ ! -d hyperboria/contrib/android/cjdroid ]] && {
+    echo "Error: Package not built because $PWD/hyperboria/contrib/android/cjdroid does not exist"
     exit 1
 }
-cp -R cjdns/contrib/android/cjdroid .
-install -Dm755 cjdns/cjdroute cjdroid/files/cjdroute
-tar cfz ../cjdroid-$cjdns_version${cjdns_repo_branch}.tar.gz cjdroid
-echo -e "\nSuccess: A deployable package has been created @ $(readlink -f ../cjdroid-$cjdns_version${cjdns_repo_branch}.tar.gz)"
+cp -R hyperboria/contrib/android/cjdroid .
+install -Dm755 hyperboria/hyperboria-route cjdroid/files/hyperboria-route
+tar cfz ../cjdroid-$hyperboria_version${hyperboria_repo_branch}.tar.gz cjdroid
+echo -e "\nSuccess: A deployable package has been created @ $(readlink -f ../cjdroid-$hyperboria_version${hyperboria_repo_branch}.tar.gz)"

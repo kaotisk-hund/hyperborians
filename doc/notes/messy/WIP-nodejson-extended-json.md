@@ -11,7 +11,7 @@
       + robots.txt
   - dumpTable (reuse the remnants of HDB?)
   - Direct Peers
-  - cjdns log/debug info
+  - hyperboria log/debug info
   - system info
 
 Note that some could be optional, and that **THIS IS A WORK IN PROGRESS**

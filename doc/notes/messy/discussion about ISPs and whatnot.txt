@@ -35,7 +35,7 @@
 12:07 < jercos> which is also bad in a sense, because now a large number of people are reliant on one company to stay connected
 12:07 < nat3r> i thought we were talking about level 3 running the fiber 
 12:07 < nat3r> and not ISP's 
-12:07 < jercos> so you would probably want to mix chunks of metro fiber, wireless links, etc, and let cjdns sort out the best path to take through the whole mess
+12:07 < jercos> so you would probably want to mix chunks of metro fiber, wireless links, etc, and let hyperboria sort out the best path to take through the whole mess
 12:07 < jercos> level3's fiber would be for a single huge buy to run between cities
 12:08 < jercos> metro fiber is typically provisions from existing infrastructure within a city that's been placed by a local ISP
 12:08 < jercos> privisioned*
@@ -71,9 +71,9 @@
 12:15 < jercos> there's always going to be some hitch like that, but in this model the meshlocals own their part of the network, and are just renting connections around the city, and paying part of the connectivity back to the world
 12:16 < jercos> this really is just like how the internet does it
 12:16 < jercos> if you pay ARIN for some IP space and a BGP ASN, and lay fiber, and make peering arrangements with someone already on the internet, you can get on the internet without paying an ISP at all
-12:17 < jercos> same cabling, same concepts, just without cjdns and wireless networks as a core part of the system
-12:17 < jercos> cjdns removes the need for ASNs and assigned IP space, and replaces BGP as a routing protocol
-12:17 < nat3r> i havent looked to far into cjdns just yet 
+12:17 < jercos> same cabling, same concepts, just without hyperboria and wireless networks as a core part of the system
+12:17 < jercos> hyperboria removes the need for ASNs and assigned IP space, and replaces BGP as a routing protocol
+12:17 < nat3r> i havent looked to far into hyperboria just yet 
 12:17 < jercos> BATMAN-adv makes a local set of wireless links into a homogenous mesh over which a wider routing protocol can carry traffic
 12:18 < nat3r> so who would be the ones to roll out the city-to-town fiber 
 12:18 < jercos> that's just it, it can be *anyone*
@@ -168,18 +168,18 @@
 13:24 < nat3r> which i have no problem doing 
 13:25 < jercos> you might have a meshlocal near you, you might want to start a meshlocal if there isn't one, but the way to get from the meshlocal to hyperboria will be the currently cheapest option, a consume-grade internet connection.
 13:25 < jercos> consumer*
-13:25 < nat3r> i saw that crowdfunding page, has cjdns been ported to windows yet?
+13:25 < nat3r> i saw that crowdfunding page, has hyperboria been ported to windows yet?
 13:25 < jercos> a meshlocal might wind up with more than one consumer grade internet connection linking them, and might have internet links dense enough to make it more efficient to duck through the internet to avoid two or three wireless hops
 13:25 < jercos> it has.
 13:26 < jercos> interfect put together an installer even
 13:26 < jercos> I'm still using the version from that installer on my windows machine at home :)
-13:26 < nat3r> https://www.reddit.com/r/darknetplan/comments/2hvjbe/installer_for_cjdns_on_windows/
+13:26 < nat3r> https://www.reddit.com/r/darknetplan/comments/2hvjbe/installer_for_hyperboria_on_windows/
 13:26 < nat3r> yess
 13:26 < nat3r> one sec
 13:28 < nat3r> ok back
 13:28 < jercos> coolio
 13:28 < jercos> as noted in that thread, that version will be updated... someday :p
-13:29 < jercos> since cjdns is very much still in flux as a project, that means you might be left with a non-working version and no path to update for a long while if the protocol changes majorly
+13:29 < jercos> since hyperboria is very much still in flux as a project, that means you might be left with a non-working version and no path to update for a long while if the protocol changes majorly
 13:29 < nat3r> it happens
 13:29 < jercos> so the current recommended path is still to use the most targetted platform, which is Linux, and treat any other platforms (mac, *BSD, windows, etc.) as secondary
 13:29 < nat3r> so how do you switch back and forth on windows
@@ -189,25 +189,25 @@
 13:31 < jercos> There is a slight resemblance in some areas, but for the most part, no.
 13:31 < jercos> one of the biggest differences obviously is that there's no onion routing.
 13:31 < nat3r> so to switch from normal web browsing to hyperboria web browsing theres changes that youd make 
-13:31 < jercos> cjdns is not, and should not be treates as, anonymous.
+13:31 < jercos> hyperboria is not, and should not be treates as, anonymous.
 13:31 < jercos> treated*
 13:32 < jercos> it encrypts all your data, sure, but each node along the way knows the source and destination of the packet by examining the switching label and their own routing table
 13:32 < nat3r> ah ok 
-13:32 < jercos> cjdns also passes real IP packets.
+13:32 < jercos> hyperboria also passes real IP packets.
 13:32 < nat3r> hence the manual invitation 
 13:32 < jercos> Tor and i2p are similar in that they implement *A* stream socket layer, and then have a translator between TCP and their own stream sockets
-13:33 < jercos> yes. cjdns also doesn't have any kind of internet autopeering. there is local autopeering with physically close machines over ethernet, but the manual process exists because it's potentially unsafe (in a privacy sense) to connect to random people
-13:34 < jercos> cjdns acts like a corporate VPN rather than a proxy. it handles IP packets as I said, but it handles them in a special manner, and doesn't expect to receive traffic destined for the internet normally
+13:33 < jercos> yes. hyperboria also doesn't have any kind of internet autopeering. there is local autopeering with physically close machines over ethernet, but the manual process exists because it's potentially unsafe (in a privacy sense) to connect to random people
+13:34 < jercos> hyperboria acts like a corporate VPN rather than a proxy. it handles IP packets as I said, but it handles them in a special manner, and doesn't expect to receive traffic destined for the internet normally
 13:34 -!- larsg [~larsg@p57A059FA.dip0.t-ipconnect.de] has quit [Read error: Operation timed out]
 13:34 < jercos> the "iptunnel" mechanism can be used to pass internet traffic to a node that you control, and specifically configured to allow that between two particular nodes...
-13:34 < nat3r> so there are sites that can be accessed exclusively through the cjdns protocol
+13:34 < nat3r> so there are sites that can be accessed exclusively through the hyperboria protocol
 13:34 < jercos> but it's not designed to have "exit nodes"
-13:35 < jercos> yeah. it might do to think of every cjdns site as being a .onion site in one sense, because endpoints are always identified by cryptographic key
+13:35 < jercos> yeah. it might do to think of every hyperboria site as being a .onion site in one sense, because endpoints are always identified by cryptographic key
 13:36 < jercos> Except as a full IP address, you have potentially 65535 TCP ports and 65535 UDP ports to do stuff with, instead of having a mapping to a single port for each key
 13:36 < nat3r> so whats the preferred method of connecting to others
-13:36 < jercos> there are hyperboria-only sites, that usually work by binding specifically to the cjdns TUN/TAP device
+13:36 < jercos> there are hyperboria-only sites, that usually work by binding specifically to the hyperboria TUN/TAP device
 13:36 < nat3r> is there a wiki within the network that informs users of various services?
-13:36 < jercos> but the "default" setup for most webservers will work with cjdns without changing anything as long as it accepts IPv6 traffic
+13:36 < jercos> but the "default" setup for most webservers will work with hyperboria without changing anything as long as it accepts IPv6 traffic
 13:37 < jercos> uh, there are a couple of sites keeping track of open services on the network, but there's no a single authoritative one
 13:37 < jercos> the hyperboria intelligence agency catalouges services by scanning every node they find with a port scanner for example ;)
 13:38 < jercos> the most preferred method of connecting to others is the same process used for freenet... peer with your friends. with people you know in the real world. people who, if their nodes started behaving poorly, you could knock on their front door and ask them 
@@ -231,28 +231,28 @@
 13:44 < jercos> so there have been a lot of those sort of groups even over the short history of meshlocals as they exist now
 13:44 < nat3r> any documentation on node building?
 13:44 < jercos> um, there's various documentation in places that I don't remember now, but it's extremely flexible.
-13:45 < jercos> If a machine/gateway/router/AP/media center/streaming dongle/whatever will run Linux (which includes OpenWrt on home gateway products) it'll usually passably run cjdns
+13:45 < jercos> If a machine/gateway/router/AP/media center/streaming dongle/whatever will run Linux (which includes OpenWrt on home gateway products) it'll usually passably run hyperboria
 13:45 < nat3r> ended up on some weird notepad installation with a bit about installing an Omnitik on a seattle rooftop
 13:45 < jercos> sometimes there's bandwidth restrictions from the CPU being too slow
 13:45 < jercos> and naturally picking a good wireless card and a good antenna are important
 13:46 < jercos> but the hardware requirements beyond those can flex very far
-13:46 < jercos> cheap hardware is a good reason to use BATMAN-adv as a first player instead of running cjdns directly on a wireless link for example
-13:46 < jercos> you can use very cheap home gateway devices to make the local meshing parts, and then run cjdns nodes on computers attached to those gateways
+13:46 < jercos> cheap hardware is a good reason to use BATMAN-adv as a first player instead of running hyperboria directly on a wireless link for example
+13:46 < jercos> you can use very cheap home gateway devices to make the local meshing parts, and then run hyperboria nodes on computers attached to those gateways
 13:47 < jercos> BATMAN-adv doesn't need slow crypto to work, so it can cost very little (probably under 1k to mesh a metropolitan area if you're careful with the budget and don't mind ordering lots of things from china)
-13:47 < jercos> and then that fabric can carry a cjdns link from a computer on one side of the area to th other, without needing a node at each hope
+13:47 < jercos> and then that fabric can carry a hyperboria link from a computer on one side of the area to th other, without needing a node at each hope
 13:48 < jercos> that same sort of design is used by a lot of commercial ISPs with MPLS
 13:48 < nat3r> is there a current benefit for creating a mesh though?
 13:48 < jercos> the ISP has a meshy sort of network all over the city, they attach your company offices to that mesh, and any traffic you send gets tagged with a lebl saying where it's going
 13:48 < jercos> uh, most of the same benefits you'd have from having all your local friends on a LAN apply
 13:49 < nat3r> ah 
 13:49 < nat3r> so the peer-to-pear connection is certainly a focus 
-13:49 < jercos> assuming you can keep the number of hops down, that sort of thing is great for bandwidth-intensive games that wouldn't work well over a slow internet connection. minecraft for example, works great over cjdns :)
+13:49 < jercos> assuming you can keep the number of hops down, that sort of thing is great for bandwidth-intensive games that wouldn't work well over a slow internet connection. minecraft for example, works great over hyperboria :)
 13:49 -!- voltid [~volt@173-170-189-41.res.bhn.net] has joined #projectmeshnet
 13:49 < jercos> yeah, that's really the level at which we're keeping corporations out
 13:50 < nat3r> how fast is hyperborea? 
 13:50 < jercos> the mesh equallizes *people*, so anyone can run a service or participate in the larger internet with futzing with "port forwarding" or needing to pay for an expensive high-end internet connection
 13:50 -!- orthogona [~orthogona@151.moo0102.moo.iprimus.net.au] has joined #projectmeshnet
-13:51 < jercos> it depends. right now cjdns has some outstanding routing bugs, so the first time you try to reach a node, it might take a while to find a good route through the network...
+13:51 < jercos> it depends. right now hyperboria has some outstanding routing bugs, so the first time you try to reach a node, it might take a while to find a good route through the network...
 13:51 < jercos> in some cases you might never find a working route even if the path should be good. you'll see that discussed as a "blackholing bug"
 13:51 < jercos> obviously eventually that'll be fixed, but that's the main slowdown currently
 13:52 < jercos> I don't have good figures for uncapped connections other than the nodes in my LAN, on gigabit ethernet...
@@ -262,7 +262,7 @@
 13:53 < jercos> without NAT, you'd need to rent an IP address for each of your devices
 13:53 < jercos> which in the time before NAT was common, was a heavily charged premium service
 13:54 < jercos> now I have dedicated static IPs on my devices at home in the $100/mo range... most people don't.
-13:54 < jercos> with cjdns in the picture, you have one IP address for each device running cjdns, no matter how many you have.
+13:54 < jercos> with hyperboria in the picture, you have one IP address for each device running hyperboria, no matter how many you have.
 13:54 < jercos> There's no cost to add a device and peer it with one of your own computers
 13:55 < nat3r> yeah but i do that internally for free
 13:55 < jercos> which means in turn anyone can run a webserver, or an IRC server, or whatever they want, and have those addresses also work for everyone *else*
@@ -286,16 +286,16 @@
                 an addon to that service as well
 14:04 < jercos> so a meshlocal might pool their users' money and share a larger connection that doesn't have any restrictions on sharing... and at that level of connection a whole block of IP addresses on the public internet is often thrown in at little or no charge.
 14:04 < jercos> I uh, recall getting a rate-billed capless connection for a couple hundred bucks on average and getting a /24 out of it
-14:05 < ansuz> my isp has restrictions on launching servers, but they can't tell that I'm serving something based on my cjdns traffic
+14:05 < ansuz> my isp has restrictions on launching servers, but they can't tell that I'm serving something based on my hyperboria traffic
 14:05 < jercos> that could be 254 users getting sold internet-over-the-mesh by a meshlocal in addition to that pipe being used for an internet link to hyperboria
-14:05 < jercos> yeah. that circumvention ability is partially why I think ISPs will be against cjdns traffic, and might even eventually actually block it
-14:06 < ansuz> there's also the matter of not needing to set up SSL over cjdns
+14:05 < jercos> yeah. that circumvention ability is partially why I think ISPs will be against hyperboria traffic, and might even eventually actually block it
+14:06 < ansuz> there's also the matter of not needing to set up SSL over hyperboria
 14:06 < ansuz> which is nice
 14:06 < jercos> why you could be doing *anything* over that connection, streaming pirated movies, downloading child porn, won't someone please think of the children, etc. etc.
 14:06 < nat3r> back sorry
 14:06 < ansuz> net neutrality is the devil's plaything
 14:06 < ansuz> or something
-14:06 < jercos> and then just like that there's no question over an ISP's right to pull the plug on you if they see you using cjdns
+14:06 < jercos> and then just like that there's no question over an ISP's right to pull the plug on you if they see you using hyperboria
 14:06  * jercos shrugs
 14:10 < nat3r> yeah 
 14:10 < nat3r> i mean thats the beauty of a hackerspace

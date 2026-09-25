@@ -1,6 +1,6 @@
-# Installing cjdns on Ubuntu 16.04
+# Installing hyperboria on Ubuntu 16.04
 
-This is a short guide how to setup an Ubuntu cjdns box.
+This is a short guide how to setup an Ubuntu hyperboria box.
 
 ## Install packages
 
@@ -9,12 +9,12 @@ This is a short guide how to setup an Ubuntu cjdns box.
 ## Clone, compile, install
 
 	cd /opt
-	git clone https://github.com/cjdelisle/cjdns.git
-	cd cjdns
+	git clone https://github.com/cjdelisle/hyperboria.git
+	cd hyperboria
 	./do
-	ln -s /opt/cjdns/cjdroute /usr/bin/
-	(umask 077 && ./cjdroute --genconf > /etc/cjdroute.conf)
-	cp contrib/systemd/cjdns.service contrib/systemd/cjdns-resume.service /lib/systemd/system/
-	systemctl enable cjdns
-	systemctl start cjdns
+	ln -s /opt/hyperboria/hyperboria-route /usr/bin/
+	(umask 077 && ./hyperboria-route --genconf > /etc/hyperboria-route.conf)
+	cp contrib/systemd/hyperboria.service contrib/systemd/hyperboria-resume.service /lib/systemd/system/
+	systemctl enable hyperboria
+	systemctl start hyperboria
 

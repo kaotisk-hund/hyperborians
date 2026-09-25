@@ -25,7 +25,7 @@ matrix:
       script:
         - "bash node_build/run_jshint"
 
-    ## TODO(cjd) merge allocator-fixes and enable this
+    ## TODO(hyperboria) merge allocator-fixes and enable this
     # - name: "AddressSanitizer"
     #   addons:
     #     apt:

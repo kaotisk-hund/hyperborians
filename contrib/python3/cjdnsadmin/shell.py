@@ -17,7 +17,7 @@ import cjdnsadmin
 
 s = cjdnsadmin.connectWithAdminInfo()
 
-print("Interactive cjdns admin shell.")
+print("Interactive hyperboria admin shell.")
 print("Usage: `s.command()`. 's' for Session.")
 print("Try s.ping() or s.functions() to start.")
 print("Ctrl-D to exit.")

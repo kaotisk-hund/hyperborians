@@ -79,7 +79,7 @@ int main(int argc, char** argv)
             ,privateKeyHexIn,publicKeyBase32Out,addressOut);
         return 0;
     } else {
-        fprintf(stderr, "Not a valid cjdns address\n");
+        fprintf(stderr, "Not a valid hyperboria address\n");
         return 1;
     }
 

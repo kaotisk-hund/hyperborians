@@ -1,23 +1,23 @@
 # Debugging memory leaks
 
-Ok, so cjdns just crashed on you and printed some shit like
+Ok, so hyperboria just crashed on you and printed some shit like
 `Fatal error: [Out of memory, limit exceeded]` what do you do.
 
 ## Solution 1: cry
 The bdfl will fix it when it happens on his laptop.
 
 ## Solution 2: find the cause
-Before crashing, cjdns prints a tree containing every memory allocation, its allocator, the
+Before crashing, hyperboria prints a tree containing every memory allocation, its allocator, the
 parent of that allocator and so on back up to the root allocator.
 
-Memory in cjdns is allocated in a tree structure similar to the directory structure on a filesystem.
+Memory in hyperboria is allocated in a tree structure similar to the directory structure on a filesystem.
 In order to allocate memory, you need an **allocator**, allocators can spawn child allocators
 and allocate memory. When an allocator is *freed*, all of its memory and all of the memory of
 its children is freed in turn.
 
-If you want to see the memory tree while cjdns is running, you can trigger a print of the tree using
+If you want to see the memory tree while hyperboria is running, you can trigger a print of the tree using
 the RPC call `Allocator_snapshot()`, the parameter specifies whether the individual memory
-allocations should be shown or just the allocators, if cjdns has an OOM crash, it shows everything.
+allocations should be shown or just the allocators, if hyperboria has an OOM crash, it shows everything.
 
 Example: `./tools/cexec 'Allocator_snapshot(1)'`
 Note that this will print the tree to stdout because it is far too large to return in a UDP packet
@@ -68,12 +68,12 @@ Usually either `Allocator_child()` or `Allocator_malloc()`.
 ### Finding memory leaks
 If you encounter an OOM crash, there is probably a leak. The easiest way to find this is to take
 the entire memory tree trace (probably huge) and copy it into a text document. Remove everything
-below `----- end cjdns memory snapshot -----` and everything above
-`----- cjdns memory snapshot -----` then save the file (perhaps using the name `~/cjdns_memdump`).
+below `----- end hyperboria memory snapshot -----` and everything above
+`----- hyperboria memory snapshot -----` then save the file (perhaps using the name `~/hyperboria_memdump`).
 
 On the command line, run the following command:
 
-        cat ~/cjdns_memdump | sed -n -e 's/.* \([a-zA-Z0-9_]*\.[ch]\:[0-9]*\) .*$/\1/p' | sort | uniq -c | sort -n
+        cat ~/hyperboria_memdump | sed -n -e 's/.* \([a-zA-Z0-9_]*\.[ch]\:[0-9]*\) .*$/\1/p' | sort | uniq -c | sort -n
 
 This will show a list of each location (in the code) where memory is allocated and the number of
 currently active allocations (or allocators) which were allocated in that spot.
@@ -114,5 +114,5 @@ have one currently active allocation.
 
 All the way at the bottom is an anomaly, a single location in the source code which contains
 twice as many allocations as the next greatest number. Investigating that I found a dumb mistake
-which [some idiot](https://github.com/cjdelisle/cjdns/commit/507223dac10690f562b91d8ec84ce2f7a41df5ad)
+which [some idiot](https://github.com/cjdelisle/hyperboria/commit/507223dac10690f562b91d8ec84ce2f7a41df5ad)
 made while working on the source.

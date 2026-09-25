@@ -32,7 +32,7 @@ struct Pipe
 {
     struct Iface iface;
 
-    /** The name of the file eg: "/tmp/cjdns_pipe_foo" */
+    /** The name of the file eg: "/tmp/hyperboria_pipe_foo" */
     const char* const fullName;
 
     void* userData;

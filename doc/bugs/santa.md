@@ -4,7 +4,7 @@ This is a possible routing issue that may be related to the **black hole routing
 
 ## The Expectation
 
-**cjdns** distributes a network's routing table across its constituent nodes. Individual nodes decide which other nodes they should keep track of by a combination of two main metrics:
+**hyperboria** distributes a network's routing table across its constituent nodes. Individual nodes decide which other nodes they should keep track of by a combination of two main metrics:
 
 + a **logical** proximity metric (in which nodes which are a small number of hops away are considered close)
 + a **key-wise** proximity metric (in which nodes with similar addresses (by a xor metric) are considered close)
@@ -21,7 +21,7 @@ Many of the world's nations have a holiday practice sometimes referred to as a [
 
 The assumption is that even if they do not know their chosen recipient well, they have enough common acquaintances that they can learn enough about them to deliver a suitable gift. Furthermore, it should go without saying that they should have the capacity to deliver this gift. The Kademlia method is generally implemented as a dynamic overlay network. Its member are assumed to have a path to one another.
 
-This is not the case with **cjdns**, as it is intended to be used to form a **[pseudonymous](https://en.wikipedia.org/wiki/Pseudonymity)** network. In other words, it is not guaranteed that there already exists a path to the their target node (or gift recipient, to return to the metaphor).
+This is not the case with **hyperboria**, as it is intended to be used to form a **[pseudonymous](https://en.wikipedia.org/wiki/Pseudonymity)** network. In other words, it is not guaranteed that there already exists a path to the their target node (or gift recipient, to return to the metaphor).
 
 ## Relying on chaos
 

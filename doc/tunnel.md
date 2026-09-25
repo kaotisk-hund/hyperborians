@@ -1,33 +1,33 @@
-# IpTunnel - Tunneling IPv4 and IPv6 through a cjdns network
+# IpTunnel - Tunneling IPv4 and IPv6 through a hyperboria network
 
-IpTunnel is designed to make it easy to access The Old Internet through cjdns.
+IpTunnel is designed to make it easy to access The Old Internet through hyperboria.
 The way you get to the internet is via "gate" nodes which hand you an address
 the same way as a traditional VPN service would. TOR users might think of it as
-"exit nodes" for cjdns, the main difference is with cjdns you need to ask permission
+"exit nodes" for hyperboria, the main difference is with hyperboria you need to ask permission
 from the gate operator before (ab)using their gateway.
 
 
-## Updating your cjdroute.conf
+## Updating your hyperboria-route.conf
 
-First compare your cjdroute.conf file to a newly generated one, if your cjdroute.conf
+First compare your hyperboria-route.conf file to a newly generated one, if your hyperboria-route.conf
 file is old, there are two changes which you will need to include. In the `router` section
 you will need to add a subsection called `IpTunnel`.
 
-        // System for tunneling IPv4 and ICANN IPv6 through cjdns.
-        // This is using the cjdns switch layer as a VPN carrier.
+        // System for tunneling IPv4 and ICANN IPv6 through hyperboria.
+        // This is using the hyperboria switch layer as a VPN carrier.
         "ipTunnel":
         {
             lots
             of stuff here
             see the real version
-            by running ./cjdroute --genconf
+            by running ./hyperboria-route --genconf
         }
 
 ## Connecting to a gateway
 
 To connect to an IPv6 gate, you must first ask the operator of the gate to add your
 key to his gate, once he has added it, add their *key* to the `outgoingConnections`
-section of the `IpTunnel` block in your cjdroute.conf like this:
+section of the `IpTunnel` block in your hyperboria-route.conf like this:
 
     "outgoingConnections":
     [
@@ -35,7 +35,7 @@ section of the `IpTunnel` block in your cjdroute.conf like this:
         "d5d0wu0usrkuThisIsJustAnExampleThisIsFake63uqlnk2kb0.k"
     ]
 
-Then restart cjdns and after a few moments you should see it add IP addresses to your TUN device by running
+Then restart hyperboria and after a few moments you should see it add IP addresses to your TUN device by running
 `ifconfig` for example:
 
     tun0      Link encap:UNSPEC  HWaddr 00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00
@@ -67,7 +67,7 @@ For IPv4, you will need to set up a local network on `10.0.0.0/24` for example,
 with a gateway on `10.0.0.1`. You will have to set up NAT to allow routing those
 address to the Internet.
 
-First edit your cjdroute.conf and add the clients who will be connecting to your gate.
+First edit your hyperboria-route.conf and add the clients who will be connecting to your gate.
 It's always a good idea to add some identification with the connect block so you know who
 it is for later.
 
@@ -86,12 +86,12 @@ it is for later.
 Note the `ip6Prefix` field: it specifies the netmask that the client should use.
 We have set it to 0, so the client will think the entire IPv6 address space is
 accessible over the tunnel (which it is, since we're building a
-cjdns-to-clearnet gateway). This avoids us having to set up an IPv6 default
+hyperboria-to-clearnet gateway). This avoids us having to set up an IPv6 default
 gateway manually on the client node. If you want to advertise a smaller network
 to your clients (like just the `1111:1111:1111:1111::/64` network), set this to
 the appropriate value (in this case, 64).
 
-When you start cjdroute, the IP address for the TUN device will *not* be set automatically,
+When you start hyperboria-route, the IP address for the TUN device will *not* be set automatically,
 so you must set that next with the following command:
 
     ip -6 addr add dev tun0 1111:1111:1111:1111::3
@@ -124,7 +124,7 @@ and to make it permanent, edit your `/etc/sysctl.conf` file and *uncomment* the 
 
 Run `sysctl --system` to use those new settings.
 
-For IPv4, you probably want to set up NAT between the `tun0` cjdns interface and
+For IPv4, you probably want to set up NAT between the `tun0` hyperboria interface and
 the uplink `eth0`:
 
     iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
@@ -132,13 +132,13 @@ the uplink `eth0`:
     iptables -A FORWARD -i tun0 -o eth0 -j ACCEPT
 
 
-Connect the client to the gateway using cjdns and wait a few moments until you've obtained the ipv6
+Connect the client to the gateway using hyperboria and wait a few moments until you've obtained the ipv6
 address associated with the tunnel. Now, test the connection by attempting to ping the ipv6 address
 associated with the gateway on the tunnel, and if this succeeds you can try to ping an external ipv6
 address like `ipv6.google.com` too if you're expecting internet traffic to be routed through.
 
 For IPv4, you probably want to set up routing on the client side as well
-(assuming the cjdns interface in `tun0`:
+(assuming the hyperboria interface in `tun0`:
 
     ip route add 10.0.0.0/24 dev tun0
     ip route add default via 10.0.0.1
@@ -154,7 +154,7 @@ blocking your connection in any way. You should also make sure a processes calle
 (at least to rule out as a cause until you have things working) since it seems to be capable of causing
 some routing issues.
 
-Now ensure the client is still connected to the gateway through cjdns, and that it still has an ipv6
+Now ensure the client is still connected to the gateway through hyperboria, and that it still has an ipv6
 address associated with the tunnel, then try pinging the gateway or an internet ipv6 address again with
 the client. On the gateway, run `tcpdump -n -i tun0` to see if any packets get as far as the tun device, and
 if nothing scrolls with the ipv6 associated with your client's on the tunnel, you should check your routes

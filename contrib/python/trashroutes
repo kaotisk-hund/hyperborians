@@ -13,9 +13,9 @@
 
 import sys;
 import math;
-from cjdnsadmin.cjdnsadmin import connectWithAdminInfo;
+from cjdnsadmin.hyperboriaadmin import connectWithAdminInfo;
 
-cjdns = connectWithAdminInfo();
+hyperboria = connectWithAdminInfo();
 allRoutes = [];
 
 def parseRoute(path):
@@ -43,14 +43,14 @@ def parseRoute(path):
 
 i = 0;
 while True:
-    table = cjdns.NodeStore_dumpTable(i);
+    table = hyperboria.NodeStore_dumpTable(i);
     routes = table['routingTable'];
     allRoutes += routes;
     if (not 'more' in table):
         break;
     i += 1;
 
-# get the value of a route as cjdns sees it
+# get the value of a route as hyperboria sees it
 def getValue(node):
     if (node['link'] == 0): return 0
     return 64 - int(math.log(int(node['path'].replace(".", ""), 16), 2));

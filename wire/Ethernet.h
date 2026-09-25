@@ -33,6 +33,6 @@ Assert_compileTime(sizeof(struct Ethernet) == Ethernet_SIZE);
 #define Ethernet_TYPE_IP4   Endian_hostToBigEndian16( 0x0800 )
 #define Ethernet_TYPE_ARP   Endian_hostToBigEndian16( 0x0806 )
 #define Ethernet_TYPE_IP6   Endian_hostToBigEndian16( 0x86DD )
-#define Ethernet_TYPE_CJDNS Endian_hostToBigEndian16( 0xFC00 )
+#define Ethernet_TYPE_HYPERBORIA Endian_hostToBigEndian16( 0xFC00 )
 
 #endif

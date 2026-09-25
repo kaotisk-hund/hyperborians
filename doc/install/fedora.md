@@ -1,11 +1,11 @@
-Installing CJDNS on Fedora
+Installing HYPERBORIA on Fedora
 ==========================
 (last tested on Fedora 22, those with fedora versions older than 22 should substitute yum for dnf.)
 
 ## Install from dnf (easy)
 
 ```bash
-sudo dnf install cjdns
+sudo dnf install hyperboria
 ```
 
 Skip straight down to "Generating a config"
@@ -17,10 +17,10 @@ Skip straight down to "Generating a config"
 sudo dnf install git nodejs gcc
 ```
 
-### Getting cjdns
+### Getting hyperboria
 ```bash
-git clone https://github.com/cjdelisle/cjdns
-cd cjdns/
+git clone https://github.com/cjdelisle/hyperboria
+cd hyperboria/
 ```
 
 ### Do you want to build crashey branch ?  (optional)
@@ -29,25 +29,25 @@ cd cjdns/
 git checkout crashey
 ```
 
-### Building cjdns
+### Building hyperboria
 ```bash
 ./do
 ```
 
 ## Generating a config
 ```bash
-./cjdroute --genconf | sudo tee /etc/cjdroute.conf
+./hyperboria-route --genconf | sudo tee /etc/hyperboria-route.conf
 ```
 
-## Setting cjdns to autostart on boot
+## Setting hyperboria to autostart on boot
 
 ```bash
-sudo cp cjdns.service /etc/systemd/system/cjdns.service # This gives systemd some information about cjdns.
-sudo systemctl enable cjdns.service #This sets cjdns to be started on boot. if you don't want that, feel free to leave this line out.
-sudo systemctl start cjdns.service #This actually starts cjdns.
+sudo cp hyperboria.service /etc/systemd/system/hyperboria.service # This gives systemd some information about hyperboria.
+sudo systemctl enable hyperboria.service #This sets hyperboria to be started on boot. if you don't want that, feel free to leave this line out.
+sudo systemctl start hyperboria.service #This actually starts hyperboria.
 ```
 
 ## Check the logs
 ```bash
-sudo systemctl status -l cjdns
+sudo systemctl status -l hyperboria
 ```

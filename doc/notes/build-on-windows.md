@@ -1,6 +1,6 @@
-CultureSpy worked out how to compile cjdns for Windows for Windows. So if you happen to use this broken ass OS and want to use cjdns....
+CultureSpy worked out how to compile hyperboria for Windows for Windows. So if you happen to use this broken ass OS and want to use hyperboria....
 
-# Building cjdns On Windows For Windows
+# Building hyperboria On Windows For Windows
 
 
 Install Cygwin from [here](https://cygwin.com/install.html)
@@ -34,7 +34,7 @@ make
 [Install node.js](http://nodejs.org/download/)
 
 
-Get the [cjdns source](https://github.com/cjdelisle/cjdns)
+Get the [hyperboria source](https://github.com/cjdelisle/hyperboria)
 
 
 Create `C:\tmp`
@@ -46,7 +46,7 @@ export CC=i686-w64-mingw32-gcc
 export CXX=i686-w64-mingw32-g++
 ```
 
-Make a small edit to the cjdns JS build system:
+Make a small edit to the hyperboria JS build system:
 
 ```
 --- a/node_build/make.js
@@ -82,11 +82,11 @@ Edit `node_build/dependencies/libuv/Makefile` so that it will use the mingw gcc 
 
 Then run `./do` to build
 
-The system churns for a while, hopefully producing no errors. It will eventually tell you it's time to run `cjdroute`. It lies.
+The system churns for a while, hopefully producing no errors. It will eventually tell you it's time to run `hyperboria-route`. It lies.
 
-`cp build_win32/admin_angel_cjdroute2_c.exe cjdroute.exe`
+`cp build_win32/admin_angel_hyperboria-route2_c.exe hyperboria-route.exe`
 
-Or put cjdroute.exe wherever you like.
+Or put hyperboria-route.exe wherever you like.
 
 Continue following [instructions here](../windows.md#run-time-dependencies)
 

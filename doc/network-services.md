@@ -7,7 +7,7 @@ Take control of the services your host is offering as described below.
 ## 1: Obtain IP address.
 
 Use `ifconfig -a` to find the IPv6 address of your TUN device. (Assigned by
-cjdroute.)
+hyperboria-route.)
 
 ## 2: Scan for open services.
 

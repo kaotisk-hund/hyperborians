@@ -69,7 +69,7 @@ struct Allocator_OnFreeJob
  *
  * #1 Do not create new root allocators, create child allocators instead.
  * When you call MallocAllocator_new() or equivalent, you are creating a parentless allocator and
- * you must take responsibility for it's freeing when you are finished with it. In cjdns there is
+ * you must take responsibility for it's freeing when you are finished with it. In hyperboria there is
  * only one call to a main allocator and all other allocators are spawned from it using
  * Allocator_child().
  * Exception: In certain code which interfaces with libuv, an alternate root allocator is necessary
@@ -92,7 +92,7 @@ struct Allocator_OnFreeJob
  * memory. To prevent this, every place where temporary memory is placed into a more permanent
  * structure (the table), Allocator_onFree() is used to hook the freeing of that memory and add a
  * function to remove the entry from the table.
- * Cjdns is notably lacking in "deregister" or "cancel" type functions as the accepted method of
+ * Hyperboria is notably lacking in "deregister" or "cancel" type functions as the accepted method of
  * deregistering a peer or cancelling an operation is by freeing the associated allocator, both
  * simplifying the code and avoiding bug prone "cold" codepaths.
  *

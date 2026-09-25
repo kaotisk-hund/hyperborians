@@ -18,7 +18,7 @@
 enum ContentType
 {
     /**
-     * The lowest 255 message types are reserved for cjdns/IPv6 packets.
+     * The lowest 255 message types are reserved for hyperboria/IPv6 packets.
      * AKA: packets where the IP address is within the FC00::/8 block.
      * Any packet sent in this way will have the IPv6 header deconstructed and this
      * field will come from the nextHeader field in the IPv6 header.
@@ -50,7 +50,7 @@ enum ContentType
     ContentType_IP6_MAX =       255,
 
     /** Bencoded inter-router DHT messages. */
-    ContentType_CJDHT =         256,
+    ContentType_HYPERBORIADHT =         256,
     ContentType_IPTUN =         257,
 
     /** Reserved for future allocation. */
@@ -59,8 +59,8 @@ enum ContentType
 
     /**
      * Content types in the AVAILABLE range are not defined and can be used
-     * like port numbers for subsystems of cjdns to communicate with subsystems within
-     * cjdns on other machines, providing they first agree on which numbers to use via
+     * like port numbers for subsystems of hyperboria to communicate with subsystems within
+     * hyperboria on other machines, providing they first agree on which numbers to use via
      * CTRL messages.
      */
     ContentType_AVAILABLE =     0x8000,

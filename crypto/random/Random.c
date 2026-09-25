@@ -26,7 +26,7 @@
 #include <crypto_stream_salsa20.h>
 
 /**
- * cjdns random generator:
+ * hyperboria random generator:
  * It is with great apprehension that I have decided to go forward with this random generator.
  * Sadly there doesn't exist any plain-and-simple random generation library for C without
  * bundling libevent, openssl or some other megalyth.

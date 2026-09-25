@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-var Cjdns = require('./lib/cjdnsadmin/cjdnsadmin');
+var Hyperboria = require('./lib/hyperboriaadmin/hyperboriaadmin');
 var nThen = require('nthen');
 
-var cjdns;
+var hyperboria;
 nThen(function (waitFor) {
-    Cjdns.connectWithAdminInfo(waitFor(function (c) { cjdns = c; }));
+    Hyperboria.connectWithAdminInfo(waitFor(function (c) { hyperboria = c; }));
 }).nThen(function (waitFor) {
     var code;
     if (process.argv[process.argv.length-1].indexOf('cexec') !== -1) {
@@ -31,9 +31,9 @@ nThen(function (waitFor) {
         code = code.replace('(,cb);', '(cb);');
     }
     var f = new Function('x', 'cb', 'x.' + code);
-    f(cjdns, function (err, ret) {
+    f(hyperboria, function (err, ret) {
         if (err) { throw err; }
         console.log(JSON.stringify(ret, null, '  '));
-        cjdns.disconnect();
+        hyperboria.disconnect();
     });
 });

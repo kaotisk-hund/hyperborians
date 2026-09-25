@@ -1,4 +1,4 @@
-# cjdns
+# hyperboria
 
 [English](README.md)
 [Русская версия](README_RU.md)
@@ -11,19 +11,19 @@
 
 #### *Datornätverk - Ett nytt sätt*
 
-Cjdns är ett krypterat IPv6-nätverk. Adresser i nätverket baseras på assymetrisk
+Hyperboria är ett krypterat IPv6-nätverk. Adresser i nätverket baseras på assymetrisk
 kryptografi och paket dirigeras i nätverket genom att använda en s.k. distribuerad
 hashtabell (DHT, eller Distributed Hash Table på engelska). Genom denna design
 uppnås ett nätverk som knappt kräver någon konfiguration. Vi blir också av med
 många skalnings- och säkerhetsproblem som andra nätverk har.
 
-[![Build Status](https://travis-ci.org/cjdelisle/cjdns.svg?branch=master)](https://travis-ci.org/cjdelisle/cjdns)
-[![tip for next commit](https://tip4commit.com/projects/941.svg)](https://tip4commit.com/github/cjdelisle/cjdns)
-[![irc](https://img.shields.io/badge/irc%20chat-%23cjdns-blue.svg)](https://kiwiirc.com/client/irc.efnet.org/?nick=visitor|?#cjdns)
+[![Build Status](https://travis-ci.org/cjdelisle/hyperboria.svg?branch=master)](https://travis-ci.org/cjdelisle/hyperboria)
+[![tip for next commit](https://tip4commit.com/projects/941.svg)](https://tip4commit.com/github/cjdelisle/hyperboria)
+[![irc](https://img.shields.io/badge/irc%20chat-%23hyperboria-blue.svg)](https://kiwiirc.com/client/irc.efnet.org/?nick=visitor|?#hyperboria)
 
 ## Vitsord
 
-    23:26 <@jercos> well, cjdns is now officially more reliable than the open
+    23:26 <@jercos> well, hyperboria is now officially more reliable than the open
                     internet for getting to my cheaper VPSes :|
 
     12:52 < mariner> so i don't know if it's been done before, and i assume it's
@@ -35,7 +35,7 @@ många skalnings- och säkerhetsproblem som andra nätverk har.
 
     <DuoNoxSol> it's notably more reliable than the normal internet
 
-    09:46 < Kubuxu> I so love cjdns code base
+    09:46 < Kubuxu> I so love hyperboria code base
 
     <whyrusleeping> my internet is way better now.
     ​<whyrusleeping> thanks
@@ -44,29 +44,29 @@ många skalnings- och säkerhetsproblem som andra nätverk har.
 
 ## Community
 
-* [irc://irc.efnet.org/#cjdns][IRC Web]
-* [Hyperboria][], det största cjdns-nätverket, över 2100 noder i Oktober 2015.
+* [irc://irc.efnet.org/#hyperboria][IRC Web]
+* [Hyperboria][], det största hyperboria-nätverket, över 2100 noder i Oktober 2015.
 * [/r/darknetplan][]
-* [#cjdns på Twitter][]
+* [#hyperboria på Twitter][]
 
 ## Dokumentation
 
 * [Projectmål](doc/projectGoals.md)
-* [Cjdns Whitepaper](doc/Whitepaper.md)
-* [Cjdns på Wikipedia][]
+* [Hyperboria Whitepaper](doc/Whitepaper.md)
+* [Hyperboria på Wikipedia][]
 
 Avancerad konfiguration:
 
-* [Sätt upp en cjdns NAT gateway till ditt LAN (EN)](doc/nat-gateway.md)
-* [Installera cjdns på OpenIndiana (EN)](doc/open-indiana.md)
+* [Sätt upp en hyperboria NAT gateway till ditt LAN (EN)](doc/nat-gateway.md)
+* [Installera hyperboria på OpenIndiana (EN)](doc/open-indiana.md)
 
 Tack för visat intresse,
 
-- Utvecklarna av Cjdns.
+- Utvecklarna av Hyperboria.
 
 --------------------------------------------------------------------------------
 
-## Hur du installerar cjdns
+## Hur du installerar hyperboria
 
 Följande instruktioner är till för Debian-baserade Linux-distributioner eller för macOS.
 De bör vara tillräckligt informativa för att kunna anpassas till andra distributioner -
@@ -74,7 +74,7 @@ förvänta dig dock inte att de kommer fungera rakt av.
 
 ### 0. Installera beroenden
 
-Cjdns byggsystem beror av [Node.js](http://nodejs.org/). Det är att föredra om du
+Hyperboria byggsystem beror av [Node.js](http://nodejs.org/). Det är att föredra om du
 kan installera node.js på din maskin, men det är inte nödvändigt. Om node.js inte finns
 installerat eller om det är en oacceptabel version kommer node.js att laddas ner och
 installeras i kodträdet.
@@ -98,11 +98,11 @@ installeras i kodträdet.
 
 Installera med [Homebrew](https://brew.sh/):
 
-    brew install cjdns
+    brew install hyperboria
 
 Installera med [MacPorts](https://www.macports.org/):
 
-    sudo port install cjdns
+    sudo port install hyperboria
 
 #### OpenBSD:
 
@@ -118,27 +118,27 @@ Allt du behöver finns tillgängligt i FreeBSD' ports.
 
     pkg install gmake node
 
-### 1. Hämta cjdns från GitHub
+### 1. Hämta hyperboria från GitHub
 
-Clone'a repositoryt från GitHub och byt till katalogen cjdns:
+Clone'a repositoryt från GitHub och byt till katalogen hyperboria:
 
-    git clone https://github.com/cjdelisle/cjdns.git cjdns
-    cd cjdns
+    git clone https://github.com/cjdelisle/hyperboria.git hyperboria
+    cd hyperboria
 
 ### 2. Bygg
 
     ./do
 
-Vänta tills du ser följande meddelande `Build completed successfully, type ./cjdroute to begin setup.`,
+Vänta tills du ser följande meddelande `Build completed successfully, type ./hyperboria-route to begin setup.`,
 fortsätt sedan med följande:
 
 --------------------------------------------------------------------------------
 
 ## Upplägg
 
-Kör cjdroute utan argument för HJÄLP:
+Kör hyperboria-route utan argument för HJÄLP:
 
-    ./cjdroute
+    ./hyperboria-route
 
 ### 0. Kontrollera att du har allting som behövs.
 
@@ -162,7 +162,7 @@ ber dem om. Om du använder macOS kan du ignorera detta steg.
 
 ### 1. Skapa en ny konfigurationsfil
 
-    ./cjdroute --genconf >> cjdroute.conf
+    ./hyperboria-route --genconf >> hyperboria-route.conf
 
 **Skydda din konfigurationsfil!**
 
@@ -174,7 +174,7 @@ annan kan agera som dig på nätverket.
 För att generera en konfigurationfil med rättigheter där bara du kan läsa
 och skriva till den:
 
-    (umask 077 && ./cjdroute --genconf > cjdroute.conf)
+    (umask 077 && ./hyperboria-route --genconf > hyperboria-route.conf)
 
 
 ### 2. Hitta en vän
@@ -186,7 +186,7 @@ nödvändigt av ett antal orsaker:
 1. Det hjälper till att förhindra missbruk då det är osannolikt att
    dåliga människor kommer missbruka ett system de fått tillgång till
    från en annan människa som de på något sätt har en relation till.
-2. Cjdns är inte tänkt att vara ett overlay-nätverk ovanpå internet,
+2. Hyperboria är inte tänkt att vara ett overlay-nätverk ovanpå internet,
    utan tanken är att det ska byta ut det. Varje uppkoppling kommer i sinom
    tid att bytas ut mot en sladd, en fiberoptisk kabel eller en wifi.
 3. Vid händelse av meningsskiljaktigheter kommer det finnas en "kedja
@@ -306,7 +306,7 @@ outbound (från DIG --> VÄN) eller inbound (från VÄN --> DIG) men trafiken
 flödar i båda riktningarna så fort ni har kopplat upp er mot varandra.
 
 Se [doc/configure.md](doc/configure.md) för mer information om konfigurering,
-inkluderat hur du kan koppla upp dig mot andra cjdns noder över ethernet och wifi.
+inkluderat hur du kan koppla upp dig mot andra hyperboria noder över ethernet och wifi.
 
 
 ### 4. Säkra ditt system - kontrollera lyssnande tjänster
@@ -321,23 +321,23 @@ Se [doc/network-services.md](doc/network-services.md) för instruktioner.
 
 ### 5. Starta din nod!
 
-    sudo ./cjdroute < cjdroute.conf
+    sudo ./hyperboria-route < hyperboria-route.conf
 
 Om du vill logga till fil:
 
-    sudo ./cjdroute < cjdroute.conf > cjdroute.log
+    sudo ./hyperboria-route < hyperboria-route.conf > hyperboria-route.log
 
-För att avsluta cjdns:
+För att avsluta hyperboria:
 
-    sudo killall cjdroute
+    sudo killall hyperboria-route
 
-`sudo killall cjdns` är också användbart om du får problem. Använd
-`pgrep cjdroute` eller `top` för att kolla om cjdroute kör eller ej.
+`sudo killall hyperboria` är också användbart om du får problem. Använd
+`pgrep hyperboria-route` eller `top` för att kolla om hyperboria-route kör eller ej.
 
 *OBS!*
 
-Detta kör cjdns som användaren root så det kan konfigurera
-ditt system utan att behöva bry sig om rättigheter. För att starta cjdns utan
+Detta kör hyperboria som användaren root så det kan konfigurera
+ditt system utan att behöva bry sig om rättigheter. För att starta hyperboria utan
 root-rättigheter, se [doc/non-root-user.md](doc/non-root-user.md).
 
 
@@ -351,23 +351,23 @@ att logga in på [IRC](#community) så att andra kan nå dig.
 
 ## Admingränssnittet
 
-När cjdroute är uppe och kör så finns det ett admingränssnitt tillgängligt
-på `udp://localhost:11234` (detta kan ändras i `cjdroute.conf`).
+När hyperboria-route är uppe och kör så finns det ett admingränssnitt tillgängligt
+på `udp://localhost:11234` (detta kan ändras i `hyperboria-route.conf`).
 Se [doc/admin-api.md](doc/admin-api.md) för mer information om admingränssnittet.
 
 Det finns flera olika verktyg i `contrib/` som kan interagera med det, bl.a.:
 
 * **python**; se [contrib/python/README.md](contrib/python/README.md).
-* **perl**, maintained by Mikey; se [contrib/perl/CJDNS/README](contrib/perl/CJDNS/README).
+* **perl**, maintained by Mikey; se [contrib/perl/HYPERBORIA/README](contrib/perl/HYPERBORIA/README).
 
-[IRC Web]: http://chat.efnet.org/irc.cgi?chan=%23cjdns
+[IRC Web]: http://chat.efnet.org/irc.cgi?chan=%23hyperboria
 [Hyperboria]: https://hyperboria.net
 [/r/darknetplan]: https://www.reddit.com/r/darknetplan
-[#cjdns på Twitter]: https://twitter.com/hashtag/cjdns
+[#hyperboria på Twitter]: https://twitter.com/hashtag/hyperboria
 [Hyperboria Map]: https://www.fc00.org/
-[Buildbots]: https://buildbot.meshwith.me/cjdns/waterfall
+[Buildbots]: https://buildbot.meshwith.me/hyperboria/waterfall
 
-[Cjdns på Wikipedia]: https://en.wikipedia.org/wiki/Cjdns
+[Hyperboria på Wikipedia]: https://en.wikipedia.org/wiki/Hyperboria
 [Distributed Hash Table]: https://en.wikipedia.org/wiki/Distributed_hash_table
 [Beyond Pain]: https://lists.torproject.org/pipermail/tor-dev/2012-October/004063.html
 [Kademlia]: https://en.wikipedia.org/wiki/Kademlia

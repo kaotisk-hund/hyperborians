@@ -14,7 +14,7 @@
  */
 #include "dht/EncodingSchemeModule.h"
 #include "dht/Address.h"
-#include "dht/CJDHTConstants.h"
+#include "dht/HyperboriaDHTConstants.h"
 #include "dht/DHTMessage.h"
 #include "dht/DHTModule.h"
 #include "dht/DHTModuleRegistry.h"
@@ -58,7 +58,7 @@ static int handleIncoming(struct DHTMessage* message, void* vcontext)
 
     struct EncodingScheme* scheme = NULL;
 
-    String* schemeDefinition = Dict_getString(message->asDict, CJDHTConstants_ENC_SCHEME);
+    String* schemeDefinition = Dict_getString(message->asDict, HyperboriaDHTConstants_ENC_SCHEME);
     if (schemeDefinition) {
         scheme = EncodingScheme_deserialize(schemeDefinition, message->allocator);
     } else {
@@ -72,7 +72,7 @@ static int handleIncoming(struct DHTMessage* message, void* vcontext)
     }
     message->encodingScheme = scheme;
 
-    int64_t* version = Dict_getInt(message->asDict, CJDHTConstants_PROTOCOL);
+    int64_t* version = Dict_getInt(message->asDict, HyperboriaDHTConstants_PROTOCOL);
     if (!version) {
         Log_debug(ctx->logger, "Protocol version missing");
         Assert_ifTesting(0);
@@ -85,7 +85,7 @@ static int handleIncoming(struct DHTMessage* message, void* vcontext)
     }
     message->address->protocolVersion = *version;
 
-    int64_t* encIdx = Dict_getInt(message->asDict, CJDHTConstants_ENC_INDEX);
+    int64_t* encIdx = Dict_getInt(message->asDict, HyperboriaDHTConstants_ENC_INDEX);
     if (!encIdx) {
         Log_debug(ctx->logger, "Missing encoding index, version [%d]", (int) (*version));
         return -1;
@@ -109,7 +109,7 @@ static int handleOutgoing(struct DHTMessage* dmesg, void* vcontext)
 
     // Send our encoding scheme definition
     Dict_putString(dmesg->asDict,
-                   CJDHTConstants_ENC_SCHEME,
+                   HyperboriaDHTConstants_ENC_SCHEME,
                    ctx->schemeDefinition,
                    dmesg->allocator);
 
@@ -122,7 +122,7 @@ static int handleOutgoing(struct DHTMessage* dmesg, void* vcontext)
     // And tell the asker which interface the message came from
     int encIdx = EncodingScheme_getFormNum(ctx->scheme, dmesg->address->path);
     Assert_ifParanoid(encIdx != EncodingScheme_getFormNum_INVALID);
-    Dict_putInt(dmesg->asDict, CJDHTConstants_ENC_INDEX, encIdx, dmesg->allocator);
+    Dict_putInt(dmesg->asDict, HyperboriaDHTConstants_ENC_INDEX, encIdx, dmesg->allocator);
 
     return 0;
 }

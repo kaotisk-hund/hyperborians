@@ -1010,7 +1010,7 @@ int InterfaceController_bootstrapPeer(struct InterfaceController* ifc,
 
     struct Sockaddr* lladdr = Sockaddr_clone(lladdrParm, epAlloc);
 
-    // TODO(cjd): eps are created in 3 places, there should be a factory function.
+    // TODO(hyperboria): eps are created in 3 places, there should be a factory function.
     struct Peer* ep = Allocator_calloc(epAlloc, sizeof(struct Peer), 1);
     int index = Map_EndpointsBySockaddr_put(&lladdr, &ep, &ici->peerMap);
     Assert_true(index >= 0);

@@ -1,9 +1,9 @@
 #!/sbin/openrc-run
 description="Encrypted networking for regular people."
 
-CONFFILE=/etc/cjdroute.conf
+CONFFILE=/etc/hyperboria-route.conf
 
-command="/usr/sbin/cjdroute"
+command="/usr/sbin/hyperboria-route"
 
 depend() {
 	use net dns
@@ -20,13 +20,13 @@ start() {
 		fi
 	fi
 
-	ebegin "Starting CJDNS"
+	ebegin "Starting HYPERBORIA"
 	start-stop-daemon --start --quiet --exec "${command}" -- < "${CONFFILE}"
 	eend $?
 }
 
 stop() {
-	ebegin "Stopping CJDNS"
+	ebegin "Stopping HYPERBORIA"
 	start-stop-daemon --stop --exec "${command}"
 	eend $?
 }

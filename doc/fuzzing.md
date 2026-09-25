@@ -1,7 +1,7 @@
 # Fuzzing !
 (testing by trying a lot of random stuff)
 
-Cjdns has a few fuzz tests, at the time of this writing these include FramingIface_fuzz_test
+Hyperboria has a few fuzz tests, at the time of this writing these include FramingIface_fuzz_test
 and CryptoAuth_fuzz_test.
 
 The standard when developing a fuzz test is to name it WhateverBlah_fuzz_test.c

@@ -1,7 +1,7 @@
 #!/system/bin/sh
 
 # Set the main directory for things to run (if changed, also change in cjdctl and 99cjdroute)
-CJDPATH="/sdcard/cjdns"
+CJDPATH="/sdcard/hyperboria"
 
 # Function to output status messages and log if configured to do so
 logmessage() {
@@ -32,7 +32,7 @@ if [ ! -f "$CJDPATH"/cjdaemon.conf ]; then
     touch "$CJDPATH"/cjdaemon.conf \
         || exit 1
 
-    echo -e 'CJDCFG="cjdroute.conf"\nCJDLOG=0' \
+    echo -e 'CJDCFG="hyperboria-route.conf"\nCJDLOG=0' \
         > "$CJDPATH"/cjdaemon.conf
 fi
 
@@ -41,7 +41,7 @@ source "$CJDPATH"/cjdaemon.conf
 
 # Set $CJDCFG to the default if it wasn't set by cjdaemon.conf
 if [ -z "$CJDCFG" ]; then
-    CJDCFG="cjdroute.conf"
+    CJDCFG="hyperboria-route.conf"
 fi
 
 # Create the log if it doesn't exist, and if it can't be created disable logging
@@ -52,56 +52,56 @@ if [ -n "$CJDLOG" ]; then
     fi
 fi
 
-# Function used to start cjdroute
+# Function used to start hyperboria-route
 cjdstart() {
     # Exit if the lock file is missing
     if [ ! -f "$CJDPATH"/.lock ]; then
         exit 0
     fi
 
-    # Start cjdroute and output/log results
+    # Start hyperboria-route and output/log results
     if [ -f "${CJDPATH}/${CJDCFG}" ]; then
-        if [ `pgrep cjdroute | wc -l` -eq 0 ]; then
-            LOGMSG="Running: cjdroute < ${CJDPATH}/${CJDCFG}..."
-            cjdroute < "${CJDPATH}/${CJDCFG}" &> /dev/null 2>&1
+        if [ `pgrep hyperboria-route | wc -l` -eq 0 ]; then
+            LOGMSG="Running: hyperboria-route < ${CJDPATH}/${CJDCFG}..."
+            hyperboria-route < "${CJDPATH}/${CJDCFG}" &> /dev/null 2>&1
             sleep 1
 
-            if [ `pgrep cjdroute | wc -l` -gt 0 ]; then
+            if [ `pgrep hyperboria-route | wc -l` -gt 0 ]; then
                 LOGMSG="${LOGMSG} Success!"
             else
-                LOGMSG="${LOGMSG} Error! Failed to start cjdroute"
+                LOGMSG="${LOGMSG} Error! Failed to start hyperboria-route"
             fi
         else
-            LOGMSG="${LOGMSG} Error! Failed to start cjdroute, already running"
+            LOGMSG="${LOGMSG} Error! Failed to start hyperboria-route, already running"
         fi
     else
-        LOGMSG="${LOGMSG} Error! Failed to start cjdroute, config missing @ ${CJDPATH}/${CJDCFG}"
+        LOGMSG="${LOGMSG} Error! Failed to start hyperboria-route, config missing @ ${CJDPATH}/${CJDCFG}"
     fi
 
     logmessage "$LOGMSG"
     unset LOGMSG
 }
 
-# Function used to stop cjdroute
+# Function used to stop hyperboria-route
 cjdstop() {
     # Exit if the lock file is missing
     if [ ! -f "$CJDPATH"/.lock ]; then
         exit 0
     fi
 
-    # Kill cjdroute and output/log results
-    if [ `pgrep cjdroute | wc -l` -gt 0 ]; then
-        LOGMSG="Running: killall cjdroute..."
-        killall cjdroute
+    # Kill hyperboria-route and output/log results
+    if [ `pgrep hyperboria-route | wc -l` -gt 0 ]; then
+        LOGMSG="Running: killall hyperboria-route..."
+        killall hyperboria-route
         sleep 1
 
-        if [ `pgrep cjdroute | wc -l` -eq 0 ]; then
+        if [ `pgrep hyperboria-route | wc -l` -eq 0 ]; then
             LOGMSG="${LOGMSG} Success!"
         else
-            LOGMSG="${LOGMSG} Error! Failed to stop cjdroute"
+            LOGMSG="${LOGMSG} Error! Failed to stop hyperboria-route"
         fi
     else
-        LOGMSG="${LOGMSG} Error! Failed to stop cjdroute, already stopped"
+        LOGMSG="${LOGMSG} Error! Failed to stop hyperboria-route, already stopped"
     fi
 
     logmessage "$LOGMSG"
@@ -110,12 +110,12 @@ cjdstop() {
 
 # Run cjdstart when the phone wakes and cjdstop when it sleeps until the phone powers down
 while :; do
-    # Wait until the phone is awake, then start cjdroute
+    # Wait until the phone is awake, then start hyperboria-route
     cat /sys/power/wait_for_fb_wake > /dev/null
     cjdstart
     sleep 1
 
-    # Wait until the phone sleeps, then stop cjdns
+    # Wait until the phone sleeps, then stop hyperboria
     cat /sys/power/wait_for_fb_sleep > /dev/null
     cjdstop
 done

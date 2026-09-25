@@ -1,6 +1,6 @@
-Results of benchmarking cjdns on different systems:
+Results of benchmarking hyperboria on different systems:
 To make your own benchmark:
-./cjdroute --bench
+./hyperboria-route --bench
 cat /proc/cpuinfo
 git log | head -n 1
 
@@ -9,7 +9,7 @@ Weird processors wanted :D
 
 
 
-user@debo8:~/wrk/play/mygit/cjdns/build$ ./cjdroute --bench
+user@debo8:~/wrk/play/mygit/hyperboria/build$ ./hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte	hello packets.	packet auth enabled.	Finished in 466ms. 1098 Kb/s
@@ -29,7 +29,7 @@ Test sending 100000 64 byte	data packets.	packet auth enabled.	Finished in 360ms
 This is the switch configuration so this indicates expected switch throughput:
 Test sending 100000 1500 byte	data packets.	packet auth enabled.	Finished in 1708ms. 702576 Kb/s
 
-user@debo8:~/wrk/play/mygit/cjdns/build$ cat /proc/cpuinfo | head
+user@debo8:~/wrk/play/mygit/hyperboria/build$ cat /proc/cpuinfo | head
 processor	: 0
 vendor_id	: AuthenticAMD
 cpu family	: 16
@@ -40,7 +40,7 @@ microcode	: 0x10000c4
 cpu MHz		: 800.000
 cache size	: 512 KB
 physical id	: 0
-user@debo8:~/wrk/play/mygit/cjdns/build$ git log -n 1
+user@debo8:~/wrk/play/mygit/hyperboria/build$ git log -n 1
 commit c2cfff7b4ef1339942f3e98eb0d99a093d307a9b
 
 
@@ -49,7 +49,7 @@ commit c2cfff7b4ef1339942f3e98eb0d99a093d307a9b
 
 
 
-cjdns@abacus:~/cjdns/build$ ./cjdroute --bench
+hyperboria@abacus:~/hyperboria/build$ ./hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte	hello packets.	packet auth enabled.	Finished in 96628ms. 5 Kb/s
@@ -69,7 +69,7 @@ Test sending 100000 64 byte	data packets.	packet auth enabled.	Finished in 12059
 This is the switch configuration so this indicates expected switch throughput:
 Test sending 100000 1500 byte	data packets.	packet auth enabled.	Finished in 151882ms. 7900 Kb/s
 
-cjdns@abacus:~/cjdns/build$ cat /proc/cpuinfo
+hyperboria@abacus:~/hyperboria/build$ cat /proc/cpuinfo
 Processor	: Feroceon 88FR131 rev 1 (v5l)
 BogoMIPS	: 1196.85
 Features	: swp half thumb fastmult edsp 
@@ -82,13 +82,13 @@ CPU revision	: 1
 Hardware	: Marvell OpenRD Client Board
 Revision	: 0000
 Serial		: 0000000000000000
-cjdns@abacus:~/cjdns/build$ git log -n 1
+hyperboria@abacus:~/hyperboria/build$ git log -n 1
 commit c2cfff7b4ef1339942f3e98eb0d99a093d307a9b
 
 
 # after the update to nacl
 
-cjdns@abacus:~/cjdns/build$ time ./cjdroute --bench && cat /proc/cpuinfo && git log | head -1
+hyperboria@abacus:~/hyperboria/build$ time ./hyperboria-route --bench && cat /proc/cpuinfo && git log | head -1
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte	hello packets.	packet auth enabled.	Finished in 12076ms. 42 Kb/s
@@ -124,7 +124,7 @@ Serial		: 0000000000000000
 real	1m43.216s
 user	1m21.520s
 sys	0m1.000s
-cjdns@abacus:~/cjdns/build$ 
+hyperboria@abacus:~/hyperboria/build$ 
 
 
 
@@ -132,7 +132,7 @@ cjdns@abacus:~/cjdns/build$
 
 
 
-cjdns@ks397481:~/cjdns/build$ ./cjdroute --bench
+hyperboria@ks397481:~/hyperboria/build$ ./hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte	hello packets.	packet auth enabled.	Finished in 3420ms. 149 Kb/s
@@ -152,7 +152,7 @@ Test sending 100000 64 byte	data packets.	packet auth enabled.	Finished in 724ms
 This is the switch configuration so this indicates expected switch throughput:
 Test sending 100000 1500 byte	data packets.	packet auth enabled.	Finished in 4257ms. 281888 Kb/s
 
-cjdns@ks397481:~/cjdns/build$ cat /proc/cpuinfo | head
+hyperboria@ks397481:~/hyperboria/build$ cat /proc/cpuinfo | head
 processor	: 0
 vendor_id	: GenuineIntel
 cpu family	: 6
@@ -163,7 +163,7 @@ cpu MHz		: 1799.735
 cache size	: 512 KB
 physical id	: 0
 siblings	: 2
-cjdns@ks397481:~/cjdns/build$ git log | head -n 1
+hyperboria@ks397481:~/hyperboria/build$ git log | head -n 1
 commit fd4964634de971c888bb079d0e62b411c471803a
 
 
@@ -174,7 +174,7 @@ commit fd4964634de971c888bb079d0e62b411c471803a
 
 
 
-user@ubntfusion2:~/cjdns/build$ ./cjdroute --bench
+user@ubntfusion2:~/hyperboria/build$ ./hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte	hello packets.	packet auth enabled.	Finished in 916ms. 558 Kb/s
@@ -194,7 +194,7 @@ Test sending 100000 64 byte	data packets.	packet auth enabled.	Finished in 526ms
 This is the switch configuration so this indicates expected switch throughput:
 Test sending 100000 1500 byte	data packets.	packet auth enabled.	Finished in 3386ms. 354400 Kb/s
 
-user@ubntfusion2:~/cjdns/build$ cat /proc/cpuinfo | head
+user@ubntfusion2:~/hyperboria/build$ cat /proc/cpuinfo | head
 processor	: 0
 vendor_id	: AuthenticAMD
 cpu family	: 20
@@ -205,9 +205,9 @@ microcode	: 0x5000028
 cpu MHz		: 800.000
 cache size	: 512 KB
 physical id	: 0
-user@ubntfusion2:~/cjdns/build$ git log | head -n 1
+user@ubntfusion2:~/hyperboria/build$ git log | head -n 1
 commit 3d2ce46d3c9df964ddf37dbdb03dccbcac862d5a
-user@ubntfusion2:~/cjdns/build$
+user@ubntfusion2:~/hyperboria/build$
 
 
 
@@ -272,7 +272,7 @@ model name	: Intel(R) Pentium(R) 4 CPU 3.00GHz
 stepping	: 3
 .....
 
-cjdns@xubuntu-27-120:~/cjdns$ git log | head -n 1
+hyperboria@xubuntu-27-120:~/hyperboria$ git log | head -n 1
 commit 06522239acde31a01633033d9c4229baa7fad229
 
 
@@ -326,7 +326,7 @@ cache_alignment	: 32
 address sizes	: 36 bits physical, 32 bits virtual
 power management:
 
-cjdns@wl-4-253:~/cjdns$ git log | head -n 1
+hyperboria@wl-4-253:~/hyperboria$ git log | head -n 1
 commit 06522239acde31a01633033d9c4229baa7fad229
 
 
@@ -336,7 +336,7 @@ commit 06522239acde31a01633033d9c4229baa7fad229
 
 
 
-$ ./cjdroute --bench
+$ ./hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte       hello packets.  packet auth enabled.    Finished in 334ms. 1532 Kb/s
@@ -391,7 +391,7 @@ commit 65204735fac8a27a1057f100b0a1285633eaf29e
 
 
 
-[user@ps3 build]$ ./cjdroute --bench
+[user@ps3 build]$ ./hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte	hello packets.	packet auth enabled.	Finished in 54330ms. 9 Kb/s
@@ -558,7 +558,7 @@ real  59m 43.33s
 user  59m 39.59s
 sys   0m 2.98s
 
-ircerr@EFNet/#cjdns 20120506
+ircerr@EFNet/#hyperboria 20120506
 
 
 
@@ -567,7 +567,7 @@ ircerr@EFNet/#cjdns 20120506
 
 
 
-user@debian-mips:~/cjdns/build$ time ./cjdroute --bench
+user@debian-mips:~/hyperboria/build$ time ./hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte	hello packets.	packet auth enabled.	Finished in 271027ms. 1 Kb/s
@@ -591,7 +591,7 @@ Test sending 100000 1500 byte	data packets.	packet auth enabled.	Finished in 332
 real	25m37.560s
 user	25m4.378s
 sys	0m29.726s
-user@debian-mips:~/cjdns/build$ cat /proc/cpuinfo
+user@debian-mips:~/hyperboria/build$ cat /proc/cpuinfo
 system type		: MIPS Malta
 processor		: 0
 cpu model		: MIPS 24Kc V0.0  FPU V0.0
@@ -607,14 +607,14 @@ core			: 0
 VCED exceptions		: not available
 VCEI exceptions		: not available
 
-user@debian-mips:~/cjdns/build$ git log | head -n 1
+user@debian-mips:~/hyperboria/build$ git log | head -n 1
 commit 929f4785dcd62b2dc4201ceb40e7bdb0d49462e5
 
 
 
 # after update to nacl
 
-git log | head -1~/cjdns$ time ./build/cjdroute --bench && cat /proc/cpuinfo &&  
+git log | head -1~/hyperboria$ time ./build/hyperboria-route --bench && cat /proc/cpuinfo &&  
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte	hello packets.	packet auth enabled.	Finished in 242437ms. 2 Kb/s
@@ -654,7 +654,7 @@ VCED exceptions		: not available
 VCEI exceptions		: not available
 
 commit 8562e4298a64a7b7aa9d05d03ab357b572940b71
-user@debian-mips:~/cjdns$ 
+user@debian-mips:~/hyperboria$ 
 
 
 
@@ -920,7 +920,7 @@ Test sending 100000 1500 byte	data packets.	packet auth enabled.	Finished in 112
 
 # Rasberry Pi -- Owner unknown (we would like to meet you!)
 
-./cjdroute --bench
+./hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte	hello packets.	packet auth enabled.	Finished in 97759ms. 5 Kb/s
@@ -951,7 +951,7 @@ version: bc41a54dc5d2a0ece5864671242184afbd46ba6e
 
 
 
-[root@Bifrost] ~/src/cjdns# ./cjdroute --bench
+[root@Bifrost] ~/src/hyperboria# ./hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte       hello packets.  packet auth enabled.    Finished in 20195ms. 25 Kb/s
@@ -971,7 +971,7 @@ Test sending 100000 64 byte     data packets.   packet auth enabled.    Finished
 This is the switch configuration so this indicates expected switch throughput:
 Test sending 100000 1500 byte   data packets.   packet auth enabled.    Finished in 17730ms. 67681 Kb/s
 
-[root@Bifrost] ~/src/cjdns# cat /proc/cpuinfo
+[root@Bifrost] ~/src/hyperboria# cat /proc/cpuinfo
 processor       : 0
 cpu             : Cell Broadband Engine, altivec supported
 clock           : 3192.000000MHz
@@ -985,9 +985,9 @@ revision        : 5.1 (pvr 0070 0501)
 timebase        : 79800000
 platform        : PS3
 model           : SonyPS3
-[root@Bifrost] ~/src/cjdns# git log | head -n 1
+[root@Bifrost] ~/src/hyperboria# git log | head -n 1
 commit 829f93e93c1eff81fdde62f00500f7e2c6e05c2f
-[root@Bifrost] ~/src/cjdns# date
+[root@Bifrost] ~/src/hyperboria# date
 Fri Jun 22 15:48:05 CDT 2012
 
 
@@ -995,7 +995,7 @@ Fri Jun 22 15:48:05 CDT 2012
 
 
 
-[dan@archbang ~]$ cjdroute --bench
+[dan@archbang ~]$ hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte	hello packets.	packet auth enabled.	Finished in 614ms. 833 Kb/s
@@ -1076,8 +1076,8 @@ cache_alignment	: 64
 address sizes	: 36 bits physical, 48 bits virtual
 power management:
 
-[dan@archbang ~]$ yaourt -Q cjdns-git
-local/cjdns-git 120619-1
+[dan@archbang ~]$ yaourt -Q hyperboria-git
+local/hyperboria-git 120619-1
 packaged (6-19-2012)
 
 
@@ -1085,7 +1085,7 @@ packaged (6-19-2012)
 
 
 # Another Rasberry Pi
-[cjdns@meLonpi] ~/cjdns$ ./cjdroute --bench
+[hyperboria@meLonpi] ~/hyperboria$ ./hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte       hello packets.  packet auth enabled.    Finished in 111492ms. 4 Kb/s
@@ -1105,10 +1105,10 @@ Test sending 100000 64 byte     data packets.   packet auth enabled.    Finished
 This is the switch configuration so this indicates expected switch throughput:
 Test sending 100000 1500 byte   data packets.   packet auth enabled.    Finished in 162951ms. 7364 Kb/s
 
-[cjdns@meLonpi] ~/cjdns$ uname -a
+[hyperboria@meLonpi] ~/hyperboria$ uname -a
 Linux meLonpi 3.1.9+ #90 Wed Apr 18 18:23:05 BST 2012 armv6l GNU/Linux
 
-[cjdns@meLonpi] ~/cjdns$ cat /proc/cpuinfo
+[hyperboria@meLonpi] ~/hyperboria$ cat /proc/cpuinfo
 Processor       : ARMv6-compatible processor rev 7 (v6l)
 BogoMIPS        : 697.95
 Features        : swp half thumb fastmult vfp edsp java tls 
@@ -1122,7 +1122,7 @@ Hardware        : BCM2708
 Revision        : 0002
 Serial          : 000000008b285506
 
-[cjdns@meLonpi] ~/cjdns$ git log | head -1
+[hyperboria@meLonpi] ~/hyperboria$ git log | head -1
 commit a7c6c3a02c96ff5bfc12aa110af5a594c08a605b
 
 
@@ -1133,7 +1133,7 @@ commit a7c6c3a02c96ff5bfc12aa110af5a594c08a605b
 
 
 
-[ich@ich cjdns]$ ./cjdroute --bench
+[ich@ich hyperboria]$ ./hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 Test sending 1000 64 byte	hello packets.	packet auth enabled.	Finished in 1384ms. 369 Kb/s
@@ -1153,7 +1153,7 @@ Test sending 100000 64 byte	data packets.	packet auth enabled.	Finished in 602ms
 This is the switch configuration so this indicates expected switch throughput:
 Test sending 100000 1500 byte	data packets.	packet auth enabled.	Finished in 1297ms. 925212 Kb/s
 
-[ich@ich cjdns]$ cat /proc/cpuinfo 
+[ich@ich hyperboria]$ cat /proc/cpuinfo 
 processor	: 0
 vendor_id	: AuthenticAMD
 cpu family	: 16
@@ -1316,7 +1316,7 @@ cache_alignment	: 64
 address sizes	: 48 bits physical, 48 bits virtual
 power management: ts ttp tm stc 100mhzsteps hwpstate cpb
 
-[ich@ich cjdns]$ git log -n 1
+[ich@ich hyperboria]$ git log -n 1
 commit c9cc5fe5f54b89f014d832527aef767f24a5b4da
 Author: Caleb James DeLisle <calebdelisle@lavabit.com>
 Date:   Mon Oct 22 01:31:51 2012 -0400
@@ -1343,7 +1343,7 @@ Hardware:
 $ uname -a 
 Darwin Gaius.local 10.8.0 Darwin Kernel Version 10.8.0: Tue Jun  7 16:33:36 PDT 2011; root:xnu-1504.15.3~1/RELEASE_I386 i386
 
-$ ./cjdroute --bench
+$ ./hyperboria-route --bench
 These metrics are speed of encryption and decryption similar to the usage pattern
 when decrypting a packet, switching it, and re-encrypting it with another key.
 
@@ -1381,7 +1381,7 @@ commit e6fda6a418f5e719fe07cf0c866e546288de6cb1
 
 
 
-user@debian-mips:~/cjdns$ ./cjdroute --bench
+user@debian-mips:~/hyperboria$ ./hyperboria-route --bench
 1380772514 INFO RandomSeed.c:67 Attempting to seed random number generator
 1380772514 INFO RandomSeed.c:81 Trying random seed [RtlGenRandom() (Windows)] Failed
 1380772514 INFO RandomSeed.c:81 Trying random seed [sysctl(KERN_ARND) (BSD)] Failed
@@ -1408,13 +1408,13 @@ Test sending 100000 64 byte	data packets.	packet auth enabled.	Finished in 17659
 This is the switch configuration so this indicates expected switch throughput:
 Test sending 100000 1500 byte	data packets.	packet auth enabled.	Finished in 91680ms. 13089 Kb/s
 
-user@debian-mips:~/cjdns$ git log -n 1
+user@debian-mips:~/hyperboria$ git log -n 1
 commit 9a3db93cd3ea5b3583ecc3b741518dd0e6ec8764
-Author: Caleb James DeLisle <cjd@hyperboria.ca>
+Author: Caleb James DeLisle <hyperboria@hyperboria.ca>
 Date:   Wed Oct 2 22:07:13 2013 -0400
 
     Sometimes SearchRunner_search() returns null
-user@debian-mips:~/cjdns$ cat /proc/cpuinfo 
+user@debian-mips:~/hyperboria$ cat /proc/cpuinfo 
 system type		: MIPS Malta
 processor		: 0
 cpu model		: MIPS 24Kc V0.0  FPU V0.0
@@ -1430,7 +1430,7 @@ core			: 0
 VCED exceptions		: not available
 VCEI exceptions		: not available
 
-user@debian-mips:~/cjdns$ 
+user@debian-mips:~/hyperboria$ 
 
 
 
@@ -1439,7 +1439,7 @@ user@debian-mips:~/cjdns$
 
 
 
-linaro@linaro-ubuntu-desktop:~/cjdns/cjdns-master$ ./cjdroute --bench ; cat /proc/cpuinfo 
+linaro@linaro-ubuntu-desktop:~/hyperboria/hyperboria-master$ ./hyperboria-route --bench ; cat /proc/cpuinfo 
 3711 INFO RandomSeed.c:67 Attempting to seed random number generator
 3711 INFO RandomSeed.c:81 Trying random seed [RtlGenRandom() (Windows)] Failed
 3711 INFO RandomSeed.c:81 Trying random seed [sysctl(KERN_ARND) (BSD)] Failed
@@ -1489,15 +1489,15 @@ CPU revision	: 10
 Hardware	: Freescale i.MX 6Quad Sabre-Lite Board
 Revision	: 63000
 Serial		: 0000000000000000
-linaro@linaro-ubuntu-desktop:~/cjdns/cjdns-master$ uname -a
+linaro@linaro-ubuntu-desktop:~/hyperboria/hyperboria-master$ uname -a
 Linux linaro-ubuntu-desktop 3.0.35-troosh #17 SMP PREEMPT Tue May 7 20:29:00 MSK 2013 armv7l armv7l armv7l GNU/Linux
-linaro@linaro-ubuntu-desktop:~/cjdns/cjdns-master$ gcc --version
+linaro@linaro-ubuntu-desktop:~/hyperboria/hyperboria-master$ gcc --version
 gcc (Ubuntu/Linaro 4.6.1-9ubuntu3) 4.6.1
 Copyright (C) 2011 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-linaro@linaro-ubuntu-desktop:~/cjdns/cjdns-master$$ git log | head -1
+linaro@linaro-ubuntu-desktop:~/hyperboria/hyperboria-master$$ git log | head -1
 commit 9a3db93cd3ea5b3583ecc3b741518dd0e6ec8764
 
 
@@ -1511,9 +1511,9 @@ commit 9a3db93cd3ea5b3583ecc3b741518dd0e6ec8764
 here you have a new benchmark. It's this cheap ADSL router:
 http://wiki.openwrt.org/toh/comtrend/ar5387un
 
-The cjdns code is as e9bcb0f9f06870d6f4904149e1c15eca09c7ed8a
+The hyperboria code is as e9bcb0f9f06870d6f4904149e1c15eca09c7ed8a
 (That's mentioned in the meshbox thing I used in OpenWrt to build it:
-https://github.com/SeattleMeshnet/meshbox/blob/master/cjdns/Makefile )
+https://github.com/SeattleMeshnet/meshbox/blob/master/hyperboria/Makefile )
 
 The results (better than my 1.2GHz ARM Sheevaplug!):
 -------------------
@@ -1607,10 +1607,10 @@ Test sending 100000 1500 byte   data packets
 
 Raspberry Pi (model B)
 ----------------------
-txt@txtpie:~/cjdns$ ./cjdroute --bench |grep " per second"
+txt@txtpie:~/hyperboria$ ./hyperboria-route --bench |grep " per second"
 1450234937 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 30754ms. 39019 kilobits per second
 1450235012 INFO Benchmark.c:62 Benchmark Switching in 74575ms. 13731 packets per second
-txt@txtpie:~/cjdns$ cat /proc/cpuinfo 
+txt@txtpie:~/hyperboria$ cat /proc/cpuinfo 
 processor       : 0
 model name      : ARMv6-compatible processor rev 7 (v6l)
 BogoMIPS        : 2.00
@@ -1624,22 +1624,22 @@ CPU revision    : 7
 Hardware        : BCM2708
 Revision        : 0002
 Serial          : 000000003d24b6ce
-txt@txtpie:~/cjdns$ git log | head -n 1
+txt@txtpie:~/hyperboria$ git log | head -n 1
 commit 13189fde111d0500427a7a0ce06a970753527bca
-txt@txtpie:~/cjdns$ date
+txt@txtpie:~/hyperboria$ date
 Wed Dec 16 04:08:25 CET 2015
-txt@txtpie:~/cjdns$ cpufreq-info |grep "current CPU"
+txt@txtpie:~/hyperboria$ cpufreq-info |grep "current CPU"
   current CPU frequency is 900 MHz.
-txt@txtpie:~/cjdns$ uname -r
+txt@txtpie:~/hyperboria$ uname -r
 3.18.0-trunk-rpi
-txt@txtpie:~/cjdns$ 
+txt@txtpie:~/hyperboria$ 
 
 CubieBoard
 ----------
-txt@Cubian:~/cjdns$ ./cjdroute --bench |grep " per second"
+txt@Cubian:~/hyperboria$ ./hyperboria-route --bench |grep " per second"
 1450236953 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 34462ms. 34820 kilobits per second
 1450236979 INFO Benchmark.c:62 Benchmark Switching in 25955ms. 39452 packets per second
-txt@Cubian:~/cjdns$ cat /proc/cpuinfo
+txt@Cubian:~/hyperboria$ cat /proc/cpuinfo
 Processor       : ARMv7 Processor rev 2 (v7l)
 BogoMIPS        : 1001.88
 Features        : swp half thumb fastmult vfp edsp neon vfpv3 tls 
@@ -1653,20 +1653,20 @@ Hardware        : sun4i
 Revision        : 0000
 Serial          : 0000000000000000
 Chipid          : 162367cb-80758952-54544848-02820cf7
-txt@Cubian:~/cjdns$ git log | head -n 1
+txt@Cubian:~/hyperboria$ git log | head -n 1
 commit 13189fde111d0500427a7a0ce06a970753527bca
-txt@Cubian:~/cjdns$ date
+txt@Cubian:~/hyperboria$ date
 Wed Dec 16 04:40:55 CET 2015
-txt@Cubian:~/cjdns$ cpufreq-info |grep current
+txt@Cubian:~/hyperboria$ cpufreq-info |grep current
   current policy: frequency should be within 300 MHz and 1.01 GHz.
   current CPU frequency is 1.01 GHz.
-txt@Cubian:~/cjdns$ uname -r
+txt@Cubian:~/hyperboria$ uname -r
 3.4.79-sun4i
-txt@Cubian:~/cjdns$ 
+txt@Cubian:~/hyperboria$ 
 
 Intel Atom N550
 ---------------
-$ ./cjdroute --bench | grep " per second"
+$ ./hyperboria-route --bench | grep " per second"
 1450400626 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 4706ms. 254993 kilobits per second
 1450400634 INFO Benchmark.c:62 Benchmark Switching in 7335ms. 139604 packets per second
 $ grep -m1 "model name" /proc/cpuinfo
@@ -1678,7 +1678,7 @@ $ uname -r
 
 Intel Atom N2800
 ----------------
-$ ./cjdroute --bench |grep " per second"
+$ ./hyperboria-route --bench |grep " per second"
 1450401258 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 4261ms. 281624 kilobits per second
 1450401265 INFO Benchmark.c:62 Benchmark Switching in 6685ms. 153178 packets per second
 $ grep -m1 "model name" /proc/cpuinfo
@@ -1690,7 +1690,7 @@ $ uname -r
 
 Intel Xeon E5-2630
 ------------------
-$ ./cjdroute --bench |grep " per second"
+$ ./hyperboria-route --bench |grep " per second"
 1450401369 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 1110ms. 1081081 kilobits per second
 1450401371 INFO Benchmark.c:62 Benchmark Switching in 2532ms. 404423 packets per second
 $ grep -m1 "model name" /proc/cpuinfo
@@ -1702,7 +1702,7 @@ $ uname -r
 
 AMD E-350
 ---------
-$ ./cjdroute --bench |grep " per second"
+$ ./hyperboria-route --bench |grep " per second"
 1450401774 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 3205ms. 374414 kilobits per second
 1450401779 INFO Benchmark.c:62 Benchmark Switching in 4968ms. 206119 packets per second
 $ grep -m1 "model name" /proc/cpuinfo

@@ -5,8 +5,8 @@ set -e
 
 autoreconf -i
 
-[ -n "${CJDNS_CC:-}" ] && CC_OPT="CC=$CJDNS_CC" || CC_OPT=""
-[ -n "${CJDNS_CXX:-}" ] && CXX_OPT="CXX=$CJDNS_CXX" || CXX_OPT=""
+[ -n "${HYPERBORIA_CC:-}" ] && CC_OPT="CC=$HYPERBORIA_CC" || CC_OPT=""
+[ -n "${HYPERBORIA_CXX:-}" ] && CXX_OPT="CXX=$HYPERBORIA_CXX" || CXX_OPT=""
 
 ./configure "$@"
-exec make -j"${CJDNS_JOBS:-$(getconf _NPROCESSORS_ONLN)}" $CC_OPT $CXX_OPT
+exec make -j"${HYPERBORIA_JOBS:-$(getconf _NPROCESSORS_ONLN)}" $CC_OPT $CXX_OPT

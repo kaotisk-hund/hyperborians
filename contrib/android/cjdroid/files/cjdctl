@@ -1,7 +1,7 @@
 #!/system/bin/sh
 
 # Config and runtime directory (if changed, also change in cjdaemon and 99cjdroute)
-CJDPATH="/sdcard/cjdns"
+CJDPATH="/sdcard/hyperboria"
 
 # Set the name of this script
 APPNAME="${0##*/}"
@@ -24,19 +24,19 @@ fi
 
 # Set $CJDCFG to the default if it wasn't set by cjdaemon.conf
 if [ -z "$CJDCFG" ]; then
-    CJDCFG="cjdroute.conf"
+    CJDCFG="hyperboria-route.conf"
 fi
 
 # Create the lock file and start (or if running, restart) cjdaemon
 enable_cjdaemon() {
-    echo -n "${APPNAME}: Enabling cjdns... "
+    echo -n "${APPNAME}: Enabling hyperboria... "
 
     # Create the lock file, enabling cjdaemon
     if [ ! -f "$CJDPATH"/.lock ]; then
         touch "$CJDPATH"/.lock
     fi
 
-    # If running, kill cjdaemon (it'll start cjdroute when restarted)
+    # If running, kill cjdaemon (it'll start hyperboria-route when restarted)
     if [ -f "$CJDPATH"/.cjdaemon.pid ]; then
         if [ -d /proc/`cat "$CJDPATH"/.cjdaemon.pid` ]; then
             kill `cat "$CJDPATH"/.cjdaemon.pid`
@@ -45,7 +45,7 @@ enable_cjdaemon() {
         rm "$CJDPATH"/.cjdaemon.pid
     fi
 
-    # Start cjdaemon (which will start cjdroute if the phone is awake)
+    # Start cjdaemon (which will start hyperboria-route if the phone is awake)
     cjdaemon &
     sleep 1
 
@@ -60,9 +60,9 @@ enable_cjdaemon() {
     exit 1
 }
 
-# Remove the lock file then kill cjdaemon and cjdroute if either is running
+# Remove the lock file then kill cjdaemon and hyperboria-route if either is running
 disable_cjdaemon() {
-    echo -n "${APPNAME}: Disabling cjdns... "
+    echo -n "${APPNAME}: Disabling hyperboria... "
 
     # Remove the lock file, disabling cjdaemon
     if [ -f "$CJDPATH"/.lock ]; then
@@ -78,13 +78,13 @@ disable_cjdaemon() {
         rm "$CJDPATH"/.cjdaemon.pid
     fi
 
-    # If cjdroute is running, kill it
-    if [ `pgrep cjdroute | wc -l` -gt 0 ]; then
-        killall cjdroute
+    # If hyperboria-route is running, kill it
+    if [ `pgrep hyperboria-route | wc -l` -gt 0 ]; then
+        killall hyperboria-route
         sleep 1
 
-        if [ ! `pgrep cjdroute | wc -l` -eq 0 ]; then
-            echo "Error! cjdroute still running"
+        if [ ! `pgrep hyperboria-route | wc -l` -eq 0 ]; then
+            echo "Error! hyperboria-route still running"
             exit 1
         fi
     fi
@@ -106,8 +106,8 @@ case "$1" in
     *)
         echo -e "Usage:\n\t${APPNAME} [option]\n"
         echo -e "Options:"
-        echo -e "\te|enable: start cjdns and enable at boot"
-        echo -e "\td|disable: stop cjdns and disable at boot"
-        echo -e "\tr|restart: stop+disable, then start+enable cjdns"
+        echo -e "\te|enable: start hyperboria and enable at boot"
+        echo -e "\td|disable: stop hyperboria and disable at boot"
+        echo -e "\tr|restart: stop+disable, then start+enable hyperboria"
         ;;
 esac

@@ -1,13 +1,13 @@
-cjdns = require "cjdns/init"
+hyperboria = require "hyperboria/init"
 
 -- CONFIG
 
-confpath = "/etc/cjdroute.conf"
+confpath = "/etc/hyperboria-route.conf"
 
 -- SETUP
 
 print("Using config file: " .. confpath)
-conf = cjdns.ConfigFile.new(confpath)
+conf = hyperboria.ConfigFile.new(confpath)
 ai   = conf:makeInterface()
 
 -- TESTS

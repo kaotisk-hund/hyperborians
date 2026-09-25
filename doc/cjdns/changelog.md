@@ -1,4 +1,4 @@
-# Changelog for cjdns
+# Changelog for hyperboria
 
 crashey is for development, master is rolling release
 
@@ -13,7 +13,7 @@ crashey since: 74e7b71 - Configurator should attempt a ping before beginning to 
 master since: 97161a5 - shitfuck missed a line (Thu Jan 29 19:25:39 2015 +0100)
 
 - The configurator now tries to ping the core process before starting to configure it.
-  This might fix a possible race condition during cjdroute startup.
+  This might fix a possible race condition during hyperboria-route startup.
 - A bug with ETHInterface auto-peering has been fixed.
 - A segfault in peerStats has been fixed.
 - The `-O` cflag for build-time optimization has been fixed. It can now be set as
@@ -51,7 +51,7 @@ master since: 601b6cd - Oops, lets bump the version while we're at it (Fri Jan 2
 
 ## v13 -- January 2015
 
-crashey since: bb06b63 - Added 2 new command line tools, traceroute and cjdnslog (Thu Jan 1 17:10:39 2015 +0100)
+crashey since: bb06b63 - Added 2 new command line tools, traceroute and hyperborialog (Thu Jan 1 17:10:39 2015 +0100)
 
 master since: 185fe28 - Nodes trying to ping themselves causing crashes (Fri Jan 2 09:37:32 2015 +0100)
 
@@ -71,7 +71,7 @@ master since: 185fe28 - Nodes trying to ping themselves causing crashes (Fri Jan
 
 - The Admin API function `InterfaceController_peerStats()` now includes the peer's
   `protocolVersion`, and doesn't require authentication any longer.
-- `cjdroute --genconf` now has an `--eth` switch which enables the ETHInterface
+- `hyperboria-route --genconf` now has an `--eth` switch which enables the ETHInterface
   and auto-peering.
 - There is now a script which adds peering passwords to both the config file and
   the running process, avoiding the otherwise neccessary restart:

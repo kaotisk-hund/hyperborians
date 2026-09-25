@@ -1,4 +1,4 @@
-package CJDNS;
+package HYPERBORIA;
 
 use Bencode qw(bencode bdecode);
 use Carp qw/croak/;
@@ -30,7 +30,7 @@ sub new {
     );
 
     unless ($self->_ping) {
-        die "Can't ping cjdns admin interface at udp://$addr:$port\n";
+        die "Can't ping hyperboria admin interface at udp://$addr:$port\n";
     }
 
     $self->_make_methods;
@@ -63,7 +63,7 @@ sub _make_methods {
         $page++;
     }
 
-    # first let's start by loading them as named into the cjdns namespace.
+    # first let's start by loading them as named into the hyperboria namespace.
 
     foreach my $method_name (keys %$availableFunctions) {
         my $prototype = $availableFunctions->{$method_name};
@@ -105,21 +105,21 @@ sub _make_methods {
             if (ref($dec)) {
                 # { error: "none" } is a success case
                 if ($dec->{error} && $dec->{error} ne 'none') {
-                    croak "[error] CJDNS method '$method_name': $dec->{error}";
+                    croak "[error] HYPERBORIA method '$method_name': $dec->{error}";
                 }
             }
             return $dec;
         };
 
         # and now it's a method!
-        my $full_name = "CJDNS::$method_name";
+        my $full_name = "HYPERBORIA::$method_name";
         *{$full_name} = $method;
     }
 }
 
 sub capabilities {
     my ($self) = @_;
-    my $return = "Cjdns Administration Protocol Capabilities\n";
+    my $return = "Hyperboria Administration Protocol Capabilities\n";
     $return .= "------------------------------------------\n";
     foreach my $func (keys %{$self->{capabilities}}) {
         $return .= " $func\n";
@@ -162,21 +162,21 @@ __END__
 
 =head1 NAME
 
-Cjdns - Perl interface to the Cjdns Administration Interface
+Hyperboria - Perl interface to the Hyperboria Administration Interface
 
 =head1 SYNOPSIS
 
-  use CJDNS;
-  my $cjdns = CJDNS->new('localhost', '12345', 'abc123');
-  printf("Cjdns' routing table is using %d bytes of memory!\n", $cjdns->memory->{bytes});
+  use HYPERBORIA;
+  my $hyperboria = HYPERBORIA->new('localhost', '12345', 'abc123');
+  printf("Hyperboria' routing table is using %d bytes of memory!\n", $hyperboria->memory->{bytes});
 
 =head1 DESCRIPTION
 
-Perl interface to the cjdns Administration system
+Perl interface to the hyperboria Administration system
 
 =head1 SEE ALSO
 
-https://github.com/cjdelisle/cjdns
+https://github.com/cjdelisle/hyperboria
 
 =head1 AUTHOR
 

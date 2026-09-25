@@ -1,13 +1,13 @@
-# Cjdns Admin API
+# Hyperboria Admin API
 
-Cjdns is inspected and configured through a UDP socket.
-When cjdroute starts up, it reads the configuration file and spawns cjdns core. The core
+Hyperboria is inspected and configured through a UDP socket.
+When hyperboria-route starts up, it reads the configuration file and spawns hyperboria core. The core
 knows nothing but the port which it should bind to and the private key which it should use.
 All other information such as peers, interfaces and passwords is given to the core through the
-admin UDP interface. When cjdroute is finished setting up the core, it exits leaving the core
+admin UDP interface. When hyperboria-route is finished setting up the core, it exits leaving the core
 running in the background.
 
-You can call all of the functions which are called by cjdroute to collect information and alter
+You can call all of the functions which are called by hyperboria-route to collect information and alter
 the core's configuration.
 
 ## How a function works
@@ -77,7 +77,7 @@ describe other functions and their required and allowed arguments.
 
 
 ## Authentication
-Any function which changes the state of cjdns core requires authentication to carry out.
+Any function which changes the state of hyperboria core requires authentication to carry out.
 Authentication is done on a per-request basis. Functions which don't require authentication
 can still be called with authentication and will still fail if the authentication is incorrect.
 
@@ -116,10 +116,10 @@ be broke by changes in the future.
     echo cookie=${COOKIE};
 
 **Step 2:** Calculate the hash of the password and cookie:
-For this step, you will need the admin password from your cjdroute.conf file, it's to be found
+For this step, you will need the admin password from your hyperboria-route.conf file, it's to be found
 inside of the block which says `"admin": {`.
 
-    ADMIN_PASS=you_will_find_this_in_your_cjdroute_dot_conf \
+    ADMIN_PASS=you_will_find_this_in_your_hyperboria-route_dot_conf \
     REQUEST='{"q": "auth", "aq": "ping", "hash": "__HASH__", "cookie": "__COOKIE__"}' \
     COOKIE_RESP=`echo -n 'd1:q6:cookiee' | nc6 -u -t 1 -n -w3 127.0.0.1 11234` \
     COOKIE=`echo ${COOKIE_RESP} | sed 's/d6:cookie10:\([0-9]*\)e/\1/'` \
@@ -133,9 +133,9 @@ inside of the block which says `"admin": {`.
     echo "${REQ_ONE}" | ./build/benc2json
 
 **Step 3:** Calculate the SHA-256 of the entire request and replace the one in the request:
-This will calculate the final request and send it to cjdns.
+This will calculate the final request and send it to hyperboria.
 
-    ADMIN_PASS=you_will_find_this_in_your_cjdroute_dot_conf \
+    ADMIN_PASS=you_will_find_this_in_your_hyperboria-route_dot_conf \
     REQUEST='{"q": "auth", "aq": "ping", "hash": "__HASH__", "cookie": "__COOKIE__"}' \
     COOKIE_RESP=`echo -n 'd1:q6:cookiee' | nc6 -u -t 1 -n -w3 127.0.0.1 11234` \
     COOKIE=`echo ${COOKIE_RESP} | sed 's/d6:cookie10:\([0-9]*\)e/\1/'` \
@@ -163,18 +163,18 @@ then it has succeeded, if the password is incorrect, you will see this:
 
 ### Tools:
 
-Obviously using bash to craft cjdns admin RPC calls is probably the most awkward way possible,
-there are tools in cjdns/contrib which will help you craft requests, specifically there are
-libraries written in python and perl which will allow users to call cjdns internal functions
+Obviously using bash to craft hyperboria admin RPC calls is probably the most awkward way possible,
+there are tools in hyperboria/contrib which will help you craft requests, specifically there are
+libraries written in python and perl which will allow users to call hyperboria internal functions
 as python/perl native functions. A tool called `cexec` is provided with the python library which
-allows you to call cjdns functions from shell scripts or the command line as follows:
+allows you to call hyperboria functions from shell scripts or the command line as follows:
 
     ./contrib/python/cexec 'ping()'
 
 
-## Cjdns Functions:
+## Hyperboria Functions:
 
-    user@ubnta8:~/wrk/cjdns$ ./contrib/python/cexec 'functions()' | sort
+    user@ubnta8:~/wrk/hyperboria$ ./contrib/python/cexec 'functions()' | sort
     Admin_asyncEnabled()
     Admin_availableFunctions(page='')
     Allocator_bytesAllocated()
@@ -223,7 +223,7 @@ allows you to call cjdns functions from shell scripts or the command line as fol
 
 **Auth Required**
 
-Send a node a cjdns ping request.
+Send a node a hyperboria ping request.
 
 Parameters:
 
@@ -246,31 +246,31 @@ pinged node, and `ms` which is the number of milliseconds since the original pin
 
 Examples:
 
-    >>> cjdns.RouterModule_pingNode('fc38:4c2c:1a8f:3981:f2e7:c2b9:6870:6e84')
+    >>> hyperboria.RouterModule_pingNode('fc38:4c2c:1a8f:3981:f2e7:c2b9:6870:6e84')
     {'version': '5c5e84ccdba3f31f7c88077729700b4368320bc2', 'result': 'pong', 'ms': 79}
 
-    >>> cjdns.RouterModule_pingNode('fc5d:baa5:61fc:6ffd:9554:67f0:e290:7536')
+    >>> hyperboria.RouterModule_pingNode('fc5d:baa5:61fc:6ffd:9554:67f0:e290:7536')
     {'error': 'could not find node to ping'}
 
-    >>> cjdns.RouterModule_pingNode('0000.0000.0000.0013')
+    >>> hyperboria.RouterModule_pingNode('0000.0000.0000.0013')
     {'version': '2b62b9ae911f1044e45f3f28fdd63d0d5a7fc512', 'result': 'pong', 'ms': 0}
 
-    >>> cjdns.RouterModule_pingNode('a')
+    >>> hyperboria.RouterModule_pingNode('a')
     {'error': "Unexpected length, must be either 39 char ipv6 address (with leading zeros)
     eg: 'fc4f:000d:e499:8f5b:c49f:6e6b:01ae:3120' or 19 char path eg: '0123.4567.89ab.cdef'"}
 
-    >>> cjdns.RouterModule_pingNode('aaaaaaaaaaaaaaaaaaa')
+    >>> hyperboria.RouterModule_pingNode('aaaaaaaaaaaaaaaaaaa')
     {'error': 'parse path failed'}
 
-    >>> cjdns.RouterModule_pingNode('aaaaaaaaaaaaaaaaaaazzzzzzzzzzzzzzzzzzzz')
+    >>> hyperboria.RouterModule_pingNode('aaaaaaaaaaaaaaaaaaazzzzzzzzzzzzzzzzzzzz')
     {'error': 'parsing address failed'}
 
-    >>> cjdns.RouterModule_pingNode('fc38:4c2c:1a8f:3981:f2e7:c2b9:6870:6e84', 10)
+    >>> hyperboria.RouterModule_pingNode('fc38:4c2c:1a8f:3981:f2e7:c2b9:6870:6e84', 10)
     {'result': 'timeout', 'ms': 10}
 
 ### ETHInterface Functions:
 
-ETHInterface is a connector which allows cjdns nodes on the same lan to automatically connect
+ETHInterface is a connector which allows hyperboria nodes on the same lan to automatically connect
 without the need to IP addresses on the LAN or sharing of connection credentials. It works on
 wireless LANs as well as wired Ethernet LANs.
 
@@ -357,7 +357,7 @@ Example:
 
 ### IpTunnel Functions
 
-IPTunnel is designed to allow tunneling of IPv4 and IPv6 packets through a cjdns network
+IPTunnel is designed to allow tunneling of IPv4 and IPv6 packets through a hyperboria network
 to the external internet or to a virtual LAN. It provides familiar VPN type functionality.
 There are 2 nodes, a client and a server, the server uses `IPTunnel_allowConnection()` and the
 client uses `IPTunnel_connectTo()` the server assigns IPv4 and/or IPv6 addresses to the client
@@ -396,7 +396,7 @@ Parameters:
 Returns:
 
 * Int **outgoing**: 1 if the connection is outgoing, 0 if it's incoming.
-* String **key**: the cjdns public key of the foreign node.
+* String **key**: the hyperboria public key of the foreign node.
 * String **ip6Address**: the IPv6 address which is assigned to this IPTunnel if applicable.
 * Int **ip6Prefix**: the IPv6 netmask/prefix length which is assigned to this IPTunnel if applicable.
 * String **ip4Address**: the IPv4 address which is assigned to this IPTunnel if applicable.
@@ -466,7 +466,7 @@ Returns:
 
 ### UDPInterface Functions
 
-UDPInterface is the basic cjdns interface which is used to link distant nodes over the internet.
+UDPInterface is the basic hyperboria interface which is used to link distant nodes over the internet.
 It will work on a LAN as long as the nodes have IP addresses but for linking on a LAN, ETHInterface
 is easier.
 
@@ -507,29 +507,29 @@ The neighbor may still reject our connection attempts.
 
 Example:
 
-    >>> cjdns.UDPInterface_beginConnection("v0zyvrjuc4xbzh4n9c4k3qpx7kg8xgndv2k45j9nfgb373m8sss0.k", "192.168.0.2:10000", "null")
+    >>> hyperboria.UDPInterface_beginConnection("v0zyvrjuc4xbzh4n9c4k3qpx7kg8xgndv2k45j9nfgb373m8sss0.k", "192.168.0.2:10000", "null")
     {'error': 'none'}
 
-    >>> cjdns.UDPInterface_beginConnection("v0zyvrjuc4xbzh4n9c4k3qpx7kg8xgndv2k45j9nfgb373m8sss0.k", "x", "null")
+    >>> hyperboria.UDPInterface_beginConnection("v0zyvrjuc4xbzh4n9c4k3qpx7kg8xgndv2k45j9nfgb373m8sss0.k", "x", "null")
     {'error': 'unable to parse ip address and port.'}
 
-    >>> cjdns.UDPInterface_beginConnection("k", "x", "null")
+    >>> hyperboria.UDPInterface_beginConnection("k", "x", "null")
     {'error': 'publicKey is too short, must be 52 characters long.'}
 
-    >>> cjdns.UDPInterface_beginConnection("------------------------------------------------------", "x", "null")
+    >>> hyperboria.UDPInterface_beginConnection("------------------------------------------------------", "x", "null")
     {'error': 'failed to parse publicKey.'}
 
-    >>> cjdns.UDPInterface_beginConnection("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz0.k", "192.168.0.2:10000", "null")
-    {'error': 'invalid cjdns public key.'}
+    >>> hyperboria.UDPInterface_beginConnection("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz0.k", "192.168.0.2:10000", "null")
+    {'error': 'invalid hyperboria public key.'}
 
-    >>> cjdns.UDPInterface_beginConnection("v0zyvrjuc4xbzh4n9c4k3qpx7kg8xgndv2k45j9nfgb373m8sss0.k", "[1234::5]:10000", "null")
+    >>> hyperboria.UDPInterface_beginConnection("v0zyvrjuc4xbzh4n9c4k3qpx7kg8xgndv2k45j9nfgb373m8sss0.k", "[1234::5]:10000", "null")
     {'error': 'different address type than this socket is bound to.'}
 
 
 ### AdminLog Functions:
 
-Since cjdns contains so many logging locations, logging to a file would not only be inefficient
-but it would fill up your disk rather quickly. Because of this, cjdns logging is only enabled on
+Since hyperboria contains so many logging locations, logging to a file would not only be inefficient
+but it would fill up your disk rather quickly. Because of this, hyperboria logging is only enabled on
 request, with these functions you can ask for logs to be enabled on a log level, per-file or even
 per-line basis.
 
@@ -537,7 +537,7 @@ Log levels may be excluded at compile time in which case they will not be availa
 Each log level implies inclusion of every higher level, if you subscribe to **INFO** logging, you
 will also automatically get **WARN**, **ERROR**, and **CRITICAL**.
 
-Cjdns log levels:
+Hyperboria log levels:
 
 * **KEYS** Not compiled in by default, contains private keys and other secret information.
 * **DEBUG** Default level, contains lots of information which is probably not useful unless you are
@@ -545,12 +545,12 @@ diagnosing an ongoing problem.
 * **INFO** Shows starting and stopping of various components and general purpose information.
 * **WARN** Generally this means some system has undergone a minor failure, this includes failures
 due to network disturbance.
-* **ERROR** This means there was a (possibly temporary) failure of a system within cjdns.
-* **CRITICAL** This means something is broken such that the cjdns core will likely
+* **ERROR** This means there was a (possibly temporary) failure of a system within hyperboria.
+* **CRITICAL** This means something is broken such that the hyperboria core will likely
 have to exit immedietly.
 
 
-To see an implementation of cjdns log consumer, look at `contrib/python/cjdnslog`.
+To see an implementation of hyperboria log consumer, look at `contrib/python/hyperborialog`.
 
 
 #### AdminLog_subscribe()
@@ -617,7 +617,7 @@ Example:
 ### Admin Functions
 
 These functions are for dealing with the Admin interface, the infrastructure which allows all
-of the other functions throughout cjdns to be accessed from the admin socket.
+of the other functions throughout hyperboria to be accessed from the admin socket.
 
 #### Admin_availableFunctions()
 
@@ -698,13 +698,13 @@ authenticated calls whereas manually calling it without authentication returns f
 
 ### Security Functions
 
-These functions are available for putting the cjdns core into a sandbox where
+These functions are available for putting the hyperboria core into a sandbox where
 a security breach within the core would be less likely to cause a total system compromize.
 
 
 #### Security_setUser()
 
-Set the user ID which cjdns is running under to a different user. This function allows cjdns
+Set the user ID which hyperboria is running under to a different user. This function allows hyperboria
 to shed privileges after starting up.
 
 **NOTE**: This function will always fail with an error about `process cannot open more files` if
@@ -723,7 +723,7 @@ Return:
 
 Set the hard open file limit to zero, while this does not force closed file descriptors which are
 already open, it makes any function requiring the opening of a file to fail providing a powerful
-sandbox. By calling this function after cjdns is started, one can insure that cjdns core cannot
+sandbox. By calling this function after hyperboria is started, one can insure that hyperboria core cannot
 touch the filesystem or open network sockets which it does not already have open. This will however
 prevent a number of other admin API functions fron working.
 
@@ -746,7 +746,7 @@ Examples:
 
 ### Core_initTunnel()
 
-This function is used during cjdns startup to initialize the TUN device, set it's IP address
+This function is used during hyperboria startup to initialize the TUN device, set it's IP address
 and set the MTU, it is hastily designed and may be removed in the future.
 
 Parameters:
@@ -760,12 +760,12 @@ Returns:
 
 **Note**: an error will be returned if anything goes wrong initializing the tunnel, setting it's
 IP address or setting it's MTU, even if there is an error, the tunnel may work just fine and
-even if the tunnel doesn't work, cjdns will function as a router only without the TUN device.
+even if the tunnel doesn't work, hyperboria will function as a router only without the TUN device.
 
 
 ### Core_exit()
 
-A function to stop cjdns.
+A function to stop hyperboria.
 
 Returns:
 
@@ -799,16 +799,16 @@ if a route is not found in the local table.
 
 Examples:
 
-    >>> print cjdns.RouterModule_lookup('fc5d:baa5:61fc:6ffd:9554:67f0:e290:7535')
+    >>> print hyperboria.RouterModule_lookup('fc5d:baa5:61fc:6ffd:9554:67f0:e290:7535')
     {'result': '0000.0000.0000.1953', 'error': 'none'}
 
-    >>> print cjdns.RouterModule_lookup('fc5d:baa5:61fc:6ffd:9554:67f0:e290:7536')
+    >>> print hyperboria.RouterModule_lookup('fc5d:baa5:61fc:6ffd:9554:67f0:e290:7536')
     {'result': 'fcf1:a7a8:8ec0:589b:c64c:cc95:1ced:3679@0000.0000.0000.0013', 'error': 'none'}
 
-    >>> print cjdns.RouterModule_lookup('f')
+    >>> print hyperboria.RouterModule_lookup('f')
     {'result': '', 'error': 'address wrong length'}
 
-    >>> print cjdns.RouterModule_lookup('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
+    >>> print hyperboria.RouterModule_lookup('zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
     {'result': '', 'error': 'failed to parse address'}
 
 
@@ -859,7 +859,7 @@ Get the number of bytes of memory allocated by all memory allocators in the rout
 
 Example:
 
-    >>> cjdns.memory()
+    >>> hyperboria.memory()
     {'bytes': 779259}
 
 
@@ -904,10 +904,10 @@ What the data looks like:
 
 Example:
 
-    >>> cjdns.NodeStore_dumpTable(0)
+    >>> hyperboria.NodeStore_dumpTable(0)
     {'routingTable': [{'ip': 'fce5:de17:cbde:c87b:5289:0556:8b83:c9c8', 'link': 4294967295,....
 
-    >>> cjdns.NodeStore_dumpTable(4)
+    >>> hyperboria.NodeStore_dumpTable(4)
     {'routingTable': []}
 
 
@@ -927,18 +927,18 @@ If unspecified, will default to `DEFAULT_TIMEOUT` as defined in `SwitchPinger_ad
 
 Examples:
 
-    >>> cjdns.SwitchPinger_ping('0000.0000.04f5.2555')
+    >>> hyperboria.SwitchPinger_ping('0000.0000.04f5.2555')
     {'path': '0000.0000.04f5.2555', 'data': '', 'result': 'pong', 'ms': 281}
 
-    >>> cjdns.SwitchPinger_ping('fca5:9fe0:3fa2:d576:71e6:8373:7aeb:ea11')
+    >>> hyperboria.SwitchPinger_ping('fca5:9fe0:3fa2:d576:71e6:8373:7aeb:ea11')
     {'error': 'path was not parsable.'}
 
-    >>> cjdns.SwitchPinger_ping('0000.0000.04f5.2555', '12345abcdefg')
+    >>> hyperboria.SwitchPinger_ping('0000.0000.04f5.2555', '12345abcdefg')
     {'path': '0000.0000.04f5.2555', 'data': '12345abcdefg', 'result': 'pong', 'ms': 326}
 
-    >>> cjdns.SwitchPinger_ping('0000.0000.0405.2555')
+    >>> hyperboria.SwitchPinger_ping('0000.0000.0405.2555')
     {'path': '0000.0000.0405.2555', 'data': '', 'result': 'ping message caused switch error', 'ms': 278}
 
-    >>> cjdns.SwitchPinger_ping('0000.0000.04f5.2555', '', 30)
+    >>> hyperboria.SwitchPinger_ping('0000.0000.04f5.2555', '', 30)
     {'result': 'timeout', 'ms': 77}
 

@@ -14,13 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-var Cjdns = require('./lib/cjdnsadmin/cjdnsadmin');
+var Hyperboria = require('./lib/hyperboriaadmin/hyperboriaadmin');
 var nThen = require('nthen');
 
-var getAddresses = function (cjdns, callback) {
+var getAddresses = function (hyperboria, callback) {
     var addresses = [];
     var again = function (i) {
-        cjdns.NodeStore_dumpTable(i, function (err, table) {
+        hyperboria.NodeStore_dumpTable(i, function (err, table) {
             if (err) { throw err; }
             var j;
             for (j = 0; j < table.routingTable.length; j++) {
@@ -74,17 +74,17 @@ var printTree = function (tree, spaces) {
     }
 };
 
-Cjdns.connectWithAdminInfo(function (cjdns) {
+Hyperboria.connectWithAdminInfo(function (hyperboria) {
 
     var addrs;
     var nodes = [];
     nThen(function (waitFor) {
-        getAddresses(cjdns, waitFor(function (addrs) { addresses = addrs; }));
+        getAddresses(hyperboria, waitFor(function (addrs) { addresses = addrs; }));
     }).nThen(function (waitFor) {
         var nt = nThen;
         addresses.forEach(function (addr) {
             nt = nt(function (waitFor) {
-                cjdns.NodeStore_nodeForAddr(addr, waitFor(function (err, ret) {
+                hyperboria.NodeStore_nodeForAddr(addr, waitFor(function (err, ret) {
                     if (err) { throw err; }
                     if (ret.error !== 'none') { throw new Error(ret.error); }
                     ret.result.ip = addr;
@@ -97,7 +97,7 @@ Cjdns.connectWithAdminInfo(function (cjdns) {
         //console.log(JSON.stringify(nodes, null, '  '));
         var tree = buildTree(nodes);
         printTree(tree, '');
-        cjdns.disconnect();
+        hyperboria.disconnect();
     });
 
 });

@@ -1,6 +1,6 @@
-# Installing cjdns on raspbian jessie
+# Installing hyperboria on raspbian jessie
 
-This is a short guide how to setup a raspbian jessie cjdns box.
+This is a short guide how to setup a raspbian jessie hyperboria box.
 
 ## Install packages
 
@@ -18,21 +18,21 @@ sudo -i
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 apt install -y nodejs
 
-# Build cjdns
+# Build hyperboria
 cd /opt
-git clone https://github.com/cjdelisle/cjdns.git
-cd cjdns
+git clone https://github.com/cjdelisle/hyperboria.git
+cd hyperboria
 NO_TEST=1 Seccomp_NO=1 ./do
-ln -s /opt/cjdns/cjdroute /usr/bin
+ln -s /opt/hyperboria/hyperboria-route /usr/bin
 
 # Generate a config file
-(umask 077 && ./cjdroute --genconf > /etc/cjdroute.conf)
-# Regarding cjdns' configuration you can continue reading here:
-# https://github.com/cjdelisle/cjdns#2-find-a-friend
+(umask 077 && ./hyperboria-route --genconf > /etc/hyperboria-route.conf)
+# Regarding hyperboria' configuration you can continue reading here:
+# https://github.com/cjdelisle/hyperboria#2-find-a-friend
 
 # Set up a system service that runs on startup
-cp contrib/systemd/cjdns.service /etc/systemd/system/
+cp contrib/systemd/hyperboria.service /etc/systemd/system/
 systemctl daemon-reload
-systemctl enable cjdns
-systemctl start cjdns
+systemctl enable hyperboria
+systemctl start hyperboria
 ```

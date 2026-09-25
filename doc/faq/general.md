@@ -2,19 +2,19 @@
 
 Project Meshnet is an organization that aims to build a versatile, decentralized network built on secure protocols for routing traffic over private mesh or public networks independent of a central supporting infrastructure.
   
-## What is Cjdns?
+## What is Hyperboria?
 
-Cjdns (Caleb James DeLisle's Network Suite) is a networking protocol and reference implementation. It is founded on the ideology that networks should be easy to set up, protocols should scale smoothly, and security should be ubiquitous.
+Hyperboria (Caleb James DeLisle's Network Suite) is a networking protocol and reference implementation. It is founded on the ideology that networks should be easy to set up, protocols should scale smoothly, and security should be ubiquitous.
   
-## How do I install Cjdns?
+## How do I install Hyperboria?
 
-Instructions are on [github](https://github.com/cjdelisle/cjdns)
+Instructions are on [github](https://github.com/cjdelisle/hyperboria)
 
 ## What is Hyperboria?
 
 [Hyperboria](https://hyperboria.net) is an encrypted [Mesh Network](https://en.wikipedia.org/wiki/Mesh_networking) designed for privacy and resiliency to censorship.
 
-It currently exists as an [Overlay](https://en.wikipedia.org/wiki/Overlay_network) test network for [Project Meshnet](https://projectmeshnet.org/) and is only accessible to those who install [cjdns](https://en.wikipedia.org/wiki/Cjdns). 
+It currently exists as an [Overlay](https://en.wikipedia.org/wiki/Overlay_network) test network for [Project Meshnet](https://projectmeshnet.org/) and is only accessible to those who install [hyperboria](https://en.wikipedia.org/wiki/Hyperboria). 
 
 Ultimately we hope to build a viable alternative to the regular internet, which we call [clearnet](http://www.urbandictionary.com/define.php?term=clearnet). Our goal is to replace the existing hierarchical internet with a non-hierarchical model.
 
@@ -28,11 +28,11 @@ This is called a [Meshlocal](/meshlocals/intro.md). I am trying to start a [Toro
 
 To join the network, you need a password and a public key from someone who is already on the network. If you're in Toronto or the surrounding area, and are interested, <a href="/contact">contact</a> me.
   
-## Is Cjdns anonymous?
+## Is Hyperboria anonymous?
 
-No, Cjdns is not anonymous, nor is it intended to be. For a more in-depth explanation, take a look at the <a href="https://github.com/cjdelisle/cjdns/blob/master/doc/Whitepaper.md">whitepaper</a>.
+No, Hyperboria is not anonymous, nor is it intended to be. For a more in-depth explanation, take a look at the <a href="https://github.com/cjdelisle/hyperboria/blob/master/doc/Whitepaper.md">whitepaper</a>.
   
-## I can ping||curl||wget a cjdns ipv6, but I can't browse to it. What's up?  
+## I can ping||curl||wget a hyperboria ipv6, but I can't browse to it. What's up?  
 
 It's most likely a problem with your browser. If you are using Firefox||Iceweasel||Chrome||Chromium, we know about this, and there's a fix.
 
@@ -56,7 +56,7 @@ There are limits to the size of any node's routing table, but at hyperboria's cu
 
 * why not namecoin?
 
-## What crypto does cjdns use?  
+## What crypto does hyperboria use?  
 
 * Salsa20
 * NaCl
@@ -67,16 +67,16 @@ There are limits to the size of any node's routing table, but at hyperboria's cu
 * Nginx
 * NodeJS
 
-## Can cjdns be made to automatically run||update?
+## Can hyperboria be made to automatically run||update?
 
 * If you are using the master branch, things should be stable enough to periodically update. You probably shouldn't do this if you're using crashey. I prefer to run updates manually so I know when things have changed.
-* There are many ways to set cjdns to always run in the background, though methods will vary depending on your system.
+* There are many ways to set hyperboria to always run in the background, though methods will vary depending on your system.
 
-## Do I need to run cjdroute as root?
+## Do I need to run hyperboria-route as root?
 
 Short Answer: Pretty much
 
-Longer Answer: You generally need root permissions to create the encrypted tunnel interface that cjdns uses to communicate with other nodes. Once that is created, all extraneous permissions are dropped. In any case, cjdroute is limited to reading/writing from 0 files, so even if someone could exploit it, they wouldn't be able to access anything of any value.
+Longer Answer: You generally need root permissions to create the encrypted tunnel interface that hyperboria uses to communicate with other nodes. Once that is created, all extraneous permissions are dropped. In any case, hyperboria-route is limited to reading/writing from 0 files, so even if someone could exploit it, they wouldn't be able to access anything of any value.
 
 ## What systems are supported?
 
@@ -86,7 +86,7 @@ Long Answer: Check the dependency list. You need access to a C99 compiler, NodeJ
 
 ## Can I use UPNP to bypass NAT?  
 
-cjdns does not interact at all with your NAT setup. Use some other upnp client to control your router.
+hyperboria does not interact at all with your NAT setup. Use some other upnp client to control your router.
 
 ## Is there a Linux distribution that works best as a Hyperboria node?
 

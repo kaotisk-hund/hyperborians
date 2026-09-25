@@ -1,16 +1,16 @@
-sybilsim(8) -- Cjdns packet switch
+sybilsim(8) -- Hyperboria packet switch
 =============================================
 
 ## SYNOPSIS
 
-`/usr/libexec/cjdns/sybilsim < config.json`
+`/usr/libexec/hyperboria/sybilsim < config.json`
 
 ## DESCRIPTION
 
 Sybilsim reads a list of nodes and peers from stdin and simulates the
 corresponding mesh without any actual networking using the same code
-as cjdroute.  This is useful for testing and optimizing cjdroute.
-Every node must have a valid cjdns private key. The makekeys(1) utility can be
+as hyperboria-route.  This is useful for testing and optimizing hyperboria-route.
+Every node must have a valid hyperboria private key. The makekeys(1) utility can be
 useful for scripts that generate the config.  
 
 ## USAGE
@@ -35,9 +35,9 @@ Example config:
 Example use:
 
     makekeys | head -20 >keys.txt
-    node /usr/libexec/cjdns/tools/lib/makesim.js keys.txt |
-    /usr/libexec/cjdns/sybilsim
+    node /usr/libexec/hyperboria/tools/lib/makesim.js keys.txt |
+    /usr/libexec/hyperboria/sybilsim
 
 ## SEE ALSO
 
-makekeys(1), cjdroute(1)
+makekeys(1), hyperboria-route(1)

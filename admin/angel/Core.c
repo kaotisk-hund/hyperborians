@@ -81,7 +81,7 @@
 // Failsafe: abort if more than 2^23 bytes are allocated (8MB)
 #define ALLOCATOR_FAILSAFE (1<<23)
 
-// TODO(cjd): we need to begin detecting MTU and informing the OS properly!
+// TODO(hyperboria): we need to begin detecting MTU and informing the OS properly!
 /**
  * The worst possible packet overhead, we're in session setup with the endpoint.
  */
@@ -422,7 +422,7 @@ int Core_main(int argc, char** argv)
     struct Except* eh = NULL;
 
     if (argc != 3) {
-        Except_throw(eh, "This is internal to cjdns and shouldn't started manually.");
+        Except_throw(eh, "This is internal to hyperboria and shouldn't started manually.");
     }
 
     struct Allocator* alloc = MallocAllocator_new(ALLOCATOR_FAILSAFE);

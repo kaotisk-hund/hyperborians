@@ -1,9 +1,9 @@
 # What the fc00::/8
-## a brief introduction to cjdns
+## a brief introduction to hyperboria
 
 author: [kpcyrd](http://github.com/kpcyrd)
 
-original location: https://github/ansuz/cjdns-pr
+original location: https://github/ansuz/hyperboria-pr
 
 ```quote
 We have the means and we have the technology to end mass surveillance without any legislative action at all, without any policy changes. By basically adopting changes like making encryption a universal standard - where all communications are encrypted by default - we can end mass surveillance not just in the United States but around the world.
@@ -28,7 +28,7 @@ We have the means and we have the technology to end mass surveillance without an
 
 ## Sounds complicated
 
-1. Install cjdns
+1. Install hyperboria
 2. Find a friend to connect to
 
 ## Friend to Friend
@@ -66,7 +66,7 @@ The address is the cryptographical fingerprint.
 
 - Don't use DNS to distribute your IPv6
 - DNS can be hijacked
-- Thus, cjdns addresses can get spoofed
+- Thus, hyperboria addresses can get spoofed
 
 If we use the current domain name system it's not very secure
 

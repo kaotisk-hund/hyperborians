@@ -37,7 +37,7 @@ char* Key_parse_strerror(int error);
 #define Key_parse_MALFORMED -2
 #define Key_parse_DECODE_FAILED -3
 
-/** Invalid cjdns key (doesn't hash to an address beginning with FC) */
+/** Invalid hyperboria key (doesn't hash to an address beginning with FC) */
 #define Key_parse_INVALID -4
 
 /**

@@ -97,7 +97,7 @@ static int incomingFromDHT(struct DHTMessage* dmessage, void* vpf)
     Bits_memset(emsg, 0, PFChan_Msg_MIN_SIZE);
 
     DataHeader_setVersion(&emsg->data, DataHeader_CURRENT_VERSION);
-    DataHeader_setContentType(&emsg->data, ContentType_CJDHT);
+    DataHeader_setContentType(&emsg->data, ContentType_HYPERBORIADHT);
 
     Bits_memcpy(emsg->route.ip6, addr->ip6.bytes, 16);
     emsg->route.version_be = Endian_hostToBigEndian32(addr->protocolVersion);
@@ -476,7 +476,7 @@ static void init(void* vpf)
         .superiority_be = Endian_hostToBigEndian32(1),
         .version_be = Endian_hostToBigEndian32(Version_CURRENT_PROTOCOL)
     };
-    CString_safeStrncpy(conn.userAgent, "Cjdns internal pathfinder", 64);
+    CString_safeStrncpy(conn.userAgent, "Hyperboria internal pathfinder", 64);
     sendEvent(pf, PFChan_Pathfinder_CONNECT, &conn, PFChan_Pathfinder_Connect_SIZE);
 }
 

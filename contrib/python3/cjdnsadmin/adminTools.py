@@ -18,7 +18,7 @@ from time import sleep
 
 def anonConnect(ip='127.0.0.1', port=11234):
     from cjdnsadmin import connect
-    path = os.path.expanduser('~/.cjdnsadmin')
+    path = os.path.expanduser('~/.hyperboriaadmin')
     try:
         with open(path, 'r') as adminInfo:
             data = json.load(adminInfo)
@@ -30,23 +30,23 @@ def connect(ip='127.0.0.1', port=11234, password=''):
     from cjdnsadmin import connectWithAdminInfo
     return connectWithAdminInfo()
 
-def disconnect(cjdns):
-    cjdns.disconnect()
+def disconnect(hyperboria):
+    hyperboria.disconnect()
 
-def whoami(cjdns):
+def whoami(hyperboria):
     from publicToIp6 import PublicToIp6_convert;
-    resp=cjdns.NodeStore_nodeForAddr(0)
+    resp=hyperboria.NodeStore_nodeForAddr(0)
     key=resp['result']['key']
     ver=resp['result']['protocolVersion']
     IP=PublicToIp6_convert(key)
     return {'IP':IP,'key':key,'version':ver}
 
-def dumpTable(cjdns,verbose=False,unique_ip=False,nodes=[]):
+def dumpTable(hyperboria,verbose=False,unique_ip=False,nodes=[]):
     if nodes == []: nodes=[]
     rt = []
     i = 0;
     while True:
-        table = cjdns.NodeStore_dumpTable(i)
+        table = hyperboria.NodeStore_dumpTable(i)
         res=table['routingTable']
         for t in res:
             ip=t['ip']
@@ -66,13 +66,13 @@ def dumpTable(cjdns,verbose=False,unique_ip=False,nodes=[]):
 
     return rt
 
-def streamRoutingTable(cjdns, delay=10):
+def streamRoutingTable(hyperboria, delay=10):
     known = []
 
     while True:
         i = 0
         while True:
-            table = cjdns.NodeStore_dumpTable(i)
+            table = hyperboria.NodeStore_dumpTable(i)
             routes = table['routingTable']
             for entry in routes:
                 if entry['ip'] not in known:
@@ -95,14 +95,14 @@ def parseAddr(addr):
             }
     return res
 
-def peerStats(cjdns,up=False,verbose=False,human_readable=False):
+def peerStats(hyperboria,up=False,verbose=False,human_readable=False):
     from publicToIp6 import PublicToIp6_convert;
 
     allPeers = []
 
     i = 0;
     while True:
-        ps = cjdns.InterfaceController_peerStats(page=i);
+        ps = hyperboria.InterfaceController_peerStats(page=i);
         peers = ps['peers']
         for p in peers:
             p.update(parseAddr(p['addr']))

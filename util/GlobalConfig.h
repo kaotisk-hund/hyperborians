@@ -21,7 +21,7 @@
 Linker_require("util/GlobalConfig.c")
 
 /**
- * Cjdns is mostly a very well structured project, there is not a lot of
+ * Hyperboria is mostly a very well structured project, there is not a lot of
  * communication between modules. However there are a couple of things
  * which are concerns of a number of very different modules. For example
  * the name of the TUN device which you have configured is important to
@@ -30,7 +30,7 @@ Linker_require("util/GlobalConfig.c")
  * IpTunnel needs to make routes to the TUN device.
  *
  * This file is for those things which for very good reason, simply need
- * to violate the architecture of cjdns and communicate between far away
+ * to violate the architecture of hyperboria and communicate between far away
  * modules. Things which make sense to be in here might include peers'
  * IP addresses. Please don't use this to break the architecture when it
  * is not strictly needed.

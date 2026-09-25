@@ -1,18 +1,18 @@
-cjdnslog(1) -- display cjdroute log messages
+hyperborialog(1) -- display hyperboria-route log messages
 =============================================
 
 ## SYNOPSIS
 
-`/usr/bin/cjdnslog` [<options>...]
+`/usr/bin/hyperborialog` [<options>...]
 
 ## DESCRIPTION
 
-Cjdroute has numerous log points.  Cjdnslog enables and taps selected log
+Hyperboria-route has numerous log points.  Cjdnslog enables and taps selected log
 points and sends the resulting log messages to stdout.
 
 ## OPTIONS
 
-With no options, cjdnslog logs everything.
+With no options, hyperborialog logs everything.
 
   * `--help`
     Print usage summary.
@@ -30,14 +30,14 @@ With no options, cjdnslog logs everything.
 
 ## USAGE
 
-Running cjdnslog requires admin privilege.  The cjdnsadmin lib will 
-try to read `/etc/cjdroute.conf` for the admin password.  This will 
-normally succeed only for root.  Otherwise, it tries `~/.cjdnsadmin`
+Running hyperborialog requires admin privilege.  The cjdnsadmin lib will 
+try to read `/etc/hyperboria-route.conf` for the admin password.  This will 
+normally succeed only for root.  Otherwise, it tries `~/.hyperboriaadmin`
 
 ## FILES
 
-`~/.cjdnsadmin`
+`~/.hyperboriaadmin`
 
 ## SEE ALSO
 
-cjdroute(1)
+hyperboria-route(1)

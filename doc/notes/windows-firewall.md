@@ -4,7 +4,7 @@ With the Windows population of Hyperboria set to grow, some basic security advic
 
 ## Configuration
 
-On a general purpose desktop PC, it is possible for the firewall to become disabled for any number of reasons. This is generally considered bad practice but not fatal on a LAN. Cjdns will expose the PC to a large network where every node is considered local. The potential for hostile traffic is much higher. Therefore, we must make sure the firewall is enabled:
+On a general purpose desktop PC, it is possible for the firewall to become disabled for any number of reasons. This is generally considered bad practice but not fatal on a LAN. Hyperboria will expose the PC to a large network where every node is considered local. The potential for hostile traffic is much higher. Therefore, we must make sure the firewall is enabled:
 
 
 1. Right click network icon in the system tray and select "Open Network and Sharing Center".
@@ -34,5 +34,5 @@ On a general purpose desktop PC, it is possible for the firewall to become disab
     + This can be done in batches, so it's a little less tedious.
 16. Done!
 
-This leaves your PC able to participate in basic networking functions like responding to pings, but closes all services to the Cjdns network.
+This leaves your PC able to participate in basic networking functions like responding to pings, but closes all services to the Hyperboria network.
 

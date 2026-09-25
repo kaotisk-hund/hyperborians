@@ -21,7 +21,7 @@ Linker_require("util/version/Version.c")
 #include <stdint.h>
 
 /*
- * Cjdns Protocol Versions
+ * Hyperboria Protocol Versions
  *
  * The first argument to Version_COMPAT is the new version, the second argument is a list of
  * older versions with which it is compatible. All versions are obviously assumed to be compatible
@@ -45,7 +45,7 @@ Version_COMPAT(0, ([]))
  * Version 1:
  * October 2012
  *
- * When you send someone a message through cjdns, it's encrypted.
+ * When you send someone a message through hyperboria, it's encrypted.
  * When you send the first message to a router, it has a nice header on it which tells them your key
  * and allows them to establish a cryptographic session with you. For every message after that, they
  * need to remember that session and use it to decrypt the message.
@@ -311,8 +311,8 @@ Version_COMPAT(15, ([12,13,14]))
  * Verschlumbesserung
  *
  * This version comprises a major refactoring both in the internal organizatin of and the behavior
- * of cjdns. First on the internal organization note, the file formerly known as Ducttape.c is no
- * more, it made cjdns when cjdns didn't work but now it's time has passed, long live Ducttape.
+ * of hyperboria. First on the internal organization note, the file formerly known as Ducttape.c is no
+ * more, it made hyperboria when hyperboria didn't work but now it's time has passed, long live Ducttape.
  * Ducttape has been broken up into a series of 5 modules, SwitchAdapter, ControlHandler,
  * SessionManager, UpperDistributor and TUNAdapter. Furthermore Interface.h has been removed and
  * replaced with Iface.h. Interface.h was "gendered", meaning the male side of one interface could
@@ -325,7 +325,7 @@ Version_COMPAT(15, ([12,13,14]))
  * now communicated using Message and Iface as opposed to function calls, it may be seperated into
  * an external process. Furthermore the EventEmitter (module to which the pathfinder connects) is
  * capable of accepting connections from multiple pathfinders, allowing advanced external
- * pathfinders to be developed outside of the main cjdns project.
+ * pathfinders to be developed outside of the main hyperboria project.
  *
  * On the point of protocol, two new headers have been defined, one is sent over the wire to other
  * nodes and the other is merely internal protocol for communicating with the SessionManager.
@@ -388,9 +388,9 @@ Version_COMPAT(17, ([16]))
  * system are longer than they need to be because as the search wanders looking for a node which
  * knows the full path, so too does the traffic.
  * There exist many routing algorithms which are far more efficient and some are believed to scale
- * smoothly to millions of nodes but the routing table's resistance to poison is specific to cjdns
+ * smoothly to millions of nodes but the routing table's resistance to poison is specific to hyperboria
  * and other algorithms are mostly highly susceptable. A similar issue to poison-resiliance is that
- * cjdns nodes need not implement any highly complex behaviors in order to keep the network
+ * hyperboria nodes need not implement any highly complex behaviors in order to keep the network
  * functioning, they only answer a few simple questions such as "who do you know whose address is
  * numerically close to X" and "which of your peers has a path numerically close to Y". Most other
  * routing algorithms require complex implementations and even a small deviation in behavior on
@@ -399,7 +399,7 @@ Version_COMPAT(17, ([16]))
  * v18 Rimpasto is a rethink of the routing infrastructure. First we accept that the problem is
  * harder than it was intially thought to be. The old routing infrastructure is now optional and
  * is replaced by something known as subnode, subnode connects to what are called supernodes.
- * The supernode code is in a different codebase which is written in nodejs and is called cjdnsnode.
+ * The supernode code is in a different codebase which is written in nodejs and is called hyperboria-node.
  * The subnode is mostly located in subnode directory in the project but it makes use of a few parts
  * of the old dht directory.
  * The subnode configuration contains a set of supernodes, not anyone can just start up a supernode

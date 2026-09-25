@@ -1,7 +1,7 @@
--- Cjdns admin module for Lua
+-- Hyperboria admin module for Lua
 -- Written by Philip Horger
 
-common = require 'cjdns/common'
+common = require 'hyperboria/common'
 
 AdminInterface = {}
 AdminInterface.__index = AdminInterface
@@ -13,7 +13,7 @@ function AdminInterface.new(properties)
     properties.host     = properties.host or "127.0.0.1"
     properties.port     = properties.port or 11234
     properties.password = properties.password or nil
-    properties.config   = properties.config   or common.ConfigFile.new("/etc/cjdroute.conf", false)
+    properties.config   = properties.config   or common.ConfigFile.new("/etc/hyperboria-route.conf", false)
     properties.timeout  = properties.timeout  or 2
 
     properties.util     = common.UtilFunctions.new(properties)

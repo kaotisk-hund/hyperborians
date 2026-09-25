@@ -3,17 +3,17 @@ ACLOCAL_AMFLAGS = -I m4
 
 # ---- compilation model --------------------------------------------------
 #
-# cjdns passes its own set of flags; the platform/logging/safety defines all
+# hyperboria passes its own set of flags; the platform/logging/safety defines all
 # get folded into AM_CPPFLAGS via configure substitution.
 AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/nacl/include \
-	-I$(top_srcdir)/libuv/include $(CJDNS_CPPFLAGS)
+	-I$(top_srcdir)/libuv/include $(HYPERBORIA_CPPFLAGS)
 
-AM_CFLAGS = $(CJDNS_OPTFLAGS) -std=gnu99 -Wall -Wextra -Werror \
+AM_CFLAGS = $(HYPERBORIA_OPTFLAGS) -std=gnu99 -Wall -Wextra -Werror \
 	-Wno-pointer-sign -Wmissing-prototypes -pedantic -Wno-unused-parameter \
 	-Wno-gnu-zero-variadic-macro-arguments -Wno-variadic-macro-arguments-omitted \
-	$(CJDNS_WARN_FLAGS) -fomit-frame-pointer $(CJDNS_CFLAGS_SPLIT)
+	$(HYPERBORIA_WARN_FLAGS) -fomit-frame-pointer $(HYPERBORIA_CFLAGS_SPLIT)
 
-AM_LDFLAGS = $(CJDNS_PIE_LDFLAGS)
+AM_LDFLAGS = $(HYPERBORIA_PIE_LDFLAGS)
 
 # ---- vendored libuv ------------------------------------------------------
 .PHONY: libuv
@@ -30,9 +30,9 @@ libuv:
 # The ref sources are written against "abstract" symbol names (crypto_box(),
 # crypto_stream(), ...).  Each convenience library compiles them with -D
 # renames so the abstract names resolve to the concrete primitive symbols
-# that the rest of cjdns actually calls.  No -Werror here: this is vendored
+# that the rest of hyperboria actually calls.  No -Werror here: this is vendored
 # public-domain code, tolerate whatever the current compiler says.
-NACL_CFLAGS = $(CJDNS_OPTFLAGS) -std=gnu99 -Wall -Wextra -Wno-pointer-sign \
+NACL_CFLAGS = $(HYPERBORIA_OPTFLAGS) -std=gnu99 -Wall -Wextra -Wno-pointer-sign \
 	-Wno-unused-parameter -Wno-unterminated-string-initialization \
 	-Wno-sign-compare -Wno-overflow -pedantic
 NACL_CPPFLAGS = -I$(top_srcdir)/nacl/include
@@ -206,9 +206,9 @@ NACL_LIBS = \
 	$(top_builddir)/libnacl/libhashblocks_sha256.la \
 	$(top_builddir)/libnacl/librandombytes.la
 
-bin_PROGRAMS = cjdroute publictoip6 privatetopublic sybilsim makekeys mkpasswd randombytes testcjdroute
+bin_PROGRAMS = hyperboria-route publictoip6 privatetopublic sybilsim makekeys mkpasswd randombytes testhyperboria-route
 
-cjdroute_SOURCES = \
+hyperboria_route_SOURCES = \
         admin/Admin.c \
         admin/AdminLog.c \
         admin/AuthorizedPasswords.c \
@@ -224,7 +224,7 @@ cjdroute_SOURCES = \
         benc/serialization/standard/BencMessageWriter.c \
         client/AdminClient.c \
         client/Configurator.c \
-        client/cjdroute2.c \
+        client/hyperboria-route2.c \
         crypto/AddressCalc.c \
         crypto/CryptoAuth.c \
         crypto/Key.c \
@@ -654,7 +654,7 @@ randombytes_SOURCES = \
         util/Hex.c \
         util/log/Log.c
 
-testcjdroute_SOURCES = \
+testhyperboria_route_SOURCES = \
         admin/Admin.c \
         benc/Dict.c \
         benc/List.c \
@@ -807,7 +807,7 @@ testcjdroute_SOURCES = \
         test/targets/VarInt_test_wrap.c \
         test/targets/VersionList_test_wrap.c \
         test/targets/printIp_test_wrap.c \
-        test/testcjdroute.c \
+        test/testhyperboria-route.c \
         tunnel/IpTunnel.c \
         tunnel/RouteGen.c \
         util/AddrTools.c \
@@ -844,20 +844,20 @@ testcjdroute_SOURCES = \
         util/platform/Socket.c \
         wire/Message.c
 
-cjdroute_LDADD = $(NACL_LIBS) $(top_builddir)/libuv/.libs/libuv.a
+hyperboria_route_LDADD = $(NACL_LIBS) $(top_builddir)/libuv/.libs/libuv.a
 publictoip6_LDADD = $(NACL_LIBS) $(top_builddir)/libuv/.libs/libuv.a
 privatetopublic_LDADD = $(NACL_LIBS) $(top_builddir)/libuv/.libs/libuv.a
 sybilsim_LDADD = $(NACL_LIBS) $(top_builddir)/libuv/.libs/libuv.a
 makekeys_LDADD = $(NACL_LIBS) $(top_builddir)/libuv/.libs/libuv.a
 mkpasswd_LDADD = $(NACL_LIBS) $(top_builddir)/libuv/.libs/libuv.a
 randombytes_LDADD = $(NACL_LIBS) $(top_builddir)/libuv/.libs/libuv.a
-testcjdroute_LDADD = $(NACL_LIBS) $(top_builddir)/libuv/.libs/libuv.a
+testhyperboria_route_LDADD = $(NACL_LIBS) $(top_builddir)/libuv/.libs/libuv.a
 
 # The unit-test wrappers rename the standard main() to <name>_main via the
 # preprocessor; the old-style `int main()` definitions cannot be forward
 # declared with a real prototype, so relax -Wmissing-prototypes for the
 # test program only.
-testcjdroute_CFLAGS = $(AM_CFLAGS) -Wno-missing-prototypes
+testhyperboria_route_CFLAGS = $(AM_CFLAGS) -Wno-missing-prototypes
 
 $(top_builddir)/libuv/.libs/libuv.a:
 	@if test ! -x $(top_srcdir)/libuv/configure; then \
@@ -868,5 +868,5 @@ $(top_builddir)/libuv/.libs/libuv.a:
 	$(MAKE) -C $(top_srcdir)/libuv
 
 check-local:
-	$(top_builddir)/testcjdroute all
+	$(top_builddir)/testhyperboria-route all
 

@@ -1,9 +1,9 @@
 <?php
 /**
- * PHP Cjdns Admin API
+ * PHP Hyperboria Admin API
  */
 
-class Cjdns
+class Hyperboria
 {
 	public $buffersize = 69632;
 	public $keepalive = 2;
@@ -93,7 +93,7 @@ class Cjdns
 
 		fwrite($this->socket, Bencode::encode(array("q"=>"ping")));   // Try to ping it
 		$returndata = fread($this->socket, $this->buffersize);
-		if (empty($returndata)) die("Error: cjdroute does not working\n");
+		if (empty($returndata)) die("Error: hyperboria-route does not working\n");
 		if (!endsWith($returndata, "1:q4:ponge")) die("Can't ping: $returndata\n");
 
 		$this->password = $password;

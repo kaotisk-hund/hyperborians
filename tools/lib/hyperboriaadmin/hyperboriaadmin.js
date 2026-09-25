@@ -159,13 +159,13 @@ var getFunctions = function (sock, addr, port, pass, callback) {
 
     }).nThen(function (waitFor) {
         var funcDescriptions = [];
-        var cjdns = {};
+        var hyperboria = {};
         Object.keys(funcs).forEach(function (name) {
-            cjdns[name] = makeFunction(sock, addr, port, pass, name, funcs[name]);
+            hyperboria[name] = makeFunction(sock, addr, port, pass, name, funcs[name]);
             funcDescriptions.push(makeFunctionDescription(name, funcs[name]));
         });
-        cjdns.functions = function (cb) { cb(undefined, funcDescriptions); };
-        callback(cjdns);
+        hyperboria.functions = function (cb) { cb(undefined, funcDescriptions); };
+        callback(hyperboria);
     });
 };
 
@@ -198,33 +198,33 @@ var connect = module.exports.connect = function (addr, port, pass, callback) {
             //console.log("got pong! [" + JSON.stringify(ret) + "]");
         }));
     }).nThen(function (waitFor) {
-        getFunctions(sock, addr, port, pass, function (cjdns) {
-            cjdns.disconnect = function () { sock.close(); };
-            cjdns.setDefaultHandler = function (handler) { sock.defaultHandler = handler; };
-            callback(cjdns);
+        getFunctions(sock, addr, port, pass, function (hyperboria) {
+            hyperboria.disconnect = function () { sock.close(); };
+            hyperboria.setDefaultHandler = function (handler) { sock.defaultHandler = handler; };
+            callback(hyperboria);
         });
     });
 };
 
 var connectWithAdminInfo = module.exports.connectWithAdminInfo = function (callback) {
-    var cjdnsAdmin = {'addr': '127.0.0.1', 'port': 11234, 'password': 'NONE'};
+    var hyperboriaAdmin = {'addr': '127.0.0.1', 'port': 11234, 'password': 'NONE'};
     nThen(function (waitFor) {
-        Fs.readFile(process.env.HOME + '/.cjdnsadmin', waitFor(function (err, ret) {
+        Fs.readFile(process.env.HOME + '/.hyperboriaadmin', waitFor(function (err, ret) {
             if (err && err.code != 'ENOENT') { throw err; }
-            if (!err) { cjdnsAdmin = JSON.parse(String(ret)); }
+            if (!err) { hyperboriaAdmin = JSON.parse(String(ret)); }
         }));
     }).nThen(function (waitFor) {
-        connect(cjdnsAdmin.addr, cjdnsAdmin.port, cjdnsAdmin.password, callback);
+        connect(hyperboriaAdmin.addr, hyperboriaAdmin.port, hyperboriaAdmin.password, callback);
     });
 };
 
 var connectAsAnon = module.exports.connectAsAnon = function (callback, addr, port) {
-    var cjdnsAdmin = {'addr': addr || '127.0.0.1', 'port': port || 11234, 'password': 'NONE'};
+    var hyperboriaAdmin = {'addr': addr || '127.0.0.1', 'port': port || 11234, 'password': 'NONE'};
     nThen(function (waitFor) {
-        Fs.readFile(process.env.HOME + '/.cjdnsadmin', waitFor(function (err, ret) {
-            if (!err) { cjdnsAdmin = JSON.parse(String(ret)); }
+        Fs.readFile(process.env.HOME + '/.hyperboriaadmin', waitFor(function (err, ret) {
+            if (!err) { hyperboriaAdmin = JSON.parse(String(ret)); }
         }));
     }).nThen(function (waitFor) {
-        connect(cjdnsAdmin.addr, cjdnsAdmin.port, null, callback);
+        connect(hyperboriaAdmin.addr, hyperboriaAdmin.port, null, callback);
     });
 };

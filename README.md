@@ -1,5 +1,19 @@
 # HyperboriaNS
 
+#### *Compile on Ubuntu 24.04.1*
+
+    sudo apt install build-essentials libtools git
+    git clone https://github.com/kaotisk-hund/hyperborians
+    cd hyperborian
+    mv m4 m4_old
+    mkdir m4
+    rm aclocal.m4
+    ./condigure
+    ./do
+    
+You should get then the hyperboria-route executable available in the current directory. 
+
+
 [Русская версия](README_RU.md)
 [Hrvatski](README_HR.md)
 [Svenska](README_SV.md)
